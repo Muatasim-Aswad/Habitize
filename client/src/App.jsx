@@ -1,19 +1,42 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Nav from "./components/Nav";
-import Home from "./pages/Home/Home";
-import CreateUser from "./pages/User/CreateUser";
-import UserList from "./pages/User/UserList";
+import { Routes, Route, Navigate } from "react-router-dom";
+import LandingLayout from "./pages/Landing/LandingLayout";
+import {
+  createTheme,
+  ThemeProvider,
+  GlobalStyles,
+  CssBaseline,
+} from "@mui/material";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "'Nunito', sans-serif", // Set global font family
+  },
+});
+
+const globalStyles = {
+  "*": {
+    fontFamily: "'Nunito', sans-serif",
+  },
+  body: {
+    backgroundColor: "#FFF5E6",
+  },
+};
 
 const App = () => {
   return (
     <>
-      <Nav />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/user" element={<UserList />} />
-        <Route path="/user/create" element={<CreateUser />} />
-      </Routes>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <GlobalStyles styles={globalStyles} />
+        <Routes>
+          <Route path="/" element={<LandingLayout />}>
+            <Route index element={<Navigate to="/sign-in" replace />} />
+            <Route path="sign-in" element={<p>sign in form</p>} />
+            <Route path="sign-up" element={<p>sign up form</p>} />
+          </Route>
+        </Routes>
+      </ThemeProvider>
     </>
   );
 };
