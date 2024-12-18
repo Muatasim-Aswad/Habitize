@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -273,7 +274,8 @@ export default function SignupForm() {
           <Typography sx={{ textAlign: "center" }}>
             Already have an account?{" "}
             <Link
-              href="/material-ui/getting-started/templates/sign-in/"
+              component={RouterLink}
+              to="/sign-in"
               variant="body2"
               sx={{
                 alignSelf: "center",
