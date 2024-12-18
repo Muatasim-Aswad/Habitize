@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import {
   Box,
   TextField,
@@ -19,7 +20,6 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
-import GoogleIcon from "@mui/icons-material/Google";
 
 const SignInContainer = styled(Stack)(({ theme }) => ({
   height: "100dvh",
@@ -223,7 +223,8 @@ const SignInForm = () => {
           <Typography sx={{ textAlign: "center" }}>
             Don&apos;t have an account?{" "}
             <Link
-              href="/signup"
+              component={RouterLink}
+              to="/sign-up"
               variant="body2"
               sx={{
                 alignSelf: "center",
@@ -239,26 +240,6 @@ const SignInForm = () => {
               Sign up
             </Link>
           </Typography>
-
-          <Button
-            fullWidth
-            variant="outlined"
-            startIcon={<GoogleIcon />}
-            sx={{
-              color: "#0D102E",
-              borderColor: "#E5E9ED",
-              height: "48px",
-              borderRadius: "8px",
-              textTransform: "none",
-              fontSize: "16px",
-              "&:hover": {
-                backgroundColor: "#FAFBFC",
-                borderColor: "#0D102E",
-              },
-            }}
-          >
-            Continue with Google
-          </Button>
 
           <Link
             href="/forgot-password"
