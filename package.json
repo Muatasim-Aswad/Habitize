@@ -50,6 +50,10 @@
     "husky": "^9.0.0"
   },
   "dependencies": {
-    "concurrently": "^9.1.0"
+    "concurrently": "^9.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0",
+    "styled-components": "^6.1.13"
   }
 }

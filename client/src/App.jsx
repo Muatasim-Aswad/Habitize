@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import LandingLayout from "./pages/Landing/LandingLayout";
+import SignupForm from "./pages/SignUp/SignupForm";
 import {
   createTheme,
   ThemeProvider,
@@ -33,12 +34,11 @@ const App = () => {
           <Route path="/" element={<LandingLayout />}>
             <Route index element={<Navigate to="/sign-in" replace />} />
             <Route path="sign-in" element={<p>sign in form</p>} />
-            <Route path="sign-up" element={<p>sign up form</p>} />
+            <Route path="sign-up" element={<SignupForm />} />
           </Route>
         </Routes>
       </ThemeProvider>
     </>
   );
 };
-
 export default App;

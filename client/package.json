@@ -54,10 +54,13 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.2.0",
     "@mui/material": "^6.2.0",
+    "@mui/styled-engine-sc": "^6.2.0",
     "prop-types": "^15.7.2",
     "react": "^19",
     "react-dom": "^19",
-    "react-router-dom": "^7"
+    "react-router-dom": "^7",
+    "styled-components": "^6.1.13"
   }
 }
