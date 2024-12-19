@@ -2,12 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Stack, Card, Typography, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { SPACING } from "../../../theme/constants";
 
 const FormWrapper = styled(Stack)(({ theme }) => ({
   minHeight: "100vh",
-  padding: theme.spacing(2),
+  padding: theme.spacing(SPACING.sm),
   [theme.breakpoints.up("sm")]: {
-    padding: theme.spacing(4),
+    padding: theme.spacing(SPACING.md),
   },
 }));
 
@@ -16,11 +17,10 @@ const StyledCard = styled(Card)(({ theme }) => ({
   flexDirection: "column",
   alignSelf: "center",
   width: "100%",
-  padding: theme.spacing(4),
-  gap: theme.spacing(2),
-  margin: theme.spacing(2),
+  padding: theme.spacing(SPACING.md),
+  gap: theme.spacing(SPACING.sm),
+  margin: theme.spacing(SPACING.sm),
   boxShadow: "none",
-  border: "1px solid #E0E0E0",
   backgroundColor: "#FFF5E6",
   [theme.breakpoints.up("sm")]: {
     width: "450px",
@@ -38,7 +38,7 @@ const FormContainer = ({ children, title, description }) => {
             width: "100%",
             fontSize: "clamp(2rem, 10vw, 2.15rem)",
             fontWeight: "bold",
-            color: "#666666",
+            textAlign: "center",
           }}
         >
           {title}

@@ -10,7 +10,7 @@ import FormContainer from "../../components/form/FormContainer/FormContainer";
 import LinkButton from "../../components/form/LinkButton/LinkButton";
 import useFormValidation from "../../hooks/useFormValidation";
 
-const SignupForm = () => {
+const SignUpForm = () => {
   const { values, errors, handleChange, handleSubmit, passwordStrength } =
     useFormValidation({
       fullName: "",
@@ -133,4 +133,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default SignUpForm;
