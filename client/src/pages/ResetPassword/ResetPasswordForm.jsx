@@ -6,6 +6,7 @@ import FormInput from "../../components/form/FormInput/FormInput";
 import FormButton from "../../components/form/FormButton/FormButton";
 import FormContainer from "../../components/form/FormContainer/FormContainer";
 import LinkButton from "../../components/form/LinkButton/LinkButton";
+import OrDivider from "../../components/form/OrDivider/OrDivider";
 import useFormValidation from "../../hooks/useFormValidation";
 
 const ResetPasswordForm = () => {
@@ -38,7 +39,13 @@ const ResetPasswordForm = () => {
           <FormButton text="Send Reset Link" />
         </Box>
 
-        <Typography sx={{ textAlign: "center", mt: 2 }}>
+        <OrDivider />
+
+        <Typography
+          variant="body2"
+          align="center"
+          sx={{ color: "rgba(0, 0, 0, 0.6)" }}
+        >
           Remember your password? <LinkButton to="/sign-in">Sign in</LinkButton>
         </Typography>
       </Box>

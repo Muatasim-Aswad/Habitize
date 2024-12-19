@@ -7,6 +7,7 @@ import FormInput from "../../components/form/FormInput/FormInput";
 import FormButton from "../../components/form/FormButton/FormButton";
 import FormContainer from "../../components/form/FormContainer/FormContainer";
 import LinkButton from "../../components/form/LinkButton/LinkButton";
+import OrDivider from "../../components/form/OrDivider/OrDivider";
 import useFormValidation from "../../hooks/useFormValidation";
 
 const SignInForm = () => {
@@ -94,12 +95,22 @@ const SignInForm = () => {
           <FormButton text="Sign in" />
         </Box>
 
-        <Typography sx={{ textAlign: "center", mt: 2 }}>
+        <OrDivider />
+
+        <Typography
+          variant="body2"
+          align="center"
+          sx={{ color: "rgba(0, 0, 0, 0.6)" }}
+        >
           Don&apos;t have an account?{" "}
           <LinkButton to="/sign-up">Sign up</LinkButton>
         </Typography>
 
-        <Typography sx={{ textAlign: "center", mt: 1 }}>
+        <Typography
+          variant="body2"
+          align="center"
+          sx={{ color: "rgba(0, 0, 0, 0.6)", mt: 1 }}
+        >
           <LinkButton to="/reset-password">Forgot password?</LinkButton>
         </Typography>
       </Box>
