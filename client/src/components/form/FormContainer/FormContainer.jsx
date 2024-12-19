@@ -16,14 +16,18 @@ const StyledCard = styled(Card)(({ theme }) => ({
   flexDirection: "column",
   alignSelf: "center",
   width: "100%",
-  padding: theme.spacing(4),
-  gap: theme.spacing(2),
+  padding: theme.spacing(3),
+  gap: theme.spacing(1.5),
   margin: theme.spacing(2),
   boxShadow: "none",
   border: "1px solid #E0E0E0",
   backgroundColor: "#FFF5E6",
+  minHeight: "fit-content",
+  maxHeight: "90vh",
+  overflowY: "auto",
   [theme.breakpoints.up("sm")]: {
     width: "450px",
+    padding: theme.spacing(4),
   },
 }));
 
