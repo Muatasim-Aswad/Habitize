@@ -13,8 +13,7 @@ import useFormValidation from "../../hooks/useFormValidation";
 const SignupForm = () => {
   const { values, errors, handleChange, handleSubmit, passwordStrength } =
     useFormValidation({
-      firstName: "",
-      lastName: "",
+      fullName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -45,27 +44,14 @@ const SignupForm = () => {
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <FormInput
           type="text"
-          name="firstName"
-          label="First Name"
-          value={values.firstName}
+          name="fullName"
+          label="Full Name"
+          value={values.fullName}
           onChange={handleChange}
-          error={errors.firstName}
+          error={errors.fullName}
           icon={PersonIcon}
-          placeholder="John"
+          placeholder="John Doe"
         />
-
-        <Box sx={{ mt: 2 }}>
-          <FormInput
-            type="text"
-            name="lastName"
-            label="Last Name"
-            value={values.lastName}
-            onChange={handleChange}
-            error={errors.lastName}
-            icon={PersonIcon}
-            placeholder="Doe"
-          />
-        </Box>
 
         <Box sx={{ mt: 2 }}>
           <FormInput
@@ -137,7 +123,8 @@ const SignupForm = () => {
           <FormButton text="Sign up" />
         </Box>
 
-        <Typography sx={{ textAlign: "center", mt: 2 }}>
+        <Typography sx={{ textAlign: "center", mt: 2 }}>or</Typography>
+        <Typography sx={{ textAlign: "center", mt: 1 }}>
           Already have an account?{" "}
           <LinkButton to="/sign-in">Sign in</LinkButton>
         </Typography>
