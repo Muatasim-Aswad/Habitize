@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import LandingLayout from "./pages/Landing/LandingLayout";
-import SignInForm from "./components/SignInForm/SignInForm";
+import SignInForm from "./pages/SignIn/SignInForm";
 import SignupForm from "./pages/SignUp/SignupForm";
 
 import {
