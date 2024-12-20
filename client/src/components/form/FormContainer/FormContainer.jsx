@@ -22,8 +22,9 @@ const StyledCard = styled(Card)(({ theme }) => ({
   padding: theme.spacing(SPACING.md),
   gap: theme.spacing(SPACING.sm),
   margin: 0,
-  boxShadow: "none",
   backgroundColor: "#FFF5E6",
+  boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+  borderRadius: "12px",
   [theme.breakpoints.up("sm")]: {
     width: "450px",
   },
