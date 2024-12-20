@@ -7,6 +7,9 @@ import { SPACING } from "../../../theme/constants";
 const FormWrapper = styled(Stack)(({ theme }) => ({
   minHeight: "100vh",
   padding: theme.spacing(SPACING.sm),
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   [theme.breakpoints.up("sm")]: {
     padding: theme.spacing(SPACING.md),
   },
@@ -15,11 +18,10 @@ const FormWrapper = styled(Stack)(({ theme }) => ({
 const StyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  alignSelf: "center",
   width: "100%",
   padding: theme.spacing(SPACING.md),
   gap: theme.spacing(SPACING.sm),
-  margin: theme.spacing(SPACING.sm),
+  margin: 0,
   boxShadow: "none",
   backgroundColor: "#FFF5E6",
   [theme.breakpoints.up("sm")]: {
