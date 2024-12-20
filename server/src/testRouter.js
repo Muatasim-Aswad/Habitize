@@ -1,4 +1,4 @@
-import express from "express";
+/*import express from "express";
 import mongoose from "mongoose";
 import User, { validateUser } from "./models/User.js";
 
@@ -69,4 +69,4 @@ const emptyDatabase = async () => {
   }
 };
 
-export default testRouter;
+export default testRouter;*/
