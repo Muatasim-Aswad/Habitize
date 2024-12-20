@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
+import { useNavigate } from "react-router-dom";
 
 import FormInput from "../../components/form/FormInput/FormInput";
 import FormButton from "../../components/form/FormButton/FormButton";
@@ -10,12 +11,15 @@ import OrDivider from "../../components/form/OrDivider/OrDivider";
 import useFormValidation from "../../hooks/useFormValidation";
 
 const ResetPasswordForm = () => {
+  const navigate = useNavigate();
   const { values, errors, handleChange, handleSubmit } = useFormValidation({
     email: "",
   });
 
   const onSubmit = () => {
     // Add password reset logic here
+    // For now, just navigate to create-password
+    navigate("/create-password");
   };
 
   return (

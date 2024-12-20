@@ -6,8 +6,9 @@ import { COLORS, TYPOGRAPHY } from "./theme/constants";
 
 import LandingLayout from "./pages/Landing/LandingLayout";
 import SignInForm from "./pages/SignIn/SignInForm";
-import SignUpForm from "./pages/SignUp/SignUpForm";
+import SignUpForm from "./pages/SignUp/SignupForm";
 import ResetPasswordForm from "./pages/ResetPassword/ResetPasswordForm";
+import CreatePasswordForm from "./pages/CreatePassword/CreatePasswordForm";
 
 const globalStyles = {
   "*": {
@@ -38,6 +39,7 @@ const App = () => {
             <Route path="sign-in" element={<SignInForm />} />
             <Route path="sign-up" element={<SignUpForm />} />
             <Route path="reset-password" element={<ResetPasswordForm />} />
+            <Route path="create-password" element={<CreatePasswordForm />} />
           </Route>
         </Routes>
       </ThemeProvider>
