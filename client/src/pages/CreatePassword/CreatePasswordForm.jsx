@@ -7,33 +7,32 @@ import FormButton from "../../components/form/FormButton/FormButton";
 import FormContainer from "../../components/form/FormContainer/FormContainer";
 import LinkButton from "../../components/form/LinkButton/LinkButton";
 import OrDivider from "../../components/form/OrDivider/OrDivider";
+import ErrorMessage from "../../components/form/ErrorMessage/ErrorMessage";
 import useFormValidation from "../../hooks/useFormValidation";
+import { usePasswordValidation } from "../../hooks/usePasswordValidation";
+import { useFormSubmit, FORM_TYPES } from "../../hooks/useFormSubmit";
 
 const CreatePasswordForm = () => {
-  const { values, errors, handleChange, handleSubmit, passwordStrength } =
-    useFormValidation({
-      password: "",
-      confirmPassword: "",
-    });
+  const { values, errors, handleChange, handleSubmit } = useFormValidation({
+    password: "",
+    confirmPassword: "",
+  });
 
-  const getPasswordStrengthColor = (strength) => {
-    if (strength <= 20) return "error";
-    if (strength <= 40) return "warning";
-    if (strength <= 60) return "primary";
-    if (strength <= 80) return "info";
-    return "success";
-  };
+  const {
+    strength,
+    strengthColor,
+    strengthLabel,
+    errors: passwordErrors,
+  } = usePasswordValidation(values.password);
 
-  const getPasswordStrengthLabel = (strength) => {
-    if (strength <= 20) return "Very Weak";
-    if (strength <= 40) return "Weak";
-    if (strength <= 60) return "Fair";
-    if (strength <= 80) return "Good";
-    return "Strong";
-  };
+  const {
+    handleSubmit: submitForm,
+    isLoading,
+    error: submitError,
+  } = useFormSubmit(FORM_TYPES.CREATE_PASSWORD);
 
   const onSubmit = () => {
-    // Add create password logic here
+    submitForm(values);
   };
 
   return (
@@ -48,7 +47,10 @@ const CreatePasswordForm = () => {
           label="New Password"
           value={values.password}
           onChange={handleChange}
-          error={errors.password}
+          error={
+            errors.password ||
+            (values.password && passwordErrors.length > 0 && passwordErrors[0])
+          }
           icon={LockIcon}
           placeholder="••••••"
         />
@@ -64,17 +66,14 @@ const CreatePasswordForm = () => {
               <Typography variant="caption" color="textSecondary">
                 Password Strength:
               </Typography>
-              <Typography
-                variant="caption"
-                color={getPasswordStrengthColor(passwordStrength)}
-              >
-                {getPasswordStrengthLabel(passwordStrength)}
+              <Typography variant="caption" color={strengthColor}>
+                {strengthLabel}
               </Typography>
             </Box>
             <LinearProgress
               variant="determinate"
-              value={passwordStrength}
-              color={getPasswordStrengthColor(passwordStrength)}
+              value={strength}
+              color={strengthColor}
               sx={{ height: 4, borderRadius: 2 }}
             />
           </Box>
@@ -93,8 +92,10 @@ const CreatePasswordForm = () => {
           />
         </Box>
 
+        {submitError && <ErrorMessage error={submitError} variant="alert" />}
+
         <Box sx={{ mt: 3 }}>
-          <FormButton text="Create Password" />
+          <FormButton text="Create Password" isLoading={isLoading} />
         </Box>
 
         <OrDivider />

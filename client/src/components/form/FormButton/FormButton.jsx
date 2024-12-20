@@ -1,13 +1,20 @@
 import React from "react";
+import { Button, CircularProgress } from "@mui/material";
 import PropTypes from "prop-types";
-import { Button } from "@mui/material";
 
-const FormButton = ({ text, onClick, type = "submit", disabled = false }) => {
+const FormButton = ({
+  text,
+  isLoading = false,
+  onClick,
+  type = "submit",
+  disabled = false,
+  ...props
+}) => {
   return (
     <Button
       type={type}
       onClick={onClick}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       fullWidth
       variant="contained"
       sx={{
@@ -16,8 +23,9 @@ const FormButton = ({ text, onClick, type = "submit", disabled = false }) => {
           backgroundColor: "#3d6e6f",
         },
       }}
+      {...props}
     >
-      {text}
+      {isLoading ? <CircularProgress size={24} color="inherit" /> : text}
     </Button>
   );
 };
@@ -27,6 +35,7 @@ FormButton.propTypes = {
   onClick: PropTypes.func,
   type: PropTypes.string,
   disabled: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 FormButton.defaultProps = {
