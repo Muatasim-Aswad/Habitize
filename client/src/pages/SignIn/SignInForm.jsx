@@ -243,6 +243,8 @@ const SignInForm = () => {
 
           <Link
             href="/forgot-password"
+            component={RouterLink}
+            to="/create-password"
             variant="body2"
             sx={{
               alignSelf: "center",

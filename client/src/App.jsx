@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import LandingLayout from "./pages/Landing/LandingLayout";
 import SignInForm from "./pages/SignIn/SignInForm";
 import SignupForm from "./pages/SignUp/SignupForm";
+import ResetPasswordForm from "./pages/ResetPassword/ResetPassword";
 
 import {
   createTheme,
@@ -37,6 +38,7 @@ const App = () => {
             <Route index element={<Navigate to="/sign-in" replace />} />
             <Route path="sign-in" element={<SignInForm />} />
             <Route path="sign-up" element={<SignupForm />} />
+            <Route path="create-password" element={<ResetPasswordForm />} />
           </Route>
         </Routes>
       </ThemeProvider>

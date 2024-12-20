@@ -11,8 +11,6 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
-import PersonIcon from "@mui/icons-material/Person";
-import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Grid2, InputAdornment, IconButton } from "@mui/material";
@@ -53,24 +51,15 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-export default function SignupForm() {
+export default function ResetPasswordForm() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [formErrors, setFormErrors] = React.useState({
-    name: "",
-    email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const validateInputs = (formData) => {
     const errors = {};
-
-    if (!formData.name || formData.name.trim().length === 0) {
-      errors.name = "Name is required.";
-    }
-
-    if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email.trim())) {
-      errors.email = "Please enter a valid email address.";
-    }
 
     if (!formData.password || formData.password.trim().length < 6) {
       errors.password = "Password must be at least 6 characters long.";
@@ -88,9 +77,8 @@ export default function SignupForm() {
     event.preventDefault();
 
     const formData = {
-      name: event.target.name.value.trim(),
-      email: event.target.email.value.trim(),
       password: event.target.password.value.trim(),
+      confirmPassword: event.target.confirmPassword.value.trim(),
     };
 
     if (validateInputs(formData)) {
@@ -111,63 +99,13 @@ export default function SignupForm() {
             color: "#666666",
           }}
         >
-          Sign up
+          Create Password
         </Typography>
         <Box
           component="form"
           onSubmit={handleSubmit}
           sx={{ display: "flex", flexDirection: "column", gap: 2 }}
         >
-          <FormControl>
-            <Grid2 container alignItems="center" gap={1}>
-              <Grid2 item>
-                <PersonIcon />
-              </Grid2>
-              <Grid2 item>
-                <FormLabel
-                  htmlFor="name"
-                  sx={{ fontWeight: "bold", textAlign: "left" }}
-                >
-                  Full name
-                </FormLabel>
-              </Grid2>
-            </Grid2>
-
-            <TextField
-              name="name"
-              id="name"
-              placeholder="Jon Snow"
-              fullWidth
-              error={!!formErrors.name}
-              helperText={formErrors.name}
-              autoComplete="name"
-            />
-          </FormControl>
-          <FormControl>
-            <Grid2 container alignItems="center" gap={1}>
-              <Grid2 item>
-                <EmailIcon />
-              </Grid2>
-              <Grid2 item>
-                <FormLabel
-                  htmlFor="email"
-                  sx={{ fontWeight: "bold", textAlign: "left" }}
-                >
-                  Email
-                </FormLabel>
-              </Grid2>
-            </Grid2>
-
-            <TextField
-              name="email"
-              id="email"
-              placeholder="your@email.com"
-              fullWidth
-              error={!!formErrors.email}
-              helperText={formErrors.email}
-              autoComplete="email"
-            />
-          </FormControl>
           <FormControl>
             <Grid2 container alignItems="center" gap={1}>
               <Grid2 item>
@@ -264,7 +202,7 @@ export default function SignupForm() {
               backgroundColor: "#4F8A8B",
             }}
           >
-            Sign up
+            Continue
           </Button>
         </Box>
         <Divider>
@@ -274,6 +212,7 @@ export default function SignupForm() {
           <Typography sx={{ textAlign: "center" }}>
             Already have an account?{" "}
             <Link
+              href="/material-ui/getting-started/templates/reset-password/"
               component={RouterLink}
               to="/sign-in"
               variant="body2"
