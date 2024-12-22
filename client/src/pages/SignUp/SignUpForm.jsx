@@ -37,6 +37,14 @@ const SignUpForm = () => {
   } = useFormSubmit(FORM_TYPES.SIGN_UP);
 
   const onSubmit = () => {
+    // Check if passwords match
+    if (values.password !== values.confirmPassword) {
+      handleSubmit(() => {
+        errors.confirmPassword = "Passwords do not match";
+      });
+      return;
+    }
+
     submitForm(values);
   };
 
@@ -128,7 +136,7 @@ const SignUpForm = () => {
           <FormButton
             text="Sign up"
             isLoading={isLoading}
-            isDisabled={!isFormValid}
+            isDisabled={!isFormValid || isLoading}
           />
         </Box>
 
