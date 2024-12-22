@@ -1,23 +1,48 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid2";
+import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
 import logo from "../../../public/logo.png";
 import { Outlet } from "react-router-dom";
 import { Typography } from "@mui/material";
 
-const BoxContainer = styled(Box)(() => ({
-  flexGrow: 1,
-  height: "100vh",
-  padding: "3rem", //this is for deducting the padding of the
+const BoxContainer = styled(Box)(({ theme }) => ({
+  minHeight: "100vh",
+  padding: theme.spacing(4),
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  [theme.breakpoints.down("sm")]: {
+    padding: theme.spacing(2),
+  },
+  [theme.breakpoints.between("sm", "md")]: {
+    padding: theme.spacing(3),
+  },
 }));
 
-const GridContainer = styled(Grid)(() => ({
-  height: "100%", // Full height for the grid container
+const ContentContainer = styled(Container)(({ theme }) => ({
   display: "flex",
-  alignItems: "center", // Center content vertically
-  justifyContent: "center", // Center content horizontally}
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: theme.spacing(4),
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+    gap: theme.spacing(6),
+  },
+}));
+
+const ContentSection = styled(Stack)(({ theme }) => ({
+  flex: 1,
+  alignItems: "center",
+  justifyContent: "center",
   textAlign: "center",
+  maxWidth: "600px",
+  padding: theme.spacing(2),
+  [theme.breakpoints.down("md")]: {
+    width: "100%",
+  },
 }));
 
 const TypographyText = styled(Typography)(({ theme }) => ({
@@ -25,19 +50,22 @@ const TypographyText = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     fontSize: "16px",
   },
+  [theme.breakpoints.between("sm", "md")]: {
+    fontSize: "18px",
+  },
 }));
 
 const logoStyle = {
   maxWidth: "60%",
   height: "auto",
-  paddingBottom: "3vh",
+  marginBottom: "24px",
 };
 
 export default function LandingLayout() {
   return (
     <BoxContainer>
-      <GridContainer container spacing={2} columns={{ xs: 1, sm: 2 }}>
-        <Grid size={1}>
+      <ContentContainer maxWidth="lg">
+        <ContentSection>
           <img src={logo} alt="logo" loading="lazy" style={logoStyle} />
           <TypographyText variant="body1">
             Grow Your Habits Like Trees.
@@ -49,11 +77,11 @@ export default function LandingLayout() {
             <br />
             <strong>Login</strong> and keep growing today!
           </TypographyText>
-        </Grid>
-        <Grid size={1}>
-          <Outlet /> {/* Child routes will be rendered here */}
-        </Grid>
-      </GridContainer>
+        </ContentSection>
+        <ContentSection>
+          <Outlet />
+        </ContentSection>
+      </ContentContainer>
     </BoxContainer>
   );
 }

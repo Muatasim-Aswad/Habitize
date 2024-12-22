@@ -5,13 +5,16 @@ import { styled } from "@mui/material/styles";
 import { SPACING } from "../../../theme/constants";
 
 const FormWrapper = styled(Stack)(({ theme }) => ({
-  minHeight: "100vh",
-  padding: theme.spacing(SPACING.sm),
+  width: "100%",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  [theme.breakpoints.up("sm")]: {
-    padding: theme.spacing(SPACING.md),
+  padding: theme.spacing(SPACING.sm),
+  [theme.breakpoints.down("sm")]: {
+    padding: theme.spacing(SPACING.xs),
+  },
+  [theme.breakpoints.between("sm", "md")]: {
+    padding: theme.spacing(SPACING.sm),
   },
 }));
 
@@ -19,14 +22,21 @@ const StyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   width: "100%",
+  maxWidth: "450px",
   padding: theme.spacing(SPACING.md),
   gap: theme.spacing(SPACING.sm),
   margin: 0,
   backgroundColor: "#FFF5E6",
   boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
   borderRadius: "12px",
-  [theme.breakpoints.up("sm")]: {
-    width: "450px",
+  [theme.breakpoints.down("sm")]: {
+    padding: theme.spacing(SPACING.sm),
+    width: "100%",
+  },
+  [theme.breakpoints.between("sm", "md")]: {
+    padding: theme.spacing(SPACING.sm),
+    width: "100%",
+    maxWidth: "400px",
   },
 }));
 
