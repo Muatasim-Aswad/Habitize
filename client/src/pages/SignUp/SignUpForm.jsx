@@ -15,12 +15,13 @@ import { usePasswordValidation } from "../../hooks/usePasswordValidation";
 import { useFormSubmit, FORM_TYPES } from "../../hooks/useFormSubmit";
 
 const SignUpForm = () => {
-  const { values, errors, handleChange, handleSubmit } = useFormValidation({
-    fullName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const { values, errors, handleChange, handleSubmit, setErrors } =
+    useFormValidation({
+      fullName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
 
   const {
     strength,
@@ -36,6 +37,15 @@ const SignUpForm = () => {
   } = useFormSubmit(FORM_TYPES.SIGN_UP);
 
   const onSubmit = () => {
+    // Check if passwords match
+    if (values.password !== values.confirmPassword) {
+      setErrors((prev) => ({
+        ...prev,
+        confirmPassword: "Passwords do not match",
+      }));
+      return;
+    }
+
     submitForm(values);
   };
 

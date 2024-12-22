@@ -8,28 +8,49 @@ export const FORM_TYPES = {
   CREATE_PASSWORD: "create-password",
 };
 
+const API_BASE_URL = `${process.env.BASE_SERVER_URL}/api`;
+
 export const useFormSubmit = (formType) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // eslint-disable-next-line no-unused-vars
   const handleSubmit = async (formValues) => {
     try {
       setIsLoading(true);
       setError(null);
 
-      // TODO: Replace with actual API calls
       switch (formType) {
         case FORM_TYPES.SIGN_IN:
           // await signInApi(formValues);
           navigate("/dashboard");
           break;
 
-        case FORM_TYPES.SIGN_UP:
-          // await signUpApi(formValues);
+        case FORM_TYPES.SIGN_UP: {
+          const { fullName, email, password } = formValues;
+          const response = await fetch(`${API_BASE_URL}/user/create`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              fullUser: {
+                name: fullName,
+                email,
+                password,
+              },
+            }),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.message || "Failed to create user");
+          }
+
           navigate("/sign-in");
           break;
+        }
 
         case FORM_TYPES.RESET_PASSWORD:
           // await sendResetLinkApi(formValues);
@@ -51,10 +72,7 @@ export const useFormSubmit = (formType) => {
     }
   };
 
-  return {
-    handleSubmit,
-    isLoading,
-    error,
-    clearError: () => setError(null),
-  };
+  const clearError = () => setError(null);
+
+  return { handleSubmit, isLoading, error, clearError };
 };
