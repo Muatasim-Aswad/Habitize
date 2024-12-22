@@ -21,10 +21,30 @@ export const useFormSubmit = (formType) => {
       setError(null);
 
       switch (formType) {
-        case FORM_TYPES.SIGN_IN:
-          // await signInApi(formValues);
+        case FORM_TYPES.SIGN_IN: {
+          const { email, password } = formValues;
+          const response = await fetch(`${API_BASE_URL}/user/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              user: {
+                email,
+                password,
+              },
+            }),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.message || "Failed to sign in");
+          }
+
           navigate("/dashboard");
           break;
+        }
 
         case FORM_TYPES.SIGN_UP: {
           const { fullName, email, password } = formValues;

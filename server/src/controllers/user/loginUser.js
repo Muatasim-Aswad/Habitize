@@ -5,7 +5,6 @@ import bcrypt from "bcrypt";
 const loginUser = async (req, res, next) => {
   try {
     let { email, password } = req.body.user;
-    // password = await hash12(password);
 
     const user = await User.findOne({ email });
     if (!user) {
@@ -28,7 +27,11 @@ const loginUser = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Sign-in successful",
-      user: { id: user._id, name: user.name, email: user.email },
+      user: {
+        name: user.name,
+        email: user.email,
+        createdAt: user.createdAt,
+      },
     });
 
     //to do: complete logging logic, if authenticated create a session
