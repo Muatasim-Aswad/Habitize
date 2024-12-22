@@ -12,9 +12,10 @@ import useFormValidation from "../../hooks/useFormValidation";
 import { useFormSubmit, FORM_TYPES } from "../../hooks/useFormSubmit";
 
 const ResetPasswordForm = () => {
-  const { values, errors, handleChange, handleSubmit } = useFormValidation({
-    email: "",
-  });
+  const { values, errors, isFormValid, handleChange, handleSubmit } =
+    useFormValidation({
+      email: "",
+    });
 
   const {
     handleSubmit: submitForm,
@@ -46,7 +47,11 @@ const ResetPasswordForm = () => {
         {submitError && <ErrorMessage error={submitError} variant="alert" />}
 
         <Box sx={{ mt: 3 }}>
-          <FormButton text="Send Reset Link" isLoading={isLoading} />
+          <FormButton
+            text="Send Reset Link"
+            isLoading={isLoading}
+            isDisabled={!isFormValid}
+          />
         </Box>
 
         <OrDivider />

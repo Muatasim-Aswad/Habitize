@@ -15,12 +15,13 @@ import { usePasswordValidation } from "../../hooks/usePasswordValidation";
 import { useFormSubmit, FORM_TYPES } from "../../hooks/useFormSubmit";
 
 const SignUpForm = () => {
-  const { values, errors, handleChange, handleSubmit } = useFormValidation({
-    fullName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const { values, errors, isFormValid, handleChange, handleSubmit } =
+    useFormValidation({
+      fullName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
 
   const {
     strength,
@@ -124,7 +125,11 @@ const SignUpForm = () => {
         {submitError && <ErrorMessage error={submitError} variant="alert" />}
 
         <Box sx={{ mt: 3 }}>
-          <FormButton text="Sign up" isLoading={isLoading} />
+          <FormButton
+            text="Sign up"
+            isLoading={isLoading}
+            isDisabled={!isFormValid}
+          />
         </Box>
 
         <OrDivider />
