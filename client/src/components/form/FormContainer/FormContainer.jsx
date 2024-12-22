@@ -9,12 +9,12 @@ const FormWrapper = styled(Stack)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  padding: theme.spacing(SPACING.sm),
+  margin: theme.spacing(SPACING.sm),
   [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(SPACING.xs),
+    margin: theme.spacing(SPACING.xs),
   },
   [theme.breakpoints.between("sm", "md")]: {
-    padding: theme.spacing(SPACING.sm),
+    margin: theme.spacing(SPACING.sm),
   },
 }));
 
@@ -25,7 +25,6 @@ const StyledCard = styled(Card)(({ theme }) => ({
   maxWidth: "450px",
   padding: theme.spacing(SPACING.md),
   gap: theme.spacing(SPACING.sm),
-  margin: 0,
   backgroundColor: "#FFF5E6",
   boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
   borderRadius: "12px",

@@ -9,16 +9,11 @@ import { Typography } from "@mui/material";
 
 const BoxContainer = styled(Box)(({ theme }) => ({
   minHeight: "100vh",
-  padding: theme.spacing(4),
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(2),
-  },
-  [theme.breakpoints.between("sm", "md")]: {
-    padding: theme.spacing(3),
-  },
+  overflow: "auto",
+  padding: theme.spacing(2, 0),
 }));
 
 const ContentContainer = styled(Container)(({ theme }) => ({
@@ -27,6 +22,7 @@ const ContentContainer = styled(Container)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "center",
   gap: theme.spacing(4),
+  padding: theme.spacing(2),
   [theme.breakpoints.down("md")]: {
     flexDirection: "column",
     gap: theme.spacing(6),
@@ -39,7 +35,6 @@ const ContentSection = styled(Stack)(({ theme }) => ({
   justifyContent: "center",
   textAlign: "center",
   maxWidth: "600px",
-  padding: theme.spacing(2),
   [theme.breakpoints.down("md")]: {
     width: "100%",
   },
