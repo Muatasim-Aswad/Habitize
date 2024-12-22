@@ -5,16 +5,16 @@ import PropTypes from "prop-types";
 const FormButton = ({
   text,
   isLoading = false,
+  isDisabled = false,
   onClick,
   type = "submit",
-  disabled = false,
   ...props
 }) => {
   return (
     <Button
       type={type}
       onClick={onClick}
-      disabled={disabled || isLoading}
+      disabled={isLoading || isDisabled}
       fullWidth
       variant="contained"
       sx={{
@@ -34,14 +34,15 @@ FormButton.propTypes = {
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   type: PropTypes.string,
-  disabled: PropTypes.bool,
   isLoading: PropTypes.bool,
+  isDisabled: PropTypes.bool,
 };
 
 FormButton.defaultProps = {
   onClick: undefined,
   type: "submit",
-  disabled: false,
+  isLoading: false,
+  isDisabled: false,
 };
 
 export default FormButton;

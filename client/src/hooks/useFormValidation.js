@@ -1,9 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const useFormValidation = (initialValues = {}) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [passwordStrength, setPasswordStrength] = useState(0);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    validateFormState();
+  }, [values, errors]);
+
+  const validateFormState = () => {
+    const hasEmptyFields = Object.values(values).some((value) => !value);
+    const hasErrors = Object.keys(errors).some((key) => errors[key]);
+    setIsFormValid(!hasEmptyFields && !hasErrors);
+  };
 
   const validatePassword = (password) => {
     if (!password) return { error: "Password is required", strength: 0 };
@@ -148,6 +159,7 @@ const useFormValidation = (initialValues = {}) => {
     handleChange,
     handleSubmit,
     passwordStrength,
+    isFormValid,
   };
 };
 
