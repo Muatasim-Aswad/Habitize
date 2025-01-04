@@ -57,6 +57,43 @@ Base URL: `/api`
     }
     ```
 
+#### 2. Login User
+
+- Endpoint: `/login`
+- Method: POST
+- Description: Logs in a user with the provided email and password.
+- Request Body:
+
+```json
+{
+  "user": {
+    "email": "johndoe@example.com",
+    "password": "SecureP@ssword1!"
+  }
+}
+```
+
+- Response:
+  - 200 (OK):
+    ```json
+    {
+      "success": true,
+      "message": "Sign-in successful",
+      "user": {
+        "name": "John Doe",
+        "email": "johndoe@example.com"
+      },
+      "token": "..."
+    }
+    ```
+  - 401 (Unauthorized): If the email or password is invalid.
+    ```json
+    {
+      "success": false,
+      "message": "Invalid email or password"
+    }
+    ```
+
 ## Request and Response Format
 
 Content Type: All requests and responses must use `application/json`.
@@ -68,6 +105,10 @@ The API uses Joi-based validation middleware to ensure the request body conforms
 - Create a Joi schema (if you want to create a schema from an already existing one, use `adaptJoiSchema`).
 - Create a Joi schema validator middleware.
 - Use the middleware as the first step in the endpoint.
+
+#### JWT Authentication
+
+To validate JWT in session-protected endpoints, you can use the following middleware:
 
 ## Error Handling
 
