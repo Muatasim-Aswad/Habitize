@@ -23,27 +23,33 @@ const navItems = [
   { icon: <LogoutIcon />, link: "/app/logout" },
 ];
 
+const DRAWER_WIDTH = 100;
+
 const LeftNavigation = () => {
   const location = useLocation();
   return (
     <Drawer
       variant="permanent"
       sx={{
-        width: 240,
+        width: DRAWER_WIDTH,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: 100,
+          width: DRAWER_WIDTH,
           boxSizing: "border-box",
           backgroundColor: "#FFC297",
           display: "block",
+          overflow: "hidden",
         },
       }}
     >
       <Box
         sx={{
+          height: "100%",
           marginTop: "16px",
           textAlign: "center",
           cursor: "pointer",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <img
@@ -51,7 +57,15 @@ const LeftNavigation = () => {
           alt="logo"
           style={{ width: "100px", height: "auto", marginBottom: "24px" }}
         />
-        <List sx={{ width: "100%", textAlign: "center" }}>
+        <List
+          sx={{
+            width: "100%",
+            textAlign: "center",
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           {navItems.map((item, index) => (
             <ListItem
               button
@@ -62,8 +76,8 @@ const LeftNavigation = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                justifyContent: "center",
                 padding: "14px 0",
-                paddingLeft: "20px",
                 backgroundColor:
                   location.pathname === item.link ? "#FFD8A9" : "inherit",
                 "&:hover": {
@@ -74,6 +88,7 @@ const LeftNavigation = () => {
               <ListItemIcon
                 sx={{
                   color: "#4F8A8B",
+                  minWidth: "auto",
                 }}
               >
                 {item.icon}
