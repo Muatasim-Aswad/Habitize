@@ -57,7 +57,7 @@
     "@mui/icons-material": "^6.2.1",
     "@mui/material": "^6.2.1",
     "@mui/styled-engine-sc": "^6.2.1",
-    "prop-types": "^15.7.2",
+    "prop-types": "^15.8.1",
     "react": "^19",
     "react-dom": "^19",
     "react-router-dom": "^7",

@@ -42,7 +42,7 @@ export const useFormSubmit = (formType) => {
             throw new Error(data.message || "Failed to sign in");
           }
 
-          navigate("/dashboard");
+          navigate("/app/dashboard");
           break;
         }
 

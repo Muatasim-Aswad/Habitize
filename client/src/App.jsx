@@ -10,6 +10,13 @@ import SignUpForm from "./pages/SignUp/SignUpForm";
 import ResetPasswordForm from "./pages/ResetPassword/ResetPasswordForm";
 import CreatePasswordForm from "./pages/CreatePassword/CreatePasswordForm";
 
+import AppLayout from "./components/AppLayout";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Notifications from "./pages/Notifications/Notifications";
+import Progress from "./pages/Progress/Progress";
+import Settings from "./pages/Settings/Settings";
+import Logout from "./pages/Logout/Logout";
+
 const globalStyles = {
   "*": {
     fontFamily: TYPOGRAPHY.fontFamily,
@@ -40,6 +47,14 @@ const App = () => {
             <Route path="sign-up" element={<SignUpForm />} />
             <Route path="reset-password" element={<ResetPasswordForm />} />
             <Route path="create-password" element={<CreatePasswordForm />} />
+          </Route>
+
+          <Route path="/app/*" element={<AppLayout />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="progress" element={<Progress />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="logout" element={<Logout />} />
           </Route>
         </Routes>
       </ThemeProvider>
