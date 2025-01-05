@@ -26,7 +26,10 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"],
+            presets: [
+              ["@babel/preset-env", { targets: "defaults" }],
+              ["@babel/preset-react", { runtime: "automatic" }]
+            ],
           },
         },
       },
@@ -34,18 +37,19 @@ module.exports = {
   },
   resolve: {
     extensions: [".js", ".jsx"],
+    alias: {
+      'react': path.resolve('./node_modules/react'),
+      'react-dom': path.resolve('./node_modules/react-dom'),
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "public", "index.html"),
     }),
-    // All variables in our .env should be mentioned here
     new webpack.EnvironmentPlugin({
-      // Default is '' because on our heroku servers we want to have it default to our current URL
       BASE_SERVER_URL: "",
     }),
   ],
-  // To tell the dev server that everything should go back to index.html
   devServer: {
     historyApiFallback: true,
   },
