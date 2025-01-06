@@ -3,6 +3,9 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider, GlobalStyles, CssBaseline } from "@mui/material";
 import theme from "./theme";
 import { COLORS, TYPOGRAPHY } from "./theme/constants";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import PublicRoute from "./components/PublicRoute";
 
 import LandingLayout from "./pages/Landing/LandingLayout";
 import SignInForm from "./pages/SignIn/SignInForm";
@@ -36,20 +39,64 @@ const globalStyles = {
 
 const App = () => {
   return (
-    <>
+    <AuthProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <GlobalStyles styles={globalStyles} />
         <Routes>
-          <Route path="/" element={<LandingLayout />}>
+          {/* Public routes */}
+          <Route
+            path="/"
+            element={
+              <PublicRoute>
+                <LandingLayout />
+              </PublicRoute>
+            }
+          >
             <Route index element={<Navigate to="/sign-in" replace />} />
-            <Route path="sign-in" element={<SignInForm />} />
-            <Route path="sign-up" element={<SignUpForm />} />
-            <Route path="reset-password" element={<ResetPasswordForm />} />
-            <Route path="create-password" element={<CreatePasswordForm />} />
+            <Route
+              path="sign-in"
+              element={
+                <PublicRoute>
+                  <SignInForm />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="sign-up"
+              element={
+                <PublicRoute>
+                  <SignUpForm />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="reset-password"
+              element={
+                <PublicRoute>
+                  <ResetPasswordForm />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="create-password"
+              element={
+                <PublicRoute>
+                  <CreatePasswordForm />
+                </PublicRoute>
+              }
+            />
           </Route>
 
-          <Route path="/app/*" element={<AppLayout />}>
+          {/* Protected routes */}
+          <Route
+            path="/app/*"
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="notifications" element={<Notifications />} />
             <Route path="progress" element={<Progress />} />
@@ -58,7 +105,7 @@ const App = () => {
           </Route>
         </Routes>
       </ThemeProvider>
-    </>
+    </AuthProvider>
   );
 };
 
