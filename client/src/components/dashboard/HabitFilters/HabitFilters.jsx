@@ -1,16 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Box, InputBase } from "@mui/material";
-import { MagnifyingGlass, FunnelSimple } from "phosphor-react";
+import { MagnifyingGlass } from "phosphor-react";
 import { COLORS, SPACING } from "../../../theme/constants";
 import DatePicker from "./DatePicker";
+import mockData from "../../../data/mockHabits.json";
 
 const HabitFilters = ({
   searchValue,
   onSearchChange,
   selectedDate,
   onDateChange,
-  onFilterClick,
 }) => {
   return (
     <Box
@@ -54,28 +54,14 @@ const HabitFilters = ({
         </Box>
       </Box>
 
-      {/* Filter Button */}
-      <Box
-        sx={{
-          backgroundColor: "#4F8A8B15",
-          borderRadius: "24px",
-          padding: "8px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "40px",
-          height: "40px",
-          cursor: "pointer",
-        }}
-        onClick={onFilterClick}
-      >
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <FunnelSimple size={24} color={COLORS.text.primary} />
-        </Box>
-      </Box>
+      {/* Filter Button - Removed as per requirements */}
 
       {/* Date Picker */}
-      <DatePicker selectedDate={selectedDate} onDateChange={onDateChange} />
+      <DatePicker
+        selectedDate={selectedDate}
+        onDateChange={onDateChange}
+        mockData={mockData}
+      />
     </Box>
   );
 };
@@ -85,7 +71,6 @@ HabitFilters.propTypes = {
   onSearchChange: PropTypes.func.isRequired,
   selectedDate: PropTypes.instanceOf(Date).isRequired,
   onDateChange: PropTypes.func.isRequired,
-  onFilterClick: PropTypes.func.isRequired,
 };
 
 export default HabitFilters;

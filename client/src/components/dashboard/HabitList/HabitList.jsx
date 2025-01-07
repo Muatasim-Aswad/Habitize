@@ -1,12 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Stack } from "@mui/material";
+import { Box } from "@mui/material";
 import HabitCard from "./HabitCard/HabitCard";
-import { SPACING } from "../../../theme/constants";
 
-const HabitList = ({ habits, onIncrement, onDecrement, onEdit, onDelete }) => {
+const HabitList = ({
+  habits,
+  onIncrement,
+  onDecrement,
+  onEdit,
+  onDelete,
+  onReset,
+}) => {
   return (
-    <Stack spacing={SPACING.sm}>
+    <Box>
       {habits.map((habit) => (
         <HabitCard
           key={habit.id}
@@ -15,16 +21,17 @@ const HabitList = ({ habits, onIncrement, onDecrement, onEdit, onDelete }) => {
           onDecrement={() => onDecrement(habit.id)}
           onEdit={() => onEdit(habit.id)}
           onDelete={() => onDelete(habit.id)}
+          onReset={() => onReset(habit.id)}
         />
       ))}
-    </Stack>
+    </Box>
   );
 };
 
 HabitList.propTypes = {
   habits: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
       icon: PropTypes.elementType.isRequired,
       name: PropTypes.string.isRequired,
       streak: PropTypes.number.isRequired,
@@ -37,6 +44,7 @@ HabitList.propTypes = {
   onDecrement: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onReset: PropTypes.func.isRequired,
 };
 
 export default HabitList;

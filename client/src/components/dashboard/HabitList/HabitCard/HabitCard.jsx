@@ -1,14 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Box, Typography, IconButton } from "@mui/material";
-import { PencilSimple, X, Plus, Minus } from "phosphor-react";
+import {
+  PencilSimple,
+  X,
+  Plus,
+  Minus,
+  ArrowCounterClockwise,
+} from "phosphor-react";
 import { COLORS } from "../../../../theme/constants";
 
-const HabitCard = ({ habit, onIncrement, onDecrement, onEdit, onDelete }) => {
+const HabitCard = ({
+  habit,
+  onIncrement,
+  onDecrement,
+  onEdit,
+  onDelete,
+  onReset,
+}) => {
   const { icon: HabitIcon, name, streak, count, target, isDone } = habit;
 
   const getProgressMessage = () => {
-    if (isDone) return "done";
+    if (isDone) return "Done";
     if (count === 0) return "New Seed!";
     const remaining = target - count;
     return `Just ${remaining} more to finish!`;
@@ -26,9 +39,6 @@ const HabitCard = ({ habit, onIncrement, onDecrement, onEdit, onDelete }) => {
         width: "100%",
         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
         marginBottom: "16px",
-        "&:hover": {
-          backgroundColor: "rgba(255, 194, 151, 0.8)",
-        },
       }}
     >
       {/* Icon and Name */}
@@ -101,7 +111,7 @@ const HabitCard = ({ habit, onIncrement, onDecrement, onEdit, onDelete }) => {
               color: "#FFF",
             }}
           >
-            {isDone ? "done" : `${count}/${target}`}
+            {isDone ? "Done" : `${count}/${target}`}
           </Typography>
 
           <IconButton
@@ -125,20 +135,37 @@ const HabitCard = ({ habit, onIncrement, onDecrement, onEdit, onDelete }) => {
 
         {/* Edit and Delete */}
         <Box sx={{ display: "flex", gap: "8px" }}>
-          <IconButton
-            onClick={onEdit}
-            sx={{
-              width: "40px",
-              height: "40px",
-              backgroundColor: "#4F8A8B",
-              color: "#FFF",
-              "&:hover": {
+          {isDone ? (
+            <IconButton
+              onClick={onReset}
+              sx={{
+                width: "40px",
+                height: "40px",
                 backgroundColor: "#4F8A8B",
-              },
-            }}
-          >
-            <PencilSimple size={20} />
-          </IconButton>
+                color: "#FFF",
+                "&:hover": {
+                  backgroundColor: "#4F8A8B",
+                },
+              }}
+            >
+              <ArrowCounterClockwise size={20} />
+            </IconButton>
+          ) : (
+            <IconButton
+              onClick={onEdit}
+              sx={{
+                width: "40px",
+                height: "40px",
+                backgroundColor: "#4F8A8B",
+                color: "#FFF",
+                "&:hover": {
+                  backgroundColor: "#4F8A8B",
+                },
+              }}
+            >
+              <PencilSimple size={20} />
+            </IconButton>
+          )}
 
           <IconButton
             onClick={onDelete}
@@ -173,6 +200,7 @@ HabitCard.propTypes = {
   onDecrement: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onReset: PropTypes.func.isRequired,
 };
 
 export default HabitCard;

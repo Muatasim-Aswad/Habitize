@@ -1,32 +1,30 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Fab } from "@mui/material";
 import { Plus } from "phosphor-react";
-import { COLORS, SPACING, DASHBOARD } from "../../../theme/constants";
+import { useNavigate } from "react-router-dom";
 
-const AddHabitButton = ({ onClick }) => {
+const AddHabitButton = () => {
+  const navigate = useNavigate();
+
   return (
     <Fab
-      color="primary"
-      aria-label="add habit"
-      onClick={onClick}
+      onClick={() => navigate("/app/add-habit")}
       sx={{
         position: "fixed",
-        bottom: SPACING.md * 8,
-        right: SPACING.md * 8,
-        backgroundColor: COLORS.primary.main,
+        right: { xs: 16, sm: 24, md: 32 },
+        bottom: {
+          xs: 90, // Bottom navigation + spacing
+          md: 32,
+        },
+        backgroundColor: "#4F8A8B",
         "&:hover": {
-          backgroundColor: COLORS.primary.dark,
+          backgroundColor: "#4F8A8B",
         },
       }}
     >
-      <Plus size={DASHBOARD.icon.size.medium} weight="bold" />
+      <Plus size={24} color="#FFF" weight="bold" />
     </Fab>
   );
-};
-
-AddHabitButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
 };
 
 export default AddHabitButton;

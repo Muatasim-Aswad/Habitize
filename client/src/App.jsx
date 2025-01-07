@@ -16,6 +16,7 @@ import Notifications from "./pages/Notifications/Notifications";
 import Progress from "./pages/Progress/Progress";
 import Settings from "./pages/Settings/Settings";
 import Logout from "./pages/Logout/Logout";
+import AddHabit from "./pages/AddHabit/AddHabit";
 
 const globalStyles = {
   "*": {
@@ -55,6 +56,7 @@ const App = () => {
             <Route path="progress" element={<Progress />} />
             <Route path="settings" element={<Settings />} />
             <Route path="logout" element={<Logout />} />
+            <Route path="add-habit" element={<AddHabit />} />
           </Route>
         </Routes>
       </ThemeProvider>
