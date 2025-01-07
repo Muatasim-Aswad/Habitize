@@ -1,6 +1,16 @@
 import mongoose from "mongoose";
 import Joi from "joi";
 
+// Example object of the User model
+
+/*
+const exampleUser = {
+  name: "John Doe",
+  email: "johndoe@example.com",
+  password: "Password123!",
+};
+*/
+
 const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
