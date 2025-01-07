@@ -10,82 +10,94 @@ import { useState } from "react";
  *
  * isLoading - true if the fetch is still in progress
  * error - will contain an Error object if something went wrong
- * performFetch - this function will trigger the fetching. It is up to the user of the hook to determine when to do this!
+ * get - function to make GET requests
+ * post - function to make POST requests
+ * put - function to make PUT requests
+ * delete - function to make DELETE requests
  * cancelFetch - this function will cancel the fetch, call it when your component is unmounted
  */
-const useFetch = (route, onReceived) => {
-  /**
-   * We use the AbortController which is supported by all modern browsers to handle cancellations
-   * For more info: https://developer.mozilla.org/en-US/docs/Web/API/AbortController
-   */
-  const controller = new AbortController();
-  const signal = controller.signal;
-  const cancelFetch = () => {
-    controller.abort();
+
+const API_BASE_URL = `${process.env.BASE_SERVER_URL}/api`;
+
+const createHeaders = (token) => {
+  const headers = {
+    "Content-Type": "application/json",
   };
 
-  if (route.includes("api/")) {
-    /**
-     * We add this check here to provide a better error message if you accidentally add the api part
-     * As an error that happens later because of this can be very confusing!
-     */
-    throw Error(
-      "when using the useFetch hook, the route should not include the /api/ part",
-    );
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
   }
+
+  return headers;
+};
+
+const useFetch = (route, onReceived) => {
+  const controller = new AbortController();
+  const signal = controller.signal;
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Add any args given to the function to the fetch function
-  const performFetch = (options) => {
-    setError(null);
-    setIsLoading(true);
+  if (route.includes("api/")) {
+    throw new Error("Route should not include the /api/ part");
+  }
 
-    const baseOptions = {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-      },
-    };
-
-    const fetchData = async () => {
-      // We add the /api subsection here to make it a single point of change if our configuration changes
-      const url = `${process.env.BASE_SERVER_URL}/api${route}`;
-
-      const res = await fetch(url, { ...baseOptions, ...options, signal });
-
-      if (!res.ok) {
-        setError(
-          `Fetch for ${url} returned an invalid status (${
-            res.status
-          }). Received: ${JSON.stringify(res)}`,
-        );
-      }
-
-      const jsonResult = await res.json();
-
-      if (jsonResult.success === true) {
-        onReceived(jsonResult);
-      } else {
-        setError(
-          jsonResult.msg ||
-            `The result from our API did not have an error message. Received: ${JSON.stringify(
-              jsonResult,
-            )}`,
-        );
-      }
-
-      setIsLoading(false);
-    };
-
-    fetchData().catch((error) => {
-      setError(error);
-      setIsLoading(false);
-    });
+  const handleResponse = async (response) => {
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Request failed");
+    }
+    return response.json();
   };
 
-  return { isLoading, error, performFetch, cancelFetch };
+  const fetchData = async (method, data = null, token = null) => {
+    try {
+      setError(null);
+      setIsLoading(true);
+
+      const options = {
+        method,
+        headers: createHeaders(token),
+        signal,
+      };
+
+      if (data) {
+        options.body = JSON.stringify(data);
+      }
+
+      const response = await fetch(`${API_BASE_URL}${route}`, options);
+      const result = await handleResponse(response);
+
+      if (onReceived) {
+        onReceived(result);
+      }
+
+      return result;
+    } catch (error) {
+      if (error.name === "AbortError") {
+        return; // Ignore abort errors
+      }
+      setError(error.message);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const get = (token) => fetchData("GET", null, token);
+  const post = (data, token) => fetchData("POST", data, token);
+  const put = (data, token) => fetchData("PUT", data, token);
+  const del = (token) => fetchData("DELETE", null, token);
+
+  return {
+    isLoading,
+    error,
+    get,
+    post,
+    put,
+    delete: del,
+    cancelFetch: () => controller.abort(),
+  };
 };
 
 export default useFetch;

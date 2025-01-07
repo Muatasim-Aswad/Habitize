@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import useFetch from "./useFetch";
 
 export const FORM_TYPES = {
   SIGN_IN: "sign-in",
@@ -8,12 +10,17 @@ export const FORM_TYPES = {
   CREATE_PASSWORD: "create-password",
 };
 
-const API_BASE_URL = `${process.env.BASE_SERVER_URL}/api`;
-
 export const useFormSubmit = (formType) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { login } = useAuth();
+
+  // Separate useFetch hook for each form type
+  const signInFetch = useFetch("/user/login");
+  const signUpFetch = useFetch("/user/create");
+  const resetPasswordFetch = useFetch("/user/reset-password");
+  const createPasswordFetch = useFetch("/user/create-password");
 
   const handleSubmit = async (formValues) => {
     try {
@@ -23,76 +30,56 @@ export const useFormSubmit = (formType) => {
       switch (formType) {
         case FORM_TYPES.SIGN_IN: {
           const { email, password } = formValues;
-          const response = await fetch(`${API_BASE_URL}/user/login`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              user: {
-                email,
-                password,
-              },
-            }),
+          const response = await signInFetch.post({
+            user: { email, password },
           });
 
-          const data = await response.json();
-
-          if (!response.ok) {
-            throw new Error(data.message || "Failed to sign in");
+          if (response.success && response.token) {
+            login(response.token);
+            navigate("/app/dashboard");
+          } else {
+            throw new Error(response.message || "Login failed");
           }
-
-          navigate("/app/dashboard");
           break;
         }
 
         case FORM_TYPES.SIGN_UP: {
           const { fullName, email, password } = formValues;
-          const response = await fetch(`${API_BASE_URL}/user/create`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              fullUser: {
-                name: fullName,
-                email,
-                password,
-              },
-            }),
+          const response = await signUpFetch.post({
+            fullUser: { name: fullName, email, password },
           });
 
-          const data = await response.json();
-
-          if (!response.ok) {
-            throw new Error(data.message || "Failed to create user");
+          if (response.success) {
+            navigate("/sign-in");
+          } else {
+            throw new Error(response.message || "Sign up failed");
           }
+          break;
+        }
 
+        case FORM_TYPES.RESET_PASSWORD: {
+          const { email } = formValues;
+          await resetPasswordFetch.post({ email });
           navigate("/sign-in");
           break;
         }
 
-        case FORM_TYPES.RESET_PASSWORD:
-          // await sendResetLinkApi(formValues);
-          navigate("/create-password");
-          break;
-
-        case FORM_TYPES.CREATE_PASSWORD:
-          // await createPasswordApi(formValues);
+        case FORM_TYPES.CREATE_PASSWORD: {
+          const { password, token } = formValues;
+          await createPasswordFetch.post({ password, token });
           navigate("/sign-in");
           break;
+        }
 
         default:
           throw new Error(`Unknown form type: ${formType}`);
       }
-    } catch (err) {
-      setError(err.message || "An error occurred. Please try again.");
+    } catch (error) {
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const clearError = () => setError(null);
-
-  return { handleSubmit, isLoading, error, clearError };
+  return { handleSubmit, isLoading, error };
 };
