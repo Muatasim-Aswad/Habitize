@@ -13,7 +13,8 @@ userRouter.post("/create", validateFullUser, createUser);
 userRouter.post("/login", validateLoggingUser, loginUser);
 
 // Protected routes - authentication required
-userRouter.delete("/delete/:id", authenticateJWT, validateFullUser);
-userRouter.post("/update/:id", authenticateJWT, validateUpdatingUser);
+// Using token-based user identification instead of URL parameters
+userRouter.put("/me", authenticateJWT, validateUpdatingUser);
+userRouter.delete("/me", authenticateJWT, validateFullUser);
 
 export default userRouter;
