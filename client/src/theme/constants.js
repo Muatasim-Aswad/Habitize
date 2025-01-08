@@ -1,27 +1,31 @@
 export const COLORS = {
   primary: {
-    main: "#4F8A8B", // Action, Accent
-    light: "#4F8A8B15", // input fields
-    contrast: "#FFFFFF", // Contrast for primary
+    main: "#4F8A8B",
+    light: "#4F8A8B15",
+    contrast: "#FFFFFF",
+  },
+  secondary: {
+    main: "#B87264",
+    dark: "#A65D4F",
   },
   background: {
-    default: "#FFF5E6", // background
+    default: "#FFF5E6",
     paper: "#FFFFFF",
-    nav: "#FFC297", // nav bar
-    card: "#FFC29750", // cards with 50% opacity
+    nav: "#FFC297",
+    card: "#FFC29750",
   },
   text: {
     primary: "#000000",
-    secondary: "rgba(0, 0, 0, 0.5)", // 50% opacity for placeholders
+    secondary: "rgba(0, 0, 0, 0.5)",
   },
 };
 
 export const SPACING = {
-  xs: 1, // 8px
-  sm: 2, // 16px
-  md: 3, // 24px
-  lg: 4, // 32px
-  xl: 5, // 40px
+  xs: 1,
+  sm: 2,
+  md: 3,
+  lg: 4,
+  xl: 5,
 };
 
 export const TYPOGRAPHY = {

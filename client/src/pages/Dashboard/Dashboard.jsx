@@ -1,19 +1,12 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
-} from "@mui/material";
+import { Box } from "@mui/material";
 import { SPACING } from "../../theme/constants";
 import HabitList from "../../components/dashboard/HabitList/HabitList";
 import HabitFilters from "../../components/dashboard/HabitFilters/HabitFilters";
 import AddHabitButton from "../../components/dashboard/AddHabitButton/AddHabitButton";
-import { useHabits } from "../../hooks/useHabits";
+import DashboardHeader from "../../components/dashboard/DashboardHeader/DashboardHeader";
+import ConfirmationDialog from "../../components/common/ConfirmationDialog/ConfirmationDialog";
+import { useHabits } from "../../hooks/habits/useHabits";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
@@ -59,58 +52,23 @@ const Dashboard = () => {
     navigate("/app/add-habit");
   };
 
-  const getGreeting = () => {
-    const user = "John"; // This part will come from the auth system
-    return `Welcome back, ${user}!`;
-  };
-
   return (
     <Box
       sx={{
         flex: 1,
         display: "flex",
-        justifyContent: "center", // Center content horizontally
+        justifyContent: "center",
       }}
     >
       <Box
         sx={{
           width: "100%",
-          maxWidth: "1200px", // Maximum width
+          maxWidth: "1200px",
           padding: SPACING.md,
         }}
       >
-        {/* Header */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            mb: SPACING.lg,
-          }}
-        >
-          <Box
-            component="img"
-            src="/logo.png"
-            alt="Habitize Logo"
-            sx={{
-              height: "40px",
-              width: "auto",
-              display: { xs: "block", sm: "block" },
-            }}
-          />
-          <Typography
-            variant="h1"
-            sx={{
-              fontSize: "1.5rem",
-              fontWeight: "700",
-              color: "#4F8A8B",
-            }}
-          >
-            {getGreeting()}
-          </Typography>
-        </Box>
+        <DashboardHeader userName="John" />
 
-        {/* Filters */}
         <HabitFilters
           searchValue={searchValue}
           onSearchChange={handleSearchChange}
@@ -118,7 +76,6 @@ const Dashboard = () => {
           onDateChange={handleDateChange}
         />
 
-        {/* Habit List */}
         <HabitList
           habits={habits}
           onIncrement={handleIncrement}
@@ -130,27 +87,15 @@ const Dashboard = () => {
 
         <AddHabitButton onClick={handleAddHabit} />
 
-        {/* Delete Confirmation Dialog */}
-        <Dialog
+        <ConfirmationDialog
           open={deleteDialogOpen}
-          onClose={handleDeleteCancel}
-          aria-labelledby="delete-dialog-title"
-          aria-describedby="delete-dialog-description"
-        >
-          <DialogTitle id="delete-dialog-title">{"Delete Habit"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="delete-dialog-description">
-              Are you sure you want to delete this habit? This action cannot be
-              undone.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleDeleteCancel}>Cancel</Button>
-            <Button onClick={handleDeleteConfirm} color="error" autoFocus>
-              Delete
-            </Button>
-          </DialogActions>
-        </Dialog>
+          title="Delete Habit"
+          message="Are you sure you want to delete this habit? This action cannot be undone."
+          onConfirm={handleDeleteConfirm}
+          onCancel={handleDeleteCancel}
+          confirmText="Delete"
+          cancelText="Cancel"
+        />
       </Box>
     </Box>
   );
