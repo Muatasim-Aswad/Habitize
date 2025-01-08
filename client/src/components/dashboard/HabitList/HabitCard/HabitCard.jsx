@@ -1,13 +1,22 @@
-import React, { memo, useCallback } from "react";
+import React, { memo, useCallback, useState } from "react";
 import PropTypes from "prop-types";
-import { Box, Typography, IconButton } from "@mui/material";
+import {
+  Box,
+  Typography,
+  IconButton,
+  Menu,
+  MenuItem,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import {
   PencilSimple,
   X,
   Plus,
-  Minus,
   ArrowCounterClockwise,
+  Minus,
 } from "phosphor-react";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { COLORS } from "../../../../theme/constants";
 
 const cardStyles = {
@@ -15,41 +24,81 @@ const cardStyles = {
     display: "flex",
     alignItems: "center",
     backgroundColor: COLORS.background.card,
-    borderRadius: "16px",
-    padding: "16px 24px",
-    gap: "16px",
+    borderRadius: { xs: "4vw", sm: "16px" },
+    padding: { xs: "2vh 4vw", sm: "16px 24px" },
+    gap: { xs: "1vh", sm: "16px" },
     width: "100%",
     boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
+    flexDirection: { xs: "column", sm: "row" },
+    position: "relative",
+  },
+  mobileActions: {
+    position: "absolute",
+    top: "2vh",
+    right: "4vw",
+    display: "flex",
+    gap: "2vw",
+    zIndex: 1,
   },
   infoContainer: {
     display: "flex",
+    alignItems: { xs: "flex-start", sm: "center" },
+    flex: { xs: "unset", sm: "0 0 auto" },
+    gap: { xs: "3vw", sm: "16px" },
+    width: { xs: "100%", sm: "auto" },
+  },
+  textContainer: {
+    flex: { xs: 1, sm: "unset" },
+  },
+  reminderContainer: {
+    display: { xs: "flex", sm: "flex" },
     alignItems: "center",
-    flex: 1,
-    gap: "16px",
+    gap: { xs: "2vw", sm: "8px" },
+    color: "#FF8FAB",
+    fontSize: { xs: "3.5vw", sm: "0.75rem" },
+    marginTop: { xs: "0.5vh", sm: 0 },
+    flex: { xs: "unset", sm: 1 },
+    justifyContent: { xs: "flex-start", sm: "center" },
+    marginLeft: { xs: 0, sm: "24px" },
+    marginRight: { xs: 0, sm: "24px" },
+    fontWeight: "600",
+    lineHeight: { xs: 1.2, sm: 1.5 },
+  },
+  actionsContainer: {
+    display: "flex",
+    alignItems: "center",
+    width: { xs: "100%", sm: "auto" },
+    justifyContent: { xs: "space-between", sm: "flex-end" },
+    gap: { xs: "3vw", sm: "12px" },
   },
   habitName: {
-    fontSize: "1rem",
+    fontSize: { xs: "4vw", sm: "1rem" },
     color: COLORS.text.primary,
     fontWeight: "700",
     textTransform: "uppercase",
-    marginBottom: "4px",
+    marginBottom: { xs: "0.5vh", sm: "4px" },
+    lineHeight: { xs: 1.2, sm: 1.5 },
   },
   streakText: {
-    fontSize: "0.875rem",
+    fontSize: { xs: "3.5vw", sm: "0.875rem" },
     fontWeight: "600",
+    lineHeight: { xs: 1.2, sm: 1.5 },
   },
   counterContainer: {
     display: "flex",
     alignItems: "center",
     backgroundColor: COLORS.primary.main,
-    borderRadius: "24px",
-    minWidth: "120px",
-    height: "40px",
-    padding: "0 4px",
+    borderRadius: { xs: "3vw", sm: "24px" },
+    flex: { xs: 1, sm: "0 0 auto" },
+    minWidth: { xs: "auto", sm: "120px" },
+    height: { xs: "11vw", sm: "40px" },
+    maxHeight: { xs: "50px", sm: "40px" },
   },
   actionButton: {
-    width: "40px",
-    height: "40px",
+    width: { xs: "11vw", sm: "40px" },
+    height: { xs: "11vw", sm: "40px" },
+    maxWidth: { xs: "50px", sm: "40px" },
+    maxHeight: { xs: "50px", sm: "40px" },
     color: COLORS.primary.contrast,
     "&:hover": {
       backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -77,11 +126,70 @@ const cardStyles = {
       backgroundColor: COLORS.secondary.dark,
     },
   },
+  moreButton: {
+    width: { xs: "11vw", sm: "40px" },
+    height: { xs: "11vw", sm: "40px" },
+    maxWidth: { xs: "50px", sm: "40px" },
+    maxHeight: { xs: "50px", sm: "40px" },
+    color: COLORS.text.primary,
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
+    "& .dots": {
+      display: "flex",
+      flexDirection: "column",
+      gap: "1.2vw",
+      alignItems: "center",
+      "& .dot": {
+        width: "1.6vw",
+        height: "1.6vw",
+        maxWidth: "6px",
+        maxHeight: "6px",
+        backgroundColor: "currentColor",
+        borderRadius: "50%",
+      },
+    },
+  },
 };
 
 const HabitCard = memo(
   ({ habit, onIncrement, onDecrement, onEdit, onDelete, onReset }) => {
-    const { icon: HabitIcon, name, streak, count, target, isDone } = habit;
+    const {
+      icon: HabitIcon,
+      name,
+      streak,
+      count,
+      target,
+      isDone,
+      reminderTime,
+      reminderMessage,
+    } = habit;
+    const [anchorEl, setAnchorEl] = useState(null);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+    const handleMenuOpen = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+      setAnchorEl(null);
+    };
+
+    const handleEdit = () => {
+      handleMenuClose();
+      onEdit();
+    };
+
+    const handleDelete = () => {
+      handleMenuClose();
+      onDelete();
+    };
+
+    const handleReset = () => {
+      handleMenuClose();
+      onReset();
+    };
 
     const getProgressMessage = useCallback(() => {
       if (isDone) return "Done";
@@ -99,8 +207,11 @@ const HabitCard = memo(
     return (
       <Box sx={cardStyles.container}>
         <Box sx={cardStyles.infoContainer}>
-          <HabitIcon size={28} color={COLORS.text.primary} />
-          <Box>
+          <HabitIcon
+            size={isMobile ? "12vw" : 36}
+            color={COLORS.text.primary}
+          />
+          <Box sx={cardStyles.textContainer}>
             <Typography sx={cardStyles.habitName}>{name}</Typography>
             <Typography
               sx={{
@@ -113,53 +224,136 @@ const HabitCard = memo(
           </Box>
         </Box>
 
-        <Box sx={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <Box sx={cardStyles.counterContainer}>
-            <IconButton
-              onClick={onDecrement}
-              disabled={isDone || count === 0}
-              sx={cardStyles.actionButton}
-            >
-              <Minus size={20} />
-            </IconButton>
-
-            <Typography
-              sx={{
-                flex: 1,
-                textAlign: "center",
-                fontSize: "0.875rem",
-                fontWeight: "600",
-                color: COLORS.primary.contrast,
-              }}
-            >
-              {isDone ? "Done" : `${count}/${target}`}
+        {reminderTime && (
+          <Box sx={cardStyles.reminderContainer}>
+            <AccessTimeIcon sx={{ fontSize: { xs: "3.5vw", sm: "1rem" } }} />
+            <Typography component="span">
+              {reminderTime} - {reminderMessage}
             </Typography>
+          </Box>
+        )}
 
+        {isMobile ? (
+          <Box sx={cardStyles.mobileActions}>
             <IconButton
               onClick={onIncrement}
               disabled={isDone}
-              sx={cardStyles.actionButton}
+              sx={{
+                backgroundColor: COLORS.primary.main,
+                color: COLORS.primary.contrast,
+                width: "11vw",
+                height: "11vw",
+                maxWidth: "44px",
+                maxHeight: "44px",
+                "&:hover": {
+                  backgroundColor: COLORS.primary.main,
+                },
+                "&:active": {
+                  backgroundColor: COLORS.primary.main,
+                },
+                "&.Mui-disabled": {
+                  backgroundColor: COLORS.primary.main,
+                  opacity: 0.5,
+                },
+              }}
             >
-              <Plus size={20} />
+              {isDone ? (
+                <Typography sx={{ fontSize: "3.5vw", fontWeight: "600" }}>
+                  Done
+                </Typography>
+              ) : (
+                <Plus size="5vw" />
+              )}
             </IconButton>
-          </Box>
-
-          <Box sx={{ display: "flex", gap: "8px" }}>
-            {isDone ? (
-              <IconButton onClick={onReset} sx={cardStyles.editButton}>
-                <ArrowCounterClockwise size={20} />
-              </IconButton>
-            ) : (
-              <IconButton onClick={onEdit} sx={cardStyles.editButton}>
-                <PencilSimple size={20} />
-              </IconButton>
-            )}
-
-            <IconButton onClick={onDelete} sx={cardStyles.deleteButton}>
-              <X size={20} />
+            <IconButton onClick={handleMenuOpen} sx={cardStyles.moreButton}>
+              <div className="dots">
+                <div className="dot" />
+                <div className="dot" />
+                <div className="dot" />
+              </div>
             </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+            >
+              {!isDone && (
+                <>
+                  <MenuItem sx={{ color: COLORS.text.secondary }}>
+                    Progress: {count}/{target}
+                  </MenuItem>
+                  <MenuItem onClick={onDecrement} disabled={count === 0}>
+                    Decrease
+                  </MenuItem>
+                </>
+              )}
+              {isDone ? (
+                <MenuItem onClick={handleReset}>Reset</MenuItem>
+              ) : (
+                <MenuItem onClick={handleEdit}>Edit</MenuItem>
+              )}
+              <MenuItem
+                onClick={handleDelete}
+                sx={{ color: COLORS.secondary.main }}
+              >
+                Delete
+              </MenuItem>
+            </Menu>
           </Box>
-        </Box>
+        ) : (
+          <Box sx={cardStyles.actionsContainer}>
+            <Box sx={cardStyles.counterContainer}>
+              <IconButton
+                onClick={onDecrement}
+                disabled={isDone || count === 0}
+                sx={cardStyles.actionButton}
+              >
+                <Minus size={24} />
+              </IconButton>
+              <Typography
+                sx={{
+                  flex: 1,
+                  textAlign: "center",
+                  fontSize: "0.875rem",
+                  fontWeight: "600",
+                  color: COLORS.primary.contrast,
+                  px: 1,
+                }}
+              >
+                {isDone ? "Done" : `${count}/${target}`}
+              </Typography>
+              <IconButton
+                onClick={onIncrement}
+                disabled={isDone}
+                sx={cardStyles.actionButton}
+              >
+                <Plus size={24} />
+              </IconButton>
+            </Box>
+            <Box sx={{ display: "flex", gap: "8px" }}>
+              {isDone ? (
+                <IconButton onClick={onReset} sx={cardStyles.editButton}>
+                  <ArrowCounterClockwise size={20} />
+                </IconButton>
+              ) : (
+                <IconButton onClick={onEdit} sx={cardStyles.editButton}>
+                  <PencilSimple size={20} />
+                </IconButton>
+              )}
+              <IconButton onClick={onDelete} sx={cardStyles.deleteButton}>
+                <X size={20} />
+              </IconButton>
+            </Box>
+          </Box>
+        )}
       </Box>
     );
   },
@@ -175,6 +369,8 @@ HabitCard.propTypes = {
     count: PropTypes.number.isRequired,
     target: PropTypes.number.isRequired,
     isDone: PropTypes.bool.isRequired,
+    reminderTime: PropTypes.string,
+    reminderMessage: PropTypes.string,
   }).isRequired,
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired,

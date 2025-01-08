@@ -7,23 +7,13 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import {
-  Home,
-  Notifications,
-  Timeline,
-  Settings,
-  Logout,
-} from "@mui/icons-material";
+import { Home, Timeline, Settings, Logout } from "@mui/icons-material";
 import { Link, useLocation } from "react-router-dom";
+import { COLORS } from "../../theme/constants";
 import logo from "../../../public/image.png";
 
 const navItems = [
   { icon: <Home />, text: "Home", link: "/app/dashboard" },
-  {
-    icon: <Notifications />,
-    text: "Notifications",
-    link: "/app/notifications",
-  },
   { icon: <Timeline />, text: "Progress", link: "/app/progress" },
   { icon: <Settings />, text: "Settings", link: "/app/settings" },
   { icon: <Logout />, text: "Logout", link: "/app/logout" },
@@ -44,7 +34,7 @@ const LeftNavigation = () => {
         "& .MuiDrawer-paper": {
           width: DRAWER_WIDTH,
           boxSizing: "border-box",
-          backgroundColor: "#FFC297",
+          backgroundColor: COLORS.background.nav,
           display: "flex",
           flexDirection: "column",
           border: "none",
@@ -53,7 +43,7 @@ const LeftNavigation = () => {
       }}
     >
       <Box sx={{ p: 2, textAlign: "center" }}>
-        <img src={logo} alt="Logo" style={{ width: "50px" }} />
+        <img src={logo} alt="Logo" style={{ width: "70px" }} />
       </Box>
       <List sx={{ mt: 2 }}>
         {navItems.map((item, index) => (
@@ -63,7 +53,10 @@ const LeftNavigation = () => {
             to={item.link}
             sx={{
               justifyContent: "center",
-              color: location.pathname === item.link ? "#4F8A8B" : "#666",
+              color:
+                location.pathname === item.link
+                  ? COLORS.primary.main
+                  : COLORS.text.secondary,
               py: 2,
               "&:hover": {
                 backgroundColor: "rgba(0, 0, 0, 0.04)",

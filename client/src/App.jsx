@@ -12,7 +12,6 @@ import CreatePasswordForm from "./pages/CreatePassword/CreatePasswordForm";
 
 import AppLayout from "./components/AppLayout";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import Notifications from "./pages/Notifications/Notifications";
 import Progress from "./pages/Progress/Progress";
 import Settings from "./pages/Settings/Settings";
 import Logout from "./pages/Logout/Logout";
@@ -52,11 +51,15 @@ const App = () => {
 
           <Route path="/app/*" element={<AppLayout />}>
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="notifications" element={<Notifications />} />
             <Route path="progress" element={<Progress />} />
             <Route path="settings" element={<Settings />} />
             <Route path="logout" element={<Logout />} />
             <Route path="add-habit" element={<AddHabit />} />
+            <Route path="edit-habit/:habitId" element={<AddHabit />} />
+            <Route
+              path="*"
+              element={<Navigate to="/app/dashboard" replace />}
+            />
           </Route>
         </Routes>
       </ThemeProvider>

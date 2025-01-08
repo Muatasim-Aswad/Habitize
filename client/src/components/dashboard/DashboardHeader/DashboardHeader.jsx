@@ -33,7 +33,7 @@ const DashboardHeader = ({ userName }) => {
           color: "#4F8A8B",
         }}
       >
-        {`Welcome back, ${userName}!`}
+        {`Welcome, ${userName}!`}
       </Typography>
     </Box>
   );
