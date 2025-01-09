@@ -1,0 +1,68 @@
+{
+  "habits": [
+    {
+      "id": "1",
+      "name": "Exercise",
+      "iconName": "Barbell",
+      "streak": 3,
+      "count": 0,
+      "target": 5,
+      "isDone": false,
+      "reminderTime": "09:00 AM",
+      "reminderMessage": "Time to exercise!",
+      "history": [
+        { "date": "2025-01-06", "count": 5, "isDone": true },
+        { "date": "2025-01-05", "count": 3, "isDone": false },
+        { "date": "2025-01-04", "count": 5, "isDone": true }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Read",
+      "iconName": "Book",
+      "streak": 7,
+      "count": 0,
+      "target": 3,
+      "isDone": false,
+      "reminderTime": "08:00 PM",
+      "reminderMessage": "Reading time!",
+      "history": [
+        { "date": "2025-01-06", "count": 3, "isDone": true },
+        { "date": "2025-01-05", "count": 3, "isDone": true },
+        { "date": "2025-01-04", "count": 3, "isDone": true }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Meditate",
+      "iconName": "Brain",
+      "streak": 2,
+      "count": 0,
+      "target": 2,
+      "isDone": false,
+      "reminderTime": "07:00 AM",
+      "reminderMessage": "Time for meditation",
+      "history": [
+        { "date": "2025-01-06", "count": 2, "isDone": true },
+        { "date": "2025-01-05", "count": 1, "isDone": false },
+        { "date": "2025-01-04", "count": 2, "isDone": true }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Study",
+      "iconName": "GraduationCap",
+      "streak": 5,
+      "count": 0,
+      "target": 4,
+      "isDone": false,
+      "reminderTime": "02:00 PM",
+      "reminderMessage": "Study session time",
+      "history": [
+        { "date": "2025-01-06", "count": 4, "isDone": true },
+        { "date": "2025-01-05", "count": 4, "isDone": true },
+        { "date": "2025-01-04", "count": 4, "isDone": true }
+      ]
+    }
+  ]
+}

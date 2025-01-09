@@ -1,32 +1,46 @@
 export const COLORS = {
   primary: {
-    main: "#666666", // Color used in form headings
-    light: "#808080",
-    dark: "#404040",
+    main: "#4F8A8B",
+    light: "#4F8A8B15",
+    contrast: "#FFFFFF",
+  },
+  secondary: {
+    main: "#B87264",
+    dark: "#A65D4F",
   },
   background: {
-    default: "#FFF5E6", // Main background color
-    paper: "#FFF5E6", // Form container background color
+    default: "#FFF5E6",
+    paper: "#FFFFFF",
+    nav: "#FFC297",
+    card: "#FFC29750",
   },
-  border: "#E0E0E0", // Form container border color
   text: {
-    primary: "#666666",
-    secondary: "rgba(0, 0, 0, 0.6)",
+    primary: "#000000",
+    secondary: "rgba(0, 0, 0, 0.5)",
   },
 };
 
 export const SPACING = {
-  xs: 1, // 8px
-  sm: 2, // 16px
-  md: 3, // 24px
-  lg: 4, // 32px
+  xs: 1,
+  sm: 2,
+  md: 3,
+  lg: 4,
+  xl: 5,
 };
 
 export const TYPOGRAPHY = {
   fontFamily: "'Nunito', sans-serif",
   h4: {
-    fontSize: "clamp(2rem, 10vw, 2.15rem)",
+    fontSize: "2rem",
     fontWeight: "bold",
+  },
+  body1: {
+    fontSize: "1rem",
+    lineHeight: 1.5,
+  },
+  body2: {
+    fontSize: "0.875rem",
+    lineHeight: 1.43,
   },
 };
 
@@ -37,5 +51,29 @@ export const BREAKPOINTS = {
     md: 960,
     lg: 1280,
     xl: 1920,
+  },
+};
+
+export const DASHBOARD = {
+  card: {
+    borderRadius: "12px",
+    padding: SPACING.sm,
+  },
+  filters: {
+    borderRadius: "24px",
+    padding: {
+      x: SPACING.xs,
+      y: SPACING.xs,
+    },
+  },
+  icon: {
+    size: {
+      small: 20,
+      medium: 24,
+      large: 32,
+    },
+  },
+  nav: {
+    width: "80px",
   },
 };
