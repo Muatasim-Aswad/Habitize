@@ -17,18 +17,58 @@ This is a private API built using Node.js and Express.js. It uses MongoDB as its
 
 Base URL: `/api`
 
-### User Route: `/user`
+| **HTTP Method** | **Path**                                             | **Description**                                     | **Request Body** | **Protected** |
+| --------------- | ---------------------------------------------------- | --------------------------------------------------- | ---------------- | ------------- |
+| `POST`          | `/users`                                             | Register a new user.                                | ✅ Yes           | ❌ No         |
+| `GET`           | `/users/:userId`                                     | Retrieve a user's details.                          | ❌ No            | ✅ Yes        |
+| `PATCH`         | `/users/:userId`                                     | Update a user's details.                            | ✅ Yes           | ✅ Yes        |
+| `DELETE`        | `/users/:userId`                                     | Delete a user account.                              | ❌ No            | ✅ Yes        |
+|                 |                                                      |                                                     |                  |               |
+| `POST`          | `/users/login`                                       | Authenticate a user and start a session.            | ✅ Yes           | ❌ No         |
+| `POST`          | `/users/logout`                                      | Terminate the current session.                      | ❌ No            | ✅ Yes        |
+|                 |                                                      |                                                     |                  |               |
+| `POST`          | `/users/password/reset-request`                      | Send a password reset link to the user’s email.     | ✅ Yes           | ❌ No         |
+| `PATCH`         | `/users/password/reset/:userId`                      | Submit the new password using the reset token.      | ✅ Yes           | ✅ Yes        |
+|                 |                                                      |                                                     |                  |               |
+|                 |                                                      |                                                     |                  |               |
+| `POST`          | `/habits`                                            | Add a new habit for the user.                       | ✅ Yes           | ✅ Yes        |
+| `GET`           | `/habits/:habitId`                                   | Retrieve a habit's details.                         | ❌ No            | ✅ Yes        |
+| `PATCH`         | `/habits/:habitId`                                   | Update a habit's details.                           | ✅ Yes           | ✅ Yes        |
+| `DELETE`        | `/habits/:habitId`                                   | Delete a habit.                                     | ❌ No            | ✅ Yes        |
+|                 |                                                      |                                                     |                  |               |
+| `GET`           | `/habits`<br> `?date=yyyy-mm-dd`<br> `&name=example` | Retrieve habits, including check-in data.           | ❌ No            | ✅ Yes        |
+| `GET`           | `/habits/progress`                                   | Fetch habit names, icons, and progress percentage.  | ❌ No            | ✅ Yes        |
+|                 |                                                      |                                                     |                  |               |
+| `PATCH`         | `/check-ins/:checkInId`                              | Update the `times_done` field of a check-in record. | ✅ Yes           | ✅ Yes        |
 
-#### 1. Create User
+---
 
-- Endpoint: `/create`
-- Method: POST
-- Description: Creates a new user in the system.
-- Request Body:
+### Used Response Codes
+
+- Success Codes:
+
+  - 200 (OK): `GET` `PATCH`.
+  - 201 (Created): `POST`.
+  - 204 (No Content): `DELETE`.
+
+- Failure Codes:
+
+  - 400 (Bad Request): For invalid input or missing required fields.
+  - 401 (Unauthorized): For access without valid credentials or tokens.
+  - 404 (Not Found): For resources that cannot be found
+  - 409 (Conflict): For attempts to create a resource that already exists
+
+## Request and Response Format
+
+Content Type: All requests and responses must use `application/json`.
+
+### Request and Response Body Specifications
+
+#### 1. `POST /api/users`
 
 ```json
 {
-  "fullUser": {
+  "user": {
     "name": "John Doe",
     "email": "johndoe@example.com",
     "password": "SecureP@ssword1!"
@@ -36,67 +76,26 @@ Base URL: `/api`
 }
 ```
 
-- Response:
-  - 201 (Created):
-    ```json
-    {
-      "success": true,
-      "message": "User created successfully.",
-      "user": {
-        "name": "John Doe",
-        "email": "johndoe@example.com",
-        "createdAt": "2024-12-20T12:34:56.789Z"
-      }
-    }
-    ```
-  - 400 (Bad Request): If validation fails or the email already exists.
-    ```json
-    {
-      "success": false,
-      "message": "..."
-    }
-    ```
+#### 2. `PATCH /api/users/:userId`
 
-#### 2. Login User
+See **_(1)_**. Fields are optional.
 
-- Endpoint: `/login`
-- Method: POST
-- Description: Logs in a user with the provided email and password.
-- Request Body:
+#### 3. `DELETE /api/users/:userId`
 
-```json
-{
-  "user": {
-    "email": "johndoe@example.com",
-    "password": "SecureP@ssword1!"
-  }
-}
-```
+See **_(1)_**. Only password.
 
-- Response:
-  - 200 (OK):
-    ```json
-    {
-      "success": true,
-      "message": "Sign-in successful",
-      "user": {
-        "name": "John Doe",
-        "email": "johndoe@example.com"
-      },
-      "token": "..."
-    }
-    ```
-  - 401 (Unauthorized): If the email or password is invalid.
-    ```json
-    {
-      "success": false,
-      "message": "Invalid email or password"
-    }
-    ```
+#### 4. `POST /api/users/login`
 
-## Request and Response Format
+See **_(1)_**. Only email and password.
+Successful response includes a token and user details.
 
-Content Type: All requests and responses must use `application/json`.
+### 5. `POST /api/users/password/reset-request`
+
+See **_(1)_**. Only email.
+
+### 6. `PATCH /api/users/password/reset/:userId`
+
+See **_(1)_**. Only password.
 
 ## Middleware
 
@@ -120,11 +119,4 @@ When sending a negative response or throwing an error, this should be done using
 
 ## Models
 
-### User Model
-
-Fields:
-
-- name (String, Required)
-- email (String, Required, Unique)
-- password (String, Required, Min 8 characters)
-- createdAt and updatedAt (Generated by Mongoose)
+See the ERD and schemas in `src/models`

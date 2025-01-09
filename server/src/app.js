@@ -8,7 +8,15 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use("/api/user", userRouter);
+app.use("/api/users", userRouter);
+
+app.all("api/*", (req, res) => {
+  res.status(404).json({
+    message: "Route not found",
+    method: req.method,
+    path: req.originalUrl,
+  });
+});
 
 app.use(errorHandler); //manages any error or unsuccessful request using AppError
 

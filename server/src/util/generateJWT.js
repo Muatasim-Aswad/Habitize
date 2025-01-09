@@ -1,10 +1,9 @@
 import jwt from "jsonwebtoken";
-import crypto from "crypto";
+import dotenv from "dotenv";
+dotenv.config();
 
-export const SECRET =
-  process.env.SECRET || crypto.randomBytes(64).toString("hex");
-export const REFRESH_SECRET =
-  process.env.REFRESH_SECRET || crypto.randomBytes(64).toString("hex");
+export const SECRET = process.env.SECRET;
+export const REFRESH_SECRET = process.env.REFRESH_SECRET;
 
 export const generateJWT = (
   payload,

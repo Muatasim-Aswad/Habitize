@@ -62,5 +62,13 @@ const userJoiSchema = Joi.object({
     }),
 }).unknown(false);
 
+const addUserParentSchema = (userSpecialSchema) =>
+  Joi.object({
+    user: userSpecialSchema.required().messages({
+      "object.base": "user must be a valid object.",
+      "any.required": "user is required.",
+    }),
+  }).unknown(false);
+
 export default User;
-export { User, userJoiSchema };
+export { User, userJoiSchema, addUserParentSchema };

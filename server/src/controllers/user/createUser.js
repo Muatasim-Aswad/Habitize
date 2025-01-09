@@ -4,13 +4,14 @@ import hash12 from "../../util/hash12.js";
 
 const createUser = async (req, res, next) => {
   try {
-    let { name, email, password } = req.body.fullUser;
+    let { name, email, password } = req.body.user;
 
     const userExists = await User.exists({ email });
     if (userExists) {
       throw new AppError(
         400,
-        `User with email ${email} already exists. Please use a different email.`, //is it secure to give info about another user?
+        "Invalid input or Email already in use.",
+        `${email} is already in use.`,
       );
     }
 

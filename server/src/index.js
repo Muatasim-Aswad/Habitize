@@ -5,7 +5,7 @@ dotenv.config();
 
 import app from "./app.js";
 import { logInfo, logError } from "./util/logging.js";
-import connectDB from "./db/connectDB.js";
+import { connectDBWithRetry } from "./db/connectDB.js";
 //import testRouter from "./testRouter.js";
 
 // The environment should set the port
@@ -18,7 +18,7 @@ if (port == null) {
 
 const startServer = async () => {
   try {
-    await connectDB();
+    await connectDBWithRetry();
     app.listen(port, () => {
       logInfo(`Server started on port ${port}`);
     });
