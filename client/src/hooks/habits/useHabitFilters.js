@@ -39,17 +39,12 @@ export const useHabitFilters = (habits) => {
 
   const filterHabitsByDate = (date) => {
     const dateStr = toDateString(date);
-    const today = toDateString(new Date());
-
     const filtered = habits.map((habit) => {
-      if (dateStr === today) {
-        return habit;
-      }
       const historyEntry = habit.history?.find((h) => h.date === dateStr);
       return {
         ...habit,
-        count: historyEntry?.count || 0,
-        isDone: historyEntry?.isDone || false,
+        count: historyEntry?.count || habit.count || 0,
+        isDone: historyEntry?.isDone || habit.isDone || false,
       };
     });
     setFilteredHabits(filtered);
