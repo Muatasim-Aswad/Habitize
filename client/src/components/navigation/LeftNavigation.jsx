@@ -42,8 +42,39 @@ const LeftNavigation = () => {
         },
       }}
     >
-      <Box sx={{ p: 2, textAlign: "center" }}>
-        <img src={logo} alt="Logo" style={{ width: "70px" }} />
+      <Box
+        sx={{
+          p: 2,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          mt: 2,
+          mb: 3,
+        }}
+      >
+        <Box
+          component={Link}
+          to="/app/dashboard"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            cursor: "pointer",
+            "&:hover": {
+              opacity: 0.8,
+            },
+          }}
+        >
+          <Box
+            component="img"
+            src={logo}
+            alt="Logo"
+            sx={{
+              width: "100px",
+              height: "auto",
+            }}
+          />
+        </Box>
       </Box>
       <List sx={{ mt: 2 }}>
         {navItems.map((item, index) => (
