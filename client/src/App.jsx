@@ -19,6 +19,7 @@ import Progress from "./pages/Progress/Progress";
 import Settings from "./pages/Settings/Settings";
 import Logout from "./pages/Logout/Logout";
 import AddHabit from "./pages/AddHabit/AddHabit";
+import EditHabit from "./pages/EditHabit/EditHabit";
 
 const globalStyles = {
   "*": {
@@ -98,11 +99,13 @@ const App = () => {
             }
           >
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="add-habit" element={<AddHabit />} />
+            <Route path="edit-habit" element={<EditHabit />} />
             <Route path="progress" element={<Progress />} />
             <Route path="settings" element={<Settings />} />
             <Route path="logout" element={<Logout />} />
             <Route path="add-habit" element={<AddHabit />} />
-            <Route path="edit-habit/:habitId" element={<AddHabit />} />
+            <Route path="edit-habit/:habitId" element={<EditHabit />} />
             <Route
               path="*"
               element={<Navigate to="/app/dashboard" replace />}

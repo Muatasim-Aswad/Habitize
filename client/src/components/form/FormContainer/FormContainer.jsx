@@ -39,7 +39,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const FormContainer = ({ children, title, description }) => {
+const FormContainer = ({ children, title, description = "" }) => {
   return (
     <FormWrapper>
       <StyledCard>
@@ -72,10 +72,6 @@ FormContainer.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
-};
-
-FormContainer.defaultProps = {
-  description: "",
 };
 
 export default FormContainer;

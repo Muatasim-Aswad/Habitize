@@ -1,0 +1,90 @@
+import React from "react";
+import {
+  Box,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
+import TimelineIcon from "@mui/icons-material/Timeline";
+import SettingsIcon from "@mui/icons-material/Settings";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AddIcon from "@mui/icons-material/Add";
+import { Link, useLocation } from "react-router-dom";
+import logo from "../../public/image.png";
+
+const navItems = [
+  { icon: <HomeIcon />, link: "/app/dashboard" },
+  { icon: <TimelineIcon />, link: "/app/progress" },
+  { icon: <SettingsIcon />, link: "/app/settings" },
+  { icon: <LogoutIcon />, link: "/app/logout" },
+  { icon: <AddIcon />, link: "/app/add-habit" },
+];
+
+const LeftNavigation = () => {
+  const location = useLocation();
+  return (
+    <Drawer
+      variant="permanent"
+      sx={{
+        width: 240,
+        flexShrink: 0,
+        "& .MuiDrawer-paper": {
+          width: 100,
+          boxSizing: "border-box",
+          backgroundColor: "#FFC297",
+          display: "block",
+        },
+      }}
+    >
+      <Box
+        sx={{
+          marginTop: "16px",
+          textAlign: "center",
+          cursor: "pointer",
+        }}
+      >
+        <img
+          src={logo}
+          alt="logo"
+          style={{ width: "100px", height: "auto", marginBottom: "24px" }}
+        />
+        <List sx={{ width: "100%", textAlign: "center" }}>
+          {navItems.map((item, index) => (
+            <ListItem
+              button
+              key={index}
+              component={Link}
+              to={item.link}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                padding: "14px 0",
+                paddingLeft: "20px",
+                backgroundColor:
+                  location.pathname === item.link ? "#FFD8A9" : "inherit",
+                "&:hover": {
+                  backgroundColor: "#FFD8A9",
+                },
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  color: "#4F8A8B",
+                }}
+              >
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+    </Drawer>
+  );
+};
+
+export default LeftNavigation;
