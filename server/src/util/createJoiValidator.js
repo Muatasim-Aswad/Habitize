@@ -5,7 +5,7 @@ const createJoiValidator = (
   customOptions = {},
   options = {
     abortEarly: false,
-    convert: false,
+    convert: true,
     errorClientMessage: false,
     errorStatusCode: 400,
   },

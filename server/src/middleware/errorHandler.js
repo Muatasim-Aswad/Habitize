@@ -7,7 +7,7 @@ const errorHandler = (err, req, res, next) => {
     ? err.clientMessage || err.message
     : "Internal Server Error";
 
-  logError(err.message);
+  logError(err);
 
   res.status(statusCode).json({ success: false, message });
   next();

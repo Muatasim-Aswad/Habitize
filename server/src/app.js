@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import userRouter from "./routes/user.js";
 import errorHandler from "./middleware/errorHandler.js";
+import habitRouter from "./routes/habit.js";
+import checkInRouter from "./routes/checkIn.js";
 
 const app = express();
 
@@ -9,6 +11,8 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/users", userRouter);
+app.use("/api/habits", habitRouter);
+app.use("/api/check-ins", checkInRouter);
 
 app.all("api/*", (req, res) => {
   res.status(404).json({

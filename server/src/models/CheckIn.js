@@ -47,11 +47,11 @@ const checkInJoiSchema = Joi.object({
     .messages({
       "string.empty": "Habit ID cannot be empty.",
       "string.pattern.base": "Habit ID must be a valid MongoDB ObjectId.",
-      "any.required": "Habit ID is required.",
+      "any.required": "Habit ID field is required.",
     }),
   start_date: Joi.date().required().messages({
     "date.base": "Start date must be a valid date.",
-    "any.required": "Start date is required.",
+    "any.required": "Start date field is required.",
   }),
   end_date: Joi.date()
     .required()
@@ -59,14 +59,22 @@ const checkInJoiSchema = Joi.object({
     .messages({
       "date.base": "End date must be a valid date.",
       "date.greater": "End date must be after the start date.",
-      "any.required": "End date is required.",
+      "any.required": "End date field is required.",
     }),
   times_done: Joi.number().min(0).required().messages({
     "number.base": "Times done must be a number.",
     "number.min": "Times done cannot be negative.",
-    "any.required": "Times done is required.",
+    "any.required": "Times done field is required.",
   }),
 }).unknown(false);
 
+const addCheckInParentSchema = (checkInSpecialSchema) =>
+  Joi.object({
+    checkIn: checkInSpecialSchema.required().messages({
+      "object.base": "checkIn must be a valid object.",
+      "any.required": "checkIn field is required.",
+    }),
+  }).unknown(false);
+
 export default CheckIn;
-export { CheckIn, checkInJoiSchema };
+export { CheckIn, checkInJoiSchema, addCheckInParentSchema };

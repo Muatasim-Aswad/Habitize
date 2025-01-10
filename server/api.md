@@ -17,29 +17,29 @@ This is a private API built using Node.js and Express.js. It uses MongoDB as its
 
 Base URL: `/api`
 
-| **HTTP Method** | **Path**                                             | **Description**                                     | **Request Body** | **Protected** |
-| --------------- | ---------------------------------------------------- | --------------------------------------------------- | ---------------- | ------------- |
-| `POST`          | `/users`                                             | Register a new user.                                | ✅ Yes           | ❌ No         |
-| `GET`           | `/users/:userId`                                     | Retrieve a user's details.                          | ❌ No            | ✅ Yes        |
-| `PATCH`         | `/users/:userId`                                     | Update a user's details.                            | ✅ Yes           | ✅ Yes        |
-| `DELETE`        | `/users/:userId`                                     | Delete a user account.                              | ❌ No            | ✅ Yes        |
-|                 |                                                      |                                                     |                  |               |
-| `POST`          | `/users/login`                                       | Authenticate a user and start a session.            | ✅ Yes           | ❌ No         |
-| `POST`          | `/users/logout`                                      | Terminate the current session.                      | ❌ No            | ✅ Yes        |
-|                 |                                                      |                                                     |                  |               |
-| `POST`          | `/users/password/reset-request`                      | Send a password reset link to the user’s email.     | ✅ Yes           | ❌ No         |
-| `PATCH`         | `/users/password/reset/:userId`                      | Submit the new password using the reset token.      | ✅ Yes           | ✅ Yes        |
-|                 |                                                      |                                                     |                  |               |
-|                 |                                                      |                                                     |                  |               |
-| `POST`          | `/habits`                                            | Add a new habit for the user.                       | ✅ Yes           | ✅ Yes        |
-| `GET`           | `/habits/:habitId`                                   | Retrieve a habit's details.                         | ❌ No            | ✅ Yes        |
-| `PATCH`         | `/habits/:habitId`                                   | Update a habit's details.                           | ✅ Yes           | ✅ Yes        |
-| `DELETE`        | `/habits/:habitId`                                   | Delete a habit.                                     | ❌ No            | ✅ Yes        |
-|                 |                                                      |                                                     |                  |               |
-| `GET`           | `/habits`<br> `?date=yyyy-mm-dd`<br> `&name=example` | Retrieve habits, including check-in data.           | ❌ No            | ✅ Yes        |
-| `GET`           | `/habits/progress`                                   | Fetch habit names, icons, and progress percentage.  | ❌ No            | ✅ Yes        |
-|                 |                                                      |                                                     |                  |               |
-| `PATCH`         | `/check-ins/:checkInId`                              | Update the `times_done` field of a check-in record. | ✅ Yes           | ✅ Yes        |
+| **#** | **HTTP Method** | **Path**                                             | **Description**                                     | **Request Body** | **Protected** |
+| ----- | --------------- | ---------------------------------------------------- | --------------------------------------------------- | ---------------- | ------------- |
+| 1     | `POST`          | `/users`                                             | Register a new user.                                | ✅ Yes           | ❌ No         |
+| 2     | `GET`           | `/users/:userId`                                     | Retrieve a user's details.                          | ❌ No            | ✅ Yes        |
+| 3     | `PATCH`         | `/users/:userId`                                     | Update a user's details.                            | ✅ Yes           | ✅ Yes        |
+| 4     | `DELETE`        | `/users/:userId`                                     | Delete a user account.                              | ❌ No            | ✅ Yes        |
+|       |                 |                                                      |                                                     |                  |               |
+| 5     | `POST`          | `/users/login`                                       | Authenticate a user and start a session.            | ✅ Yes           | ❌ No         |
+| 6     | `POST`          | `/users/logout`                                      | Terminate the current session.                      | ❌ No            | ✅ Yes        |
+|       |                 |                                                      |                                                     |                  |               |
+| 7     | `POST`          | `/users/password/reset-request`                      | Send a password reset link to the user’s email.     | ✅ Yes           | ❌ No         |
+| 8     | `PATCH`         | `/users/password/reset/:userId`                      | Submit the new password using the reset token.      | ✅ Yes           | ✅ Yes        |
+|       |                 |                                                      |                                                     |                  |               |
+|       |                 |                                                      |                                                     |                  |               |
+| 9     | `POST`          | `/habits`                                            | Add a new habit for the user.                       | ✅ Yes           | ✅ Yes        |
+| 10    | `GET`           | `/habits/:habitId`                                   | Retrieve a habit's details.                         | ❌ No            | ✅ Yes        |
+| 11    | `PATCH`         | `/habits/:habitId`                                   | Update a habit's details.                           | ✅ Yes           | ✅ Yes        |
+| 12    | `DELETE`        | `/habits/:habitId`                                   | Delete a habit.                                     | ❌ No            | ✅ Yes        |
+|       |                 |                                                      |                                                     |                  |               |
+| 13    | `GET`           | `/habits`<br> `?date=yyyy-mm-dd`<br> `&name=example` | Retrieve habits, including check-in data.           | ❌ No            | ✅ Yes        |
+| 14    | `GET`           | `/habits/progress`                                   | Fetch habit names, icons, and progress percentage.  | ❌ No            | ✅ Yes        |
+|       |                 |                                                      |                                                     |                  |               |
+| 15    | `PATCH`         | `/check-ins/:checkInId`                              | Update the `times_done` field of a check-in record. | ✅ Yes           | ✅ Yes        |
 
 ---
 
@@ -76,28 +76,68 @@ Content Type: All requests and responses must use `application/json`.
 }
 ```
 
-#### 2. `PATCH /api/users/:userId`
+#### 3. `PATCH /api/users/:userId`
 
 See **_(1)_**. Fields are optional.
 
-#### 3. `DELETE /api/users/:userId`
+#### 4. `DELETE /api/users/:userId`
 
 See **_(1)_**. Only password.
 
-#### 4. `POST /api/users/login`
+#### 5. `POST /api/users/login`
 
 See **_(1)_**. Only email and password.
 Successful response includes a token and user details.
 
-### 5. `POST /api/users/password/reset-request`
+#### 7. `POST /api/users/password/reset-request`
 
 See **_(1)_**. Only email.
 
-### 6. `PATCH /api/users/password/reset/:userId`
+#### 8. `PATCH /api/users/password/reset/:userId`
 
 See **_(1)_**. Only password.
 
-## Middleware
+<hr><hr>
+
+#### 9. `POST /api/habits`
+
+```json
+{
+  "habit": {
+    "name": "sleep early",
+    "icon": "any identifier",
+    "goal": {
+      "number": 1,
+      "unit": "times",
+      "frequency": "daily"
+    },
+    "period": {
+      "start": "2025-01-01",
+      "end": "2025-02-31"
+    },
+    "reminders": [
+      {
+        "time": "23:55",
+        "message": "go to bed"
+      }
+    ]
+  }
+}
+```
+
+#### 11. `PATCH /api/habits/:habitId`
+
+See **_(1)_**. All fields are optional.
+
+#### 15. `PATCH /api/check-ins/:checkInId`
+
+```json
+{
+  "checkIn": {
+    "times_done": 4
+  }
+}
+```
 
 The API uses Joi-based validation middleware to ensure the request body conforms to the required schema. To add validation for an endpoint request body:
 

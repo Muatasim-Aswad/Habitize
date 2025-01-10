@@ -38,14 +38,14 @@ const User = mongoose.model("users", userSchema);
 const userJoiSchema = Joi.object({
   name: Joi.string().min(2).required().messages({
     "string.empty": "Name cannot be empty.", // Triggered when the field is present but empty
-    "any.required": "Name is required.", // Triggered when the field is missing
+    "any.required": "Name field is required.", // Triggered when the field is missing
     "string.min": "Name cannot be less than 2 characters.",
   }),
   email: Joi.string().lowercase().email().required().messages({
     "string.empty": "Email cannot be empty.", // Empty field
     "string.email": "Please enter a valid email address.", // Invalid email format
     "string.lowercase": "Email must be in lowercase.",
-    "any.required": "Email is required.", // Missing field
+    "any.required": "Email field is required.", // Missing field
   }),
   password: Joi.string()
     .min(8)
@@ -58,7 +58,7 @@ const userJoiSchema = Joi.object({
       "string.min": "Password must be at least 8 characters long.", // Too short
       "string.pattern.base":
         "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character: @$!%*?&. .", // Pattern mismatch
-      "any.required": "Password is required.", // Missing field
+      "any.required": "Password field is required.", // Missing field
     }),
 }).unknown(false);
 
@@ -66,7 +66,7 @@ const addUserParentSchema = (userSpecialSchema) =>
   Joi.object({
     user: userSpecialSchema.required().messages({
       "object.base": "user must be a valid object.",
-      "any.required": "user is required.",
+      "any.required": "user field is required.",
     }),
   }).unknown(false);
 
