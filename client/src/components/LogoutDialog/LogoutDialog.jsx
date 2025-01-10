@@ -15,8 +15,7 @@ const LogoutDialog = ({ open, onClose, onConfirm }) => {
       <DialogTitle>Confirm Logout</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Are you sure you want to log out? You will need to log in again to
-          access your account.
+          Are you sure you want to log out?
         </DialogContentText>
       </DialogContent>
       <DialogActions>
