@@ -14,9 +14,7 @@ const LogoutDialog = ({ open, onClose, onConfirm }) => {
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Confirm Logout</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          Are you sure you want to log out?
-        </DialogContentText>
+        <DialogContentText>Are you sure you want to log out?</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
