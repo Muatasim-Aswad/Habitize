@@ -248,22 +248,9 @@ const HabitCard = memo(
                 "&:hover": {
                   backgroundColor: COLORS.primary.main,
                 },
-                "&:active": {
-                  backgroundColor: COLORS.primary.main,
-                },
-                "&.Mui-disabled": {
-                  backgroundColor: COLORS.primary.main,
-                  opacity: 0.5,
-                },
               }}
             >
-              {isDone ? (
-                <Typography sx={{ fontSize: "3.5vw", fontWeight: "600" }}>
-                  Done
-                </Typography>
-              ) : (
-                <Plus size="5vw" />
-              )}
+              <Plus weight="bold" />
             </IconButton>
             <IconButton onClick={handleMenuOpen} sx={cardStyles.moreButton}>
               <div className="dots">
@@ -285,25 +272,40 @@ const HabitCard = memo(
                 horizontal: "right",
               }}
             >
-              {!isDone && (
-                <>
-                  <MenuItem sx={{ color: COLORS.text.secondary }}>
-                    Progress: {count}/{target}
-                  </MenuItem>
-                  <MenuItem onClick={onDecrement} disabled={count === 0}>
-                    Decrease
-                  </MenuItem>
-                </>
-              )}
-              {isDone ? (
-                <MenuItem onClick={handleReset}>Reset</MenuItem>
-              ) : (
-                <MenuItem onClick={handleEdit}>Edit</MenuItem>
-              )}
+              {!isDone && [
+                <MenuItem key="progress" sx={{ color: COLORS.text.secondary }}>
+                  Progress: {count}/{target}
+                </MenuItem>,
+                <MenuItem
+                  key="decrease"
+                  onClick={onDecrement}
+                  disabled={count === 0}
+                >
+                  <Minus weight="bold" style={{ marginRight: 8 }} />
+                  Decrease
+                </MenuItem>,
+              ]}
+              <MenuItem onClick={isDone ? handleReset : handleEdit}>
+                {isDone ? (
+                  <>
+                    <ArrowCounterClockwise
+                      weight="bold"
+                      style={{ marginRight: 8 }}
+                    />
+                    Reset
+                  </>
+                ) : (
+                  <>
+                    <PencilSimple weight="bold" style={{ marginRight: 8 }} />
+                    Edit
+                  </>
+                )}
+              </MenuItem>
               <MenuItem
                 onClick={handleDelete}
                 sx={{ color: COLORS.secondary.main }}
               >
+                <X weight="bold" style={{ marginRight: 8 }} />
                 Delete
               </MenuItem>
             </Menu>
@@ -313,18 +315,18 @@ const HabitCard = memo(
             <Box sx={cardStyles.counterContainer}>
               <IconButton
                 onClick={onDecrement}
-                disabled={isDone || count === 0}
+                disabled={count === 0 || isDone}
                 sx={cardStyles.actionButton}
               >
-                <Minus size={24} />
+                <Minus weight="bold" />
               </IconButton>
               <Typography
                 sx={{
                   flex: 1,
                   textAlign: "center",
-                  fontSize: "0.875rem",
-                  fontWeight: "600",
                   color: COLORS.primary.contrast,
+                  fontSize: { xs: "4vw", sm: "1rem" },
+                  fontWeight: "700",
                   px: 1,
                 }}
               >
@@ -335,7 +337,7 @@ const HabitCard = memo(
                 disabled={isDone}
                 sx={cardStyles.actionButton}
               >
-                <Plus size={24} />
+                <Plus weight="bold" />
               </IconButton>
             </Box>
             <Box sx={{ display: "flex", gap: "8px" }}>

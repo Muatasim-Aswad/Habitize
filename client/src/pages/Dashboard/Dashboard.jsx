@@ -9,9 +9,11 @@ import ConfirmationDialog from "../../components/common/ConfirmationDialog/Confi
 import BottomNavigation from "../../components/navigation/BottomNavigation";
 import { useHabits } from "../../hooks/habits/useHabits";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const {
     habits,
     searchValue,
@@ -26,6 +28,8 @@ const Dashboard = () => {
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [habitToDelete, setHabitToDelete] = useState(null);
+
+  const firstName = user?.name?.split(" ")[0] || "Guest";
 
   const handleDeleteClick = (habitId) => {
     setHabitToDelete(habitId);
@@ -76,7 +80,7 @@ const Dashboard = () => {
           paddingBottom: { xs: "80px", sm: SPACING.md },
         }}
       >
-        <DashboardHeader userName="John" />
+        <DashboardHeader userName={firstName} />
 
         <HabitFilters
           searchValue={searchValue}
@@ -85,7 +89,13 @@ const Dashboard = () => {
           onDateChange={handleDateChange}
         />
 
-        <Box sx={{ flex: 1, overflow: "auto" }}>
+        <Box
+          sx={{
+            flex: 1,
+            overflow: "hidden",
+            width: "100%",
+          }}
+        >
           <HabitList
             habits={habits}
             onIncrement={handleIncrement}
