@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import useFetch from "./useFetch";
+import { authService } from "../services/api";
 
 export const FORM_TYPES = {
   SIGN_IN: "sign-in",
@@ -16,12 +16,6 @@ export const useFormSubmit = (formType) => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  // Separate useFetch hook for each form type
-  const signInFetch = useFetch("/user/login");
-  const signUpFetch = useFetch("/user/create");
-  const resetPasswordFetch = useFetch("/user/reset-password");
-  const createPasswordFetch = useFetch("/user/create-password");
-
   const handleSubmit = async (formValues) => {
     try {
       setIsLoading(true);
@@ -30,44 +24,60 @@ export const useFormSubmit = (formType) => {
       switch (formType) {
         case FORM_TYPES.SIGN_IN: {
           const { email, password } = formValues;
-          const response = await signInFetch.post({
-            user: { email, password },
-          });
-
+          const response = await authService.login({ email, password });
           if (response.success && response.token) {
-            login(response.token);
+            login(response.token, response.user);
             navigate("/app/dashboard");
           } else {
-            throw new Error(response.message || "Login failed");
+            throw new Error(
+              response.message ||
+                "Login failed. Please check your credentials.",
+            );
           }
           break;
         }
 
         case FORM_TYPES.SIGN_UP: {
-          const { fullName, email, password } = formValues;
-          const response = await signUpFetch.post({
-            fullUser: { name: fullName, email, password },
+          const { fullName: name, email, password } = formValues;
+          const response = await authService.register({
+            name,
+            email,
+            password,
           });
-
           if (response.success) {
             navigate("/sign-in");
           } else {
-            throw new Error(response.message || "Sign up failed");
+            throw new Error(
+              response.message || "Registration failed. Please try again.",
+            );
           }
           break;
         }
 
         case FORM_TYPES.RESET_PASSWORD: {
           const { email } = formValues;
-          await resetPasswordFetch.post({ email });
-          navigate("/sign-in");
+          const response = await authService.requestPasswordReset(email);
+          if (response.success) {
+            navigate("/sign-in");
+          } else {
+            throw new Error(
+              response.message ||
+                "Password reset request failed. Please try again.",
+            );
+          }
           break;
         }
 
         case FORM_TYPES.CREATE_PASSWORD: {
           const { password, token } = formValues;
-          await createPasswordFetch.post({ password, token });
-          navigate("/sign-in");
+          const response = await authService.resetPassword(token, password);
+          if (response.success) {
+            navigate("/sign-in");
+          } else {
+            throw new Error(
+              response.message || "Password reset failed. Please try again.",
+            );
+          }
           break;
         }
 
@@ -75,7 +85,7 @@ export const useFormSubmit = (formType) => {
           throw new Error(`Unknown form type: ${formType}`);
       }
     } catch (error) {
-      setError(error.message);
+      setError(error.message || "An unexpected error occurred");
     } finally {
       setIsLoading(false);
     }

@@ -4,6 +4,7 @@ import { ThemeProvider, GlobalStyles, CssBaseline } from "@mui/material";
 import theme from "./theme";
 import { COLORS, TYPOGRAPHY } from "./theme/constants";
 import { AuthProvider } from "./context/AuthContext";
+import { UserProvider } from "./context/UserContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 
@@ -40,76 +41,78 @@ const globalStyles = {
 const App = () => {
   return (
     <AuthProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <GlobalStyles styles={globalStyles} />
-        <Routes>
-          {/* Public routes */}
-          <Route
-            path="/"
-            element={
-              <PublicRoute>
-                <LandingLayout />
-              </PublicRoute>
-            }
-          >
-            <Route index element={<Navigate to="/sign-in" replace />} />
+      <UserProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <GlobalStyles styles={globalStyles} />
+          <Routes>
+            {/* Public routes */}
             <Route
-              path="sign-in"
+              path="/"
               element={
                 <PublicRoute>
-                  <SignInForm />
+                  <LandingLayout />
                 </PublicRoute>
               }
-            />
-            <Route
-              path="sign-up"
-              element={
-                <PublicRoute>
-                  <SignUpForm />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="reset-password"
-              element={
-                <PublicRoute>
-                  <ResetPasswordForm />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="create-password"
-              element={
-                <PublicRoute>
-                  <CreatePasswordForm />
-                </PublicRoute>
-              }
-            />
-          </Route>
+            >
+              <Route index element={<Navigate to="/sign-in" replace />} />
+              <Route
+                path="sign-in"
+                element={
+                  <PublicRoute>
+                    <SignInForm />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="sign-up"
+                element={
+                  <PublicRoute>
+                    <SignUpForm />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="reset-password"
+                element={
+                  <PublicRoute>
+                    <ResetPasswordForm />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="create-password"
+                element={
+                  <PublicRoute>
+                    <CreatePasswordForm />
+                  </PublicRoute>
+                }
+              />
+            </Route>
 
-          {/* Protected routes */}
-          <Route
-            path="/app/*"
-            element={
-              <ProtectedRoute>
-                <AppLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="progress" element={<Progress />} />
-            <Route path="settings" element={<Settings />} />
-            <Route path="logout" element={<Logout />} />
-            <Route path="add-habit" element={<AddHabit />} />
-            <Route path="edit-habit/:habitId" element={<AddHabit />} />
+            {/* Protected routes */}
             <Route
-              path="*"
-              element={<Navigate to="/app/dashboard" replace />}
-            />
-          </Route>
-        </Routes>
-      </ThemeProvider>
+              path="/app/*"
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="progress" element={<Progress />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="logout" element={<Logout />} />
+              <Route path="add-habit" element={<AddHabit />} />
+              <Route path="edit-habit/:habitId" element={<AddHabit />} />
+              <Route
+                path="*"
+                element={<Navigate to="/app/dashboard" replace />}
+              />
+            </Route>
+          </Routes>
+        </ThemeProvider>
+      </UserProvider>
     </AuthProvider>
   );
 };
