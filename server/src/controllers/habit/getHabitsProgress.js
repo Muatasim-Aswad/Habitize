@@ -1,5 +1,5 @@
 import Habit from "../../models/Habit.js";
-import CheckIn from "../../models/checkIn.js";
+import CheckIn from "../../models/CheckIn.js";
 import {
   getPeriodLength,
   MS_PER_DAY,
