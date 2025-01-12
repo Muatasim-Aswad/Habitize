@@ -9,7 +9,7 @@ import { connectDBWithRetry } from "./db/connectDB.js";
 //import testRouter from "./testRouter.js";
 
 // The environment should set the port
-const port = process.env.PORT;
+const port = process.env.PORT || 5000;
 
 if (port == null) {
   // If this fails, make sure you have created a `.env` file in the right place with the PORT set
