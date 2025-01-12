@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, LinearProgress } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
+import { useSearchParams } from "react-router-dom";
 
 import FormInput from "../../components/form/FormInput/FormInput";
 import FormButton from "../../components/form/FormButton/FormButton";
@@ -13,6 +14,10 @@ import { usePasswordValidation } from "../../hooks/usePasswordValidation";
 import { useFormSubmit, FORM_TYPES } from "../../hooks/useFormSubmit";
 
 const CreatePasswordForm = () => {
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  const userId = searchParams.get("id");
+
   const { values, errors, isFormValid, handleChange, handleSubmit } =
     useFormValidation({
       password: "",
@@ -33,7 +38,11 @@ const CreatePasswordForm = () => {
   } = useFormSubmit(FORM_TYPES.CREATE_PASSWORD);
 
   const onSubmit = () => {
-    submitForm(values);
+    submitForm({
+      password: values.password,
+      token,
+      userId,
+    });
   };
 
   return (

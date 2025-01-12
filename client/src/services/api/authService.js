@@ -54,10 +54,18 @@ export const authService = {
   },
 
   // Create new password
-  resetPassword: async (userId, password) => {
-    return await httpClient.patch(`/users/password/reset/${userId}`, {
-      user: { password },
-    });
+  resetPassword: async (userId, password, token) => {
+    return await httpClient.patch(
+      `/users/password/reset/${userId}`,
+      {
+        user: { password },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
   },
 
   // Signup operation

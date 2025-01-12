@@ -69,8 +69,12 @@ export const useFormSubmit = (formType) => {
         }
 
         case FORM_TYPES.CREATE_PASSWORD: {
-          const { password, token } = formValues;
-          const response = await authService.resetPassword(token, password);
+          const { password, userId, token } = formValues;
+          const response = await authService.resetPassword(
+            userId,
+            password,
+            token,
+          );
           if (response.success) {
             navigate("/sign-in");
           } else {
