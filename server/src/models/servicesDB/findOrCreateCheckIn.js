@@ -1,4 +1,4 @@
-import CheckIn from "../checkIn.js"; // Assuming the file is in /models folder
+import CheckIn from "../CheckIn.js"; // Assuming the file is in /models folder
 
 export const MS_PER_DAY = 1000 * 60 * 60 * 24;
 /**

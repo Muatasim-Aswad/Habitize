@@ -1,7 +1,7 @@
 import AppError from "../util/AppError.js";
 import User from "../models/User.js";
 import Habit from "../models/Habit.js";
-import CheckIn from "../models/checkIn.js";
+import CheckIn from "../models/CheckIn.js";
 
 export async function authorize(req, res, next) {
   try {

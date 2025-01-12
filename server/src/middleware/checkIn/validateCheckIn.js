@@ -1,7 +1,7 @@
 import {
   checkInJoiSchema,
   addCheckInParentSchema,
-} from "../../models/checkIn.js";
+} from "../../models/CheckIn.js";
 import adaptJoiSchema from "../../util/adaptJoiSchema.js";
 import createValidatorMiddleware from "../../util/createValidatorMiddleware.js";
 

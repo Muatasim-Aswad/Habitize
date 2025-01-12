@@ -38,7 +38,8 @@ const checkInSchema = new mongoose.Schema(
   },
 );
 
-const CheckIn = mongoose.model("checkins", checkInSchema);
+const CheckIn =
+  mongoose.models.CheckIn || mongoose.model("CheckIn", checkInSchema);
 
 const checkInJoiSchema = Joi.object({
   habit_id: Joi.string()
