@@ -39,7 +39,7 @@ const checkInSchema = new mongoose.Schema(
 );
 
 const CheckIn =
-  mongoose.models.CheckIn || mongoose.model("CheckIn", checkInSchema);
+  mongoose.models.checkins || mongoose.model("checkins", checkInSchema);
 
 const checkInJoiSchema = Joi.object({
   habit_id: Joi.string()
@@ -77,5 +77,4 @@ const addCheckInParentSchema = (checkInSpecialSchema) =>
     }),
   }).unknown(false);
 
-export default CheckIn;
-export { CheckIn, checkInJoiSchema, addCheckInParentSchema };
+export { CheckIn as default, checkInJoiSchema, addCheckInParentSchema };
