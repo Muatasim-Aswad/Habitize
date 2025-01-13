@@ -35,15 +35,12 @@ const calculateHabitProgress = async (habit) => {
     0,
   );
 
-  const toTodaySuccessPercentage = percentage(checkedIn, donePeriods * target);
-  const overallProgressPercentage = percentage(
-    checkedIn,
-    totalPeriods * target,
-  );
+  const commitment = percentage(checkedIn, donePeriods * target); // Percentage of the target achieved till now
+  const progress = percentage(checkedIn, totalPeriods * target); // Percentage of the target achieved till the end of the period
 
   return {
-    toTodaySuccessPercentage,
-    overallProgressPercentage,
+    commitment,
+    progress,
     _id: habit._id,
     name: habit.name,
     icon: habit.icon,
@@ -68,7 +65,7 @@ const getHabitsProgress = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Habits progress details retrieved successfully.",
-      note: "The progress is calculated by comparing the number of check-ins to the target during the whole period -not per cycle.",
+      note: "The progress is calculated by comparing the number of check-ins to the target during the whole period -not per cycle. The commitment is the percentage of the target achieved till now, and the progress is the percentage of the target achieved till the end of the period.",
       count: habits.length,
       habits,
     });

@@ -80,10 +80,6 @@ Content Type: All requests and responses must use `application/json`.
 
 See **_(1)_**. Fields are optional.
 
-#### 4. `DELETE /api/users/:userId`
-
-See **_(1)_**. Only password.
-
 #### 5. `POST /api/users/login`
 
 See **_(1)_**. Only email and password.
