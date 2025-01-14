@@ -45,6 +45,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const deleteUserAccount = async () => {
+    await authService.deleteUserAccount();
+    setAuthState({ token: null, user: null });
+    navigate("/sign-in", { replace: true });
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -53,6 +58,7 @@ export const AuthProvider = ({ children }) => {
         user: authState.user,
         login,
         logout,
+        deleteUserAccount,
       }}
     >
       {children}

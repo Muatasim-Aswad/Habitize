@@ -88,4 +88,18 @@ export const authService = {
     const user = authService.getUser();
     return { token, user };
   },
+
+  // Delete user account
+  deleteUserAccount: async () => {
+    const response = await httpClient.delete("/users/delete");
+
+    if (!response.success) {
+      throw new Error("Failed to delete account");
+    }
+
+    authService.removeToken();
+    authService.removeUser();
+
+    return response;
+  },
 };

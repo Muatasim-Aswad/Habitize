@@ -1,12 +1,29 @@
 import React from "react";
-import { Box } from "@mui/material";
-// import { useSettings } from "../../hooks/useSettings";
+import { useAuth } from "../../context/AuthContext";
+import AccountSettings from "../../components/AccountSettings";
 
-const Settings = () => {
-  // Settings hooks will be used when UI is implemented
-  // const settings = useSettings();
+const SettingsPage = () => {
+  const { user, deleteUserAccount } = useAuth();
 
-  return <Box>{/* Settings content will be added here */}</Box>;
+  // eslint-disable-next-line no-unused-vars
+  const handleSave = (userData) => {};
+
+  const handleDelete = () => {
+    deleteUserAccount();
+  };
+
+  const initialUserData = {
+    email: user?.email || "",
+    name: user?.name || "",
+  };
+
+  return (
+    <AccountSettings
+      initialUserData={initialUserData}
+      onSave={handleSave}
+      onDelete={handleDelete}
+    />
+  );
 };
 
-export default Settings;
+export default SettingsPage;
