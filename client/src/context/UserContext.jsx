@@ -24,11 +24,11 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
-  const updateUser = useCallback(async (userId, userData) => {
+  const updateUser = useCallback(async (userData) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await userService.updateProfile(userId, userData);
+      const response = await userService.updateProfile(userData);
       if (response.success) {
         setUser(response.user);
       }
@@ -41,11 +41,11 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
-  const deleteUser = useCallback(async (userId) => {
+  const deleteUser = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await userService.deleteAccount(userId);
+      const response = await userService.deleteAccount();
       if (response.success) {
         setUser(null);
       }

@@ -1,15 +1,19 @@
 import React from "react";
 import { useAuth } from "../../context/AuthContext";
 import AccountSettings from "../../components/AccountSettings";
+import { useUser } from "../../context/UserContext";
 
 const SettingsPage = () => {
-  const { user, deleteUserAccount } = useAuth();
+  const { user } = useAuth();
+  const { updateUser, deleteUser } = useUser();
 
   // eslint-disable-next-line no-unused-vars
-  const handleSave = (userData) => {};
+  const handleSave = async (userData) => {
+    await updateUser(userData);
+  };
 
-  const handleDelete = () => {
-    deleteUserAccount();
+  const handleDelete = async () => {
+    await deleteUser();
   };
 
   const initialUserData = {

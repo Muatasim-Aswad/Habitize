@@ -6,7 +6,7 @@ const createHabit = async (req, res, next) => {
     const { user_id } = req.session;
     const { habit } = req.body;
 
-    const habitExists = await Habit.exists({ name: habit.name });
+    const habitExists = await Habit.exists({ name: habit.name, user_id });
     if (habitExists)
       throw new AppError(
         400,

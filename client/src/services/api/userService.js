@@ -12,16 +12,8 @@ export const userService = {
   },
 
   // Update user information
-  updateProfile: async (userId, userData) => {
-    // Validate required fields
-    const requiredFields = ["firstName", "lastName", "email"];
-    const missingFields = requiredFields.filter(
-      (field) => userData[field] === undefined,
-    );
-
-    if (missingFields.length > 0) {
-      throw new Error(`Missing required fields: ${missingFields.join(", ")}`);
-    }
+  updateProfile: async (userData) => {
+    const userId = authService.getUser().id;
 
     const response = await httpClient.patch(`/users/${userId}`, {
       user: userData,
@@ -35,13 +27,19 @@ export const userService = {
   },
 
   // Delete user account
-  deleteAccount: async (userId) => {
-    const response = await httpClient.delete(`/users/${userId}`);
+  deleteAccount: async () => {
+    const response = await httpClient.delete(
+      `/users/${authService.getUser().id}`,
+    );
+
     if (response.success) {
       // Clear auth data after successful deletion
       authService.removeToken();
       authService.removeUser();
+    } else {
+      throw new Error("Failed to delete account");
     }
+
     return response;
   },
 

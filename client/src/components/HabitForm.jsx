@@ -18,8 +18,9 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { ArrowDropDown } from "@mui/icons-material";
-import IconButtonComponent from "./IconButtonComponent";
 import { useNavigate } from "react-router-dom";
+import IconSelector from "./IconSelector";
+import IconRenderer from "./IconRenderer";
 
 const periods = ["Per day", "Per week", "Per month"];
 const frequencies = ["Times", "Hours", "Minutes"];
@@ -92,7 +93,7 @@ const HabitForm = ({ habitData, setHabitData, onSave }) => {
           }}
         >
           {habitData.icon ? (
-            <habitData.icon sx={{ fontSize: 30, mr: 1 }} />
+            <IconRenderer iconName={habitData.icon} size={30} />
           ) : (
             "Icon"
           )}
@@ -127,7 +128,31 @@ const HabitForm = ({ habitData, setHabitData, onSave }) => {
             <Typography variant="h6" sx={{ mb: 2 }}>
               Select an Icon
             </Typography>
-            <IconButtonComponent handleIconSelect={handleIconSelect} />
+            <IconSelector onIconSelect={handleIconSelect} />
+          </Box>
+        </Modal>
+
+        <Modal open={open} onClose={handleClose}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 400,
+              bgcolor: "background.paper",
+              borderRadius: "8px",
+              p: 4,
+              boxShadow: 24,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+            }}
+          >
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Select an Icon
+            </Typography>
+            <IconSelector onIconSelect={handleIconSelect} />
           </Box>
         </Modal>
 

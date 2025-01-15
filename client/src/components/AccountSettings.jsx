@@ -18,6 +18,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { authService } from "../services/api";
 
 const AccountSettings = ({
   initialUserData = { email: "", name: "" },
@@ -56,7 +57,12 @@ const AccountSettings = ({
   };
 
   const handleSave = () => {
-    onSave(userData);
+    const user = authService.getUser();
+    const updates = {};
+    if (userData.name !== user.name) updates.name = userData.name;
+    if (userData.email !== user.email) updates.email = userData.email;
+    if (userData.currentPassword) updates.password = userData.confirmPassword;
+    onSave(updates);
     setSnackbarMessage("Settings saved successfully!");
     setSnackbarOpen(true);
 

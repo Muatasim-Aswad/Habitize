@@ -19,11 +19,16 @@ const updateUser = async (req, res, next) => {
         "Failed to update user.",
       );
     }
+    const updatedUser = {
+      name: updatedFields.name || user.name,
+      email: updatedFields.email || user.email,
+      id: user.id,
+    };
 
     res.status(200).json({
       success: true,
       message: "User updated successfully.",
-      user: { name, email, id: req.user.id },
+      user: updatedUser,
     });
 
     next();
