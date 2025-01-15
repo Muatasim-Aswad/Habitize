@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { SPACING } from "../../../theme/constants";
 import PropTypes from "prop-types";
+import logo from "../../../../public/logo.png";
 
 const DashboardHeader = ({ userName }) => {
   return (
@@ -17,7 +18,7 @@ const DashboardHeader = ({ userName }) => {
     >
       <Box
         component="img"
-        src="/logo.png"
+        src={logo}
         alt="Habitize Logo"
         sx={{
           height: { xs: "32px", sm: "40px" },
