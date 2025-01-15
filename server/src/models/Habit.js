@@ -54,7 +54,7 @@ const habitSchema = new mongoose.Schema(
       unit: {
         type: String,
         required: true,
-        enum: ["times", "minutes", "hours", "steps", "calories"], // Add units as needed
+        trim: true,
       },
       frequency: {
         type: String,
@@ -123,14 +123,10 @@ const habitJoiSchema = Joi.object({
       "number.min": "Goal number must be at least 1.",
       "any.required": "Goal number field is required.",
     }),
-    unit: Joi.string()
-      .valid("times", "minutes", "hours", "steps", "calories") // Add units as needed
-      .required()
-      .messages({
-        "any.only":
-          "Unit must be one of [times, minutes, hours, steps, calories].",
-        "any.required": "Goal unit field is required.",
-      }),
+    unit: Joi.string().min(2).required().messages({
+      "string.empty": "Goal unit cannot be empty. e.g. times, hours, cups",
+      "any.required": "Goal unit field is required.",
+    }),
     frequency: Joi.string()
       .valid("daily", "weekly", "monthly", "yearly") // Add frequencies as needed
       .required()

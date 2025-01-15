@@ -57,4 +57,10 @@ export const userService = {
       return false;
     }
   },
+
+  // get user habits progress by GET /habits/progress
+  getHabitsProgress: async () => {
+    const response = await httpClient.get("/habits/progress");
+    return response;
+  },
 };

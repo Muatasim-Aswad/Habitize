@@ -44,6 +44,7 @@ const calculateHabitProgress = async (habit) => {
     _id: habit._id,
     name: habit.name,
     icon: habit.icon,
+    period: habit.period,
     target: `${target} ${habit.goal.unit} ${habit.goal.frequency}`,
     achieved: `${checkedIn} ${habit.goal.unit}`,
     age: `${donePeriods * period} days`,
