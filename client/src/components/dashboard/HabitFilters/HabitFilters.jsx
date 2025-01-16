@@ -4,7 +4,6 @@ import { Box, InputBase } from "@mui/material";
 import { MagnifyingGlass } from "phosphor-react";
 import { COLORS, SPACING } from "../../../theme/constants";
 import DatePicker from "./DatePicker";
-import mockData from "../../../data/mockHabits.json";
 
 const HabitFilters = ({
   searchValue,
@@ -54,14 +53,8 @@ const HabitFilters = ({
         </Box>
       </Box>
 
-      {/* Filter Button - Removed as per requirements */}
-
       {/* Date Picker */}
-      <DatePicker
-        selectedDate={selectedDate}
-        onDateChange={onDateChange}
-        mockData={mockData}
-      />
+      <DatePicker selectedDate={selectedDate} onDateChange={onDateChange} />
     </Box>
   );
 };

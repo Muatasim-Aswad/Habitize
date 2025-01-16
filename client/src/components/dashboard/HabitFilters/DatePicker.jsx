@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { Box, Typography, Dialog, IconButton } from "@mui/material";
 import { CalendarBlank, CaretLeft, CaretRight } from "phosphor-react";
 import { COLORS } from "../../../theme/constants";
-import { formatDate, toDateString } from "../../../utils/dateUtils";
+import { formatDate } from "../../../utils/dateUtils";
 import Calendar from "./Calendar";
 
-const DatePicker = ({ selectedDate, onDateChange, mockData }) => {
+const DatePicker = ({ selectedDate, onDateChange }) => {
   const [open, setOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
@@ -22,14 +22,6 @@ const DatePicker = ({ selectedDate, onDateChange, mockData }) => {
   const handleNextMonth = () => {
     setCurrentMonth(
       new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1),
-    );
-  };
-
-  const hasHabitsForDate = (date) => {
-    if (!date || !mockData?.habits) return false;
-    const dateStr = toDateString(date);
-    return mockData.habits.some((habit) =>
-      habit.history?.some((h) => h.date === dateStr && h.count > 0),
     );
   };
 
@@ -93,7 +85,6 @@ const DatePicker = ({ selectedDate, onDateChange, mockData }) => {
             onDateChange(date);
             handleClose();
           }}
-          hasHabitsForDate={hasHabitsForDate}
         />
       </Dialog>
     </>
@@ -103,7 +94,6 @@ const DatePicker = ({ selectedDate, onDateChange, mockData }) => {
 DatePicker.propTypes = {
   selectedDate: PropTypes.instanceOf(Date).isRequired,
   onDateChange: PropTypes.func.isRequired,
-  mockData: PropTypes.object.isRequired,
 };
 
 export default DatePicker;

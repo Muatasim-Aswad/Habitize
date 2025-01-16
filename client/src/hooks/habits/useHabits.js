@@ -15,7 +15,7 @@ export const useHabits = () => {
     const fetchHabits = async () => {
       try {
         setIsLoading(true);
-        const response = await habitService.getHabits();
+        const response = await habitService.getHabits(selectedDate);
 
         // Transform API data to HabitCard format
         const transformedHabits = response.habits.map(transformApiToCardFormat);
