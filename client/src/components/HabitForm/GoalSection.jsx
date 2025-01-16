@@ -20,8 +20,10 @@ const GoalSection = ({ goal, setGoal }) => {
         label="Goal"
         type="number"
         variant="outlined"
-        value={goal.number}
-        onChange={(value) => setGoal({ ...goal, number: value })}
+        value={goal.number || ""}
+        onChange={(e) =>
+          setGoal({ ...goal, number: parseInt(e.target.value) || null })
+        }
         sx={{
           width: "30%",
           maxWidth: "200px",
@@ -39,7 +41,7 @@ const GoalSection = ({ goal, setGoal }) => {
         placeholder="e.g. times, push-ups"
         variant="outlined"
         value={goal.unit}
-        onChange={(value) => setGoal({ ...goal, unit: value })}
+        onChange={(e) => setGoal({ ...goal, unit: e.target.value })}
         sx={{
           width: "30%",
           maxWidth: "200px",
@@ -56,7 +58,7 @@ const GoalSection = ({ goal, setGoal }) => {
         label="Frequency"
         variant="outlined"
         value={goal.frequency}
-        onChange={(value) => setGoal({ ...goal, frequency: value })}
+        onChange={(e) => setGoal({ ...goal, frequency: e.target.value })}
         sx={{
           width: "30%",
           maxWidth: "200px",
@@ -69,7 +71,7 @@ const GoalSection = ({ goal, setGoal }) => {
       >
         {FREQUENCIES.map((option) => (
           <MenuItem key={option} value={option}>
-            {option}
+            {option.charAt(0).toUpperCase() + option.slice(1)}
           </MenuItem>
         ))}
       </TextField>
@@ -79,9 +81,9 @@ const GoalSection = ({ goal, setGoal }) => {
 
 GoalSection.propTypes = {
   goal: PropTypes.shape({
-    number: PropTypes.number.isRequired,
-    unit: PropTypes.string.isRequired,
-    frequency: PropTypes.string.isRequired,
+    number: PropTypes.number,
+    unit: PropTypes.string,
+    frequency: PropTypes.string,
   }).isRequired,
   setGoal: PropTypes.func.isRequired,
 };

@@ -1,9 +1,12 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import HabitForm from "../../components/HabitForm/HabitForm";
+import { habitService } from "../../services/api/habitService";
+import { transformHabitToApiFormat } from "../../utils/habitTransforms";
 
-const AddHabit = ({ onHabitAdded }) => {
+const AddHabit = () => {
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
   const [habitData, setHabitData] = useState({
     icon: "",
     name: "",
@@ -22,33 +25,25 @@ const AddHabit = ({ onHabitAdded }) => {
     },
   });
 
-  const handleSave = async () => {
-    try {
-      const response = await axios.post("/api/habits", {
-        habit: habitData,
-      });
-
-      if (response.status === 201) {
-        alert("Habit created successfully!");
-        setHabitData({
-          icon: "",
-          name: "",
-          goal: "",
-          frequency: "",
-          period: "",
-          startDate: null,
-          endDate: null,
-          reminderTime: null,
-          reminderMessage: "",
-        });
-        onHabitAdded();
+  const handleSave = () => {
+    const createHabitData = async () => {
+      try {
+        const apiData = transformHabitToApiFormat(habitData);
+        await habitService.createHabit(apiData);
+        navigate("/app/dashboard");
+      } catch (error) {
+        setError(
+          error.message || "Failed to create habit. Please try again later.",
+        );
       }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error("Error creating habit:", error);
-      alert("Failed to create habit. Please try again.");
-    }
+    };
+
+    createHabitData();
   };
+
+  if (error) {
+    return <div style={{ color: "red" }}>{error}</div>;
+  }
 
   return (
     <HabitForm habit={habitData} setHabit={setHabitData} onSave={handleSave} />

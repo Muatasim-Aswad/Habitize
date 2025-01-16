@@ -9,7 +9,7 @@ const NameInput = ({ name, setName }) => {
       label="Name"
       variant="outlined"
       value={name}
-      onChange={(value) => setName(value)}
+      onChange={(e) => setName(e.target.value)}
       sx={{
         mb: 3,
         width: "50%",
