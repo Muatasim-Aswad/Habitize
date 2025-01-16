@@ -1,5 +1,6 @@
 import React from "react";
 import IconRenderer from "../components/IconRenderer";
+import { getMotivationalMessage } from "./motivationalMessages";
 
 /**
  * Transforms form data to API format
@@ -70,17 +71,30 @@ export const transformApiToFormFormat = (apiData) => {
 export const transformApiToCardFormat = (apiData) => {
   if (!apiData) return null;
 
+  const timesDone = apiData.checkIn?.times_done || 0;
+  const goalNumber = apiData.goal?.number || 0;
+  const frequency = apiData.goal?.frequency || "daily";
+
   return {
     id: apiData._id,
     name: apiData.name,
     icon: ({ size, color }) => (
       <IconRenderer iconName={apiData.icon} size={size} style={{ color }} />
     ),
-    count: apiData.checkIn?.times_done || 0,
-    target: apiData.goal.number,
-    isDone: (apiData.checkIn?.times_done || 0) >= apiData.goal.number,
+    count: timesDone,
+    target: goalNumber,
+    isDone: timesDone >= goalNumber,
     reminderTime: apiData.reminders?.[0]?.time || null,
     reminderMessage: apiData.reminders?.[0]?.message || null,
-    streak: apiData.checkIn?.times_done || 0,
+    goal: {
+      number: goalNumber,
+      frequency: frequency,
+    },
+    motivationalMessage: getMotivationalMessage(
+      timesDone,
+      goalNumber,
+      frequency,
+    ),
+    checkIn: apiData.checkIn || null,
   };
 };

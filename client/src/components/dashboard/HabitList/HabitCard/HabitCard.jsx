@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from "react";
+import React, { memo, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Box,
@@ -163,13 +163,14 @@ const HabitCard = memo(
     const {
       icon: HabitIcon,
       name,
-      streak,
       count,
       target,
       isDone,
       reminderTime,
       reminderMessage,
+      motivationalMessage,
     } = habit;
+
     const [anchorEl, setAnchorEl] = useState(null);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -197,19 +198,6 @@ const HabitCard = memo(
       onReset();
     };
 
-    const getProgressMessage = useCallback(() => {
-      if (isDone) return "Done";
-      if (count === 0) return "New Seed!";
-      const remaining = target - count;
-      return `Just ${remaining} more to finish!`;
-    }, [count, target, isDone]);
-
-    const streakMessage = useCallback(() => {
-      return streak > 0 && !isDone
-        ? `${streak} times in a row!`
-        : getProgressMessage();
-    }, [streak, isDone, getProgressMessage]);
-
     return (
       <Box sx={cardStyles.container}>
         <Box sx={cardStyles.infoContainer}>
@@ -225,7 +213,7 @@ const HabitCard = memo(
                 color: isDone ? COLORS.primary.main : COLORS.secondary.main,
               }}
             >
-              {streakMessage()}
+              {motivationalMessage}
             </Typography>
           </Box>
         </Box>
@@ -375,12 +363,12 @@ HabitCard.propTypes = {
   habit: PropTypes.shape({
     icon: PropTypes.elementType.isRequired,
     name: PropTypes.string.isRequired,
-    streak: PropTypes.number.isRequired,
     count: PropTypes.number.isRequired,
     target: PropTypes.number.isRequired,
     isDone: PropTypes.bool.isRequired,
     reminderTime: PropTypes.string,
     reminderMessage: PropTypes.string,
+    motivationalMessage: PropTypes.string.isRequired,
   }).isRequired,
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired,

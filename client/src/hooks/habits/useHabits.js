@@ -10,27 +10,87 @@ export const useHabits = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch habits from API
+  // Update filtered habits whenever habits change
   useEffect(() => {
-    const fetchHabits = async () => {
-      try {
-        setIsLoading(true);
-        const response = await habitService.getHabits(selectedDate);
+    if (searchValue.trim()) {
+      const searchTerm = searchValue.toLowerCase().trim();
+      setFilteredHabits(
+        habits.filter((habit) =>
+          habit?.name?.toLowerCase().includes(searchTerm),
+        ),
+      );
+    } else {
+      setFilteredHabits(habits);
+    }
+  }, [habits, searchValue]);
 
-        // Transform API data to HabitCard format
-        const transformedHabits = response.habits.map(transformApiToCardFormat);
+  // Fetch habits from API
+  const fetchHabits = async () => {
+    try {
+      setIsLoading(true);
+      const response = await habitService.getHabits(selectedDate);
+      const transformedHabits = response.habits.map(transformApiToCardFormat);
+      setHabits(transformedHabits);
+    } catch (error) {
+      setError(error.message || "Failed to fetch habits");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-        setHabits(transformedHabits);
-        setFilteredHabits(transformedHabits);
-      } catch (error) {
-        setError(error.message || "Failed to fetch habits");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
+  useEffect(() => {
     fetchHabits();
-  }, [selectedDate]); // Refetch when selected date changes
+  }, [selectedDate]);
+
+  const updateHabitState = (habitId, updatedCount) => {
+    setHabits((prevHabits) =>
+      prevHabits.map((habit) => {
+        if (habit.id === habitId) {
+          // Create updated habit with all necessary data
+          const updatedHabit = {
+            ...habit,
+            count: updatedCount,
+            isDone: updatedCount >= habit.target,
+            checkIn: {
+              ...habit.checkIn,
+              times_done: updatedCount,
+            },
+          };
+
+          // Create complete data structure for transformApiToCardFormat
+          const apiData = {
+            _id: habit.id,
+            name: habit.name,
+            icon: habit.icon.name || habit.icon,
+            goal: {
+              number: habit.target,
+              frequency: habit.goal.frequency, // Keep the original frequency
+            },
+            checkIn: {
+              times_done: updatedCount,
+            },
+            reminders: habit.reminderTime
+              ? [
+                  {
+                    time: habit.reminderTime,
+                    message: habit.reminderMessage,
+                  },
+                ]
+              : [],
+          };
+
+          // Get new motivational message using complete data
+          const transformedData = transformApiToCardFormat(apiData);
+
+          return {
+            ...updatedHabit,
+            motivationalMessage: transformedData.motivationalMessage,
+          };
+        }
+        return habit;
+      }),
+    );
+  };
 
   const handleIncrement = async (habitId) => {
     try {
@@ -41,22 +101,14 @@ export const useHabits = () => {
       const checkInId = habit.checkIn?._id;
 
       if (checkInId) {
-        await habitService.updateCheckIn(checkInId, updatedCount);
+        const response = await habitService.updateCheckIn(
+          checkInId,
+          updatedCount,
+        );
+        if (response.success) {
+          updateHabitState(habitId, updatedCount);
+        }
       }
-
-      setHabits((prevHabits) =>
-        prevHabits.map((h) => {
-          if (h.id === habitId) {
-            return {
-              ...h,
-              count: updatedCount,
-              isDone: updatedCount >= h.target,
-              streak: updatedCount,
-            };
-          }
-          return h;
-        }),
-      );
     } catch (error) {
       setError(error.message || "Failed to update habit");
     }
@@ -71,22 +123,14 @@ export const useHabits = () => {
       const checkInId = habit.checkIn?._id;
 
       if (checkInId) {
-        await habitService.updateCheckIn(checkInId, updatedCount);
+        const response = await habitService.updateCheckIn(
+          checkInId,
+          updatedCount,
+        );
+        if (response.success) {
+          updateHabitState(habitId, updatedCount);
+        }
       }
-
-      setHabits((prevHabits) =>
-        prevHabits.map((h) => {
-          if (h.id === habitId) {
-            return {
-              ...h,
-              count: updatedCount,
-              isDone: false,
-              streak: updatedCount,
-            };
-          }
-          return h;
-        }),
-      );
     } catch (error) {
       setError(error.message || "Failed to update habit");
     }
@@ -99,15 +143,59 @@ export const useHabits = () => {
 
       const checkInId = habit.checkIn?._id;
 
+      // Only reset if there's a check-in for today
       if (checkInId) {
-        await habitService.updateCheckIn(checkInId, 0);
-      }
+        const response = await habitService.updateCheckIn(checkInId, 0);
+        if (response.success) {
+          // Only update today's count, keeping other data intact
+          const updatedHabit = {
+            ...habit,
+            count: 0,
+            isDone: false,
+            checkIn: {
+              ...habit.checkIn,
+              times_done: 0,
+            },
+          };
 
-      setHabits((prevHabits) =>
-        prevHabits.map((h) =>
-          h.id === habitId ? { ...h, count: 0, isDone: false, streak: 0 } : h,
-        ),
-      );
+          // Create API data structure for motivational message
+          const apiData = {
+            _id: habit.id,
+            name: habit.name,
+            icon: habit.icon.name || habit.icon,
+            goal: {
+              number: habit.target,
+              frequency: habit.goal.frequency,
+            },
+            checkIn: {
+              ...habit.checkIn,
+              times_done: 0,
+            },
+            reminders: habit.reminderTime
+              ? [
+                  {
+                    time: habit.reminderTime,
+                    message: habit.reminderMessage,
+                  },
+                ]
+              : [],
+          };
+
+          // Get new motivational message
+          const transformedData = transformApiToCardFormat(apiData);
+
+          setHabits((prevHabits) =>
+            prevHabits.map((h) =>
+              h.id === habitId
+                ? {
+                    ...updatedHabit,
+                    motivationalMessage: transformedData.motivationalMessage,
+                  }
+                : h,
+            ),
+          );
+        }
+      }
     } catch (error) {
       setError(error.message || "Failed to reset habit");
     }
@@ -115,12 +203,10 @@ export const useHabits = () => {
 
   const handleDelete = async (habitId) => {
     try {
-      await habitService.deleteHabit(habitId);
-      setHabits((prevHabits) => {
-        const updatedHabits = prevHabits.filter((h) => h.id !== habitId);
-        setFilteredHabits(updatedHabits);
-        return updatedHabits;
-      });
+      const response = await habitService.deleteHabit(habitId);
+      if (response.success) {
+        setHabits((prevHabits) => prevHabits.filter((h) => h.id !== habitId));
+      }
     } catch (error) {
       setError(error.message || "Failed to delete habit");
     }
@@ -128,17 +214,6 @@ export const useHabits = () => {
 
   const handleSearchChange = (value) => {
     setSearchValue(value);
-
-    if (!value || !value.trim()) {
-      setFilteredHabits(habits);
-      return;
-    }
-
-    const searchTerm = value.toLowerCase().trim();
-    const filtered = habits.filter((habit) =>
-      habit?.name?.toLowerCase().includes(searchTerm),
-    );
-    setFilteredHabits(filtered);
   };
 
   const handleDateChange = (date) => {
