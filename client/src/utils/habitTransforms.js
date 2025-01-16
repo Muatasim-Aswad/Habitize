@@ -1,5 +1,8 @@
+import React from "react";
+import IconRenderer from "../components/IconRenderer";
+
 /**
- * Form verilerini API formatına dönüştürür
+ * Transforms form data to API format
  */
 export const transformHabitToApiFormat = (habitData) => {
   if (!habitData) return null;
@@ -32,7 +35,7 @@ export const transformHabitToApiFormat = (habitData) => {
 };
 
 /**
- * API verilerini form formatına dönüştürür
+ * Transforms API data to form format
  */
 export const transformApiToFormFormat = (apiData) => {
   if (!apiData) return null;
@@ -58,5 +61,26 @@ export const transformApiToFormFormat = (apiData) => {
           time: null,
           message: "",
         },
+  };
+};
+
+/**
+ * Transforms API data to HabitCard format
+ */
+export const transformApiToCardFormat = (apiData) => {
+  if (!apiData) return null;
+
+  return {
+    id: apiData._id,
+    name: apiData.name,
+    icon: ({ size, color }) => (
+      <IconRenderer iconName={apiData.icon} size={size} style={{ color }} />
+    ),
+    count: apiData.checkIn?.times_done || 0,
+    target: apiData.goal.number,
+    isDone: (apiData.checkIn?.times_done || 0) >= apiData.goal.number,
+    reminderTime: apiData.reminders?.[0]?.time || null,
+    reminderMessage: apiData.reminders?.[0]?.message || null,
+    streak: apiData.checkIn?.times_done || 0,
   };
 };
