@@ -1,19 +1,25 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import axios from "axios";
-import HabitForm from "../../components/HabitForm";
+import HabitForm from "../../components/HabitForm/HabitForm";
 
 const AddHabit = ({ onHabitAdded }) => {
   const [habitData, setHabitData] = useState({
     icon: "",
     name: "",
-    goal: "",
-    frequency: "",
-    period: "",
-    startDate: null,
-    endDate: null,
-    reminderTime: null,
-    reminderMessage: "",
+    goal: {
+      number: null,
+      unit: "",
+      frequency: "",
+    },
+    period: {
+      start: null,
+      end: null,
+    },
+    reminder: {
+      time: null,
+      message: "",
+    },
   });
 
   const handleSave = async () => {
@@ -45,11 +51,7 @@ const AddHabit = ({ onHabitAdded }) => {
   };
 
   return (
-    <HabitForm
-      habitData={habitData}
-      setHabitData={setHabitData}
-      onSave={handleSave}
-    />
+    <HabitForm habit={habitData} setHabit={setHabitData} onSave={handleSave} />
   );
 };
 

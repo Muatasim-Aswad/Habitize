@@ -63,4 +63,16 @@ export const userService = {
     const response = await httpClient.get("/habits/progress");
     return response;
   },
+
+  getHabit: async (habitId) => {
+    const response = await httpClient.get(`/habits/${habitId}`);
+    return response;
+  },
+
+  editHabit: async (habitId, habitData) => {
+    const response = await httpClient.patch(`/habits/${habitId}`, {
+      habit: habitData,
+    });
+    return response;
+  },
 };
