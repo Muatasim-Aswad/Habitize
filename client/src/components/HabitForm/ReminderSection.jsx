@@ -45,7 +45,7 @@ const ReminderSection = ({ reminder, setReminder }) => {
         label="Reminder Message"
         variant="outlined"
         value={reminder.message}
-        onChange={(value) => setReminder({ ...reminder, message: value })}
+        onChange={(e) => setReminder({ ...reminder, message: e.target.value })}
         sx={{
           width: "45%",
           backgroundColor: "#4F8A8B15",
