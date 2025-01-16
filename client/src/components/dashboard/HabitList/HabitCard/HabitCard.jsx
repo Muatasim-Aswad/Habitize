@@ -63,6 +63,11 @@ const cardStyles = {
     marginRight: { xs: 0, sm: "24px" },
     fontWeight: "900",
     lineHeight: { xs: 1.2, sm: 1.5 },
+    minWidth: { sm: "200px" },
+  },
+  spacer: {
+    flex: { xs: "unset", sm: 1 },
+    minWidth: { sm: "200px" },
   },
   actionsContainer: {
     display: "flex",
@@ -70,6 +75,7 @@ const cardStyles = {
     width: { xs: "100%", sm: "auto" },
     justifyContent: { xs: "space-between", sm: "flex-end" },
     gap: { xs: "3vw", sm: "12px" },
+    marginLeft: { sm: "auto" },
   },
   habitName: {
     fontSize: { xs: "4vw", sm: "1rem" },
@@ -224,13 +230,15 @@ const HabitCard = memo(
           </Box>
         </Box>
 
-        {reminderTime && (
+        {reminderTime ? (
           <Box sx={cardStyles.reminderContainer}>
             <AccessTimeIcon sx={{ fontSize: { xs: "3.5vw", sm: "1rem" } }} />
             <Typography component="span">
               {reminderTime} - {reminderMessage}
             </Typography>
           </Box>
+        ) : (
+          <Box sx={cardStyles.spacer} />
         )}
 
         {isMobile ? (
