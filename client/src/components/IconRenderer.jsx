@@ -13,8 +13,8 @@ const IconRenderer = ({ iconName, size = 24 }) => {
 };
 
 IconRenderer.propTypes = {
-  iconName: PropTypes.string.isRequired,
-  size: PropTypes.number, // Optional: Adjust the size of the icon
+  iconName: PropTypes.string,
+  size: PropTypes.number,
 };
 
 export default IconRenderer;
