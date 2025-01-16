@@ -11,6 +11,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  LinearProgress,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -19,6 +20,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../services/api";
+import { usePasswordValidation } from "../hooks/usePasswordValidation";
 
 const AccountSettings = ({
   initialUserData = { email: "", name: "" },
@@ -45,6 +47,13 @@ const AccountSettings = ({
 
   const navigate = useNavigate();
 
+  const {
+    strength,
+    strengthColor,
+    strengthLabel,
+    errors: passwordErrors,
+  } = usePasswordValidation(userData.newPassword);
+
   const handleChange = (field) => (event) => {
     setUserData({ ...userData, [field]: event.target.value });
   };
@@ -57,11 +66,22 @@ const AccountSettings = ({
   };
 
   const handleSave = () => {
+    if (userData.newPassword !== userData.confirmPassword) {
+      setSnackbarMessage("Passwords do not match.");
+      setSnackbarOpen(true);
+      return;
+    }
+    if (passwordErrors.length > 0) {
+      setSnackbarMessage(passwordErrors[0]);
+      setSnackbarOpen(true);
+      return;
+    }
+
     const user = authService.getUser();
     const updates = {};
     if (userData.name !== user.name) updates.name = userData.name;
     if (userData.email !== user.email) updates.email = userData.email;
-    if (userData.currentPassword) updates.password = userData.confirmPassword;
+    if (userData.currentPassword) updates.password = userData.newPassword;
     onSave(updates);
     setSnackbarMessage("Settings saved successfully!");
     setSnackbarOpen(true);
@@ -187,9 +207,9 @@ const AccountSettings = ({
                   onClick={handleClickShowPassword("currentPassword")}
                 >
                   {showPassword.currentPassword ? (
-                    <VisibilityOff />
-                  ) : (
                     <Visibility />
+                  ) : (
+                    <VisibilityOff />
                   )}
                 </IconButton>
               </InputAdornment>
@@ -218,15 +238,44 @@ const AccountSettings = ({
                   onClick={handleClickShowPassword("newPassword")}
                 >
                   {showPassword.newPassword ? (
-                    <VisibilityOff />
-                  ) : (
                     <Visibility />
+                  ) : (
+                    <VisibilityOff />
                   )}
                 </IconButton>
               </InputAdornment>
             ),
           }}
         />
+        {passwordErrors.length > 0 && (
+          <Typography variant="caption" color="error" sx={{ mt: 0.5 }}>
+            {passwordErrors[0]}
+          </Typography>
+        )}
+        {userData.newPassword && (
+          <Box sx={{ mt: 1 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                mb: 0.5,
+              }}
+            >
+              <Typography variant="caption" color="textSecondary">
+                Password Strength:
+              </Typography>
+              <Typography variant="caption" color={strengthColor}>
+                {strengthLabel}
+              </Typography>
+            </Box>
+            <LinearProgress
+              variant="determinate"
+              value={strength}
+              color={strengthColor}
+              sx={{ height: 4, borderRadius: 2 }}
+            />
+          </Box>
+        )}
         <TextField
           label="Confirm Password"
           type={showPassword.confirmPassword ? "text" : "password"}
@@ -249,15 +298,21 @@ const AccountSettings = ({
                   onClick={handleClickShowPassword("confirmPassword")}
                 >
                   {showPassword.confirmPassword ? (
-                    <VisibilityOff />
-                  ) : (
                     <Visibility />
+                  ) : (
+                    <VisibilityOff />
                   )}
                 </IconButton>
               </InputAdornment>
             ),
           }}
         />
+        {userData.confirmPassword &&
+          userData.newPassword !== userData.confirmPassword && (
+            <Typography variant="caption" color="error" sx={{ mt: 0.5 }}>
+              Passwords do not match.
+            </Typography>
+          )}
       </Box>
 
       <Box
@@ -267,16 +322,17 @@ const AccountSettings = ({
           width: "100%",
           maxWidth: "500px",
           mt: 4,
-          gap: 2,
+          gap: 3,
+          position: "relative",
+          marginBottom: "16",
         }}
       >
         <Button
           variant="contained"
           color="primary"
           sx={{
-            width: "50%",
+            width: "48%",
             maxWidth: "200px",
-            mt: 10,
             backgroundColor: "#4F8A8B",
             borderRadius: "8px",
           }}
@@ -284,24 +340,31 @@ const AccountSettings = ({
         >
           Save
         </Button>
-        <Box
-          sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          width: "100%",
+          maxWidth: "500px",
+          position: "absolute",
+          bottom: 16,
+          right: 16,
+        }}
+      >
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            width: "48%",
+            maxWidth: "200px",
+            backgroundColor: "#8B4F54",
+            borderRadius: "8px",
+          }}
+          onClick={handleDelete}
         >
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              width: "100%",
-              maxWidth: "240px",
-              mt: 10,
-              backgroundColor: "#8B4F54",
-              borderRadius: "8px",
-            }}
-            onClick={handleDelete}
-          >
-            Delete Account
-          </Button>
-        </Box>
+          Delete Account
+        </Button>
       </Box>
 
       <Snackbar

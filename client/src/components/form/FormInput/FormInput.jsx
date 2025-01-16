@@ -63,7 +63,7 @@ const FormInput = ({
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={handleClickShowPassword} edge="end">
-                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
                 </IconButton>
               </InputAdornment>
             ),
