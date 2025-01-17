@@ -21,7 +21,7 @@ const findOrCreateCheckIn = async (date, habit) => {
   if (existingCheckIn) return existingCheckIn; // Return if found
 
   const habitStartDate = new Date(habit.period.start);
-  habitStartDate.setUTCHours(0, 0, 0, 0);
+  habitStartDate.setHours(0, 0, 0, 0);
 
   const periodLength = getPeriodLength(habit.goal.frequency); // Calculate period length from the habit goal's frequency
   const periodStart = calculatePeriodStart(habitStartDate, date, periodLength); // Calculate the period start date
@@ -71,7 +71,7 @@ const calculatePeriodStart = (startDate, wantedDate, periodLength) => {
   const daysDone = periodsDone * periodLength;
 
   const periodStart = new Date(startDate.getTime() + daysDone * MS_PER_DAY);
-  periodStart.setUTCHours(0, 0, 0, 0);
+  periodStart.setHours(0, 0, 0, 0);
 
   return periodStart;
 };
@@ -86,7 +86,7 @@ const calculatePeriodStart = (startDate, wantedDate, periodLength) => {
 const calculatePeriodEnd = (periodStart, periodLength) => {
   return new Date(
     periodStart.getTime() + (periodLength - 1) * MS_PER_DAY,
-  ).setUTCHours(23, 59, 59, 999);
+  ).setHours(23, 59, 59, 999);
 };
 
 export default findOrCreateCheckIn;

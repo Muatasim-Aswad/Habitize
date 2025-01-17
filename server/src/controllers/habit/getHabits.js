@@ -9,7 +9,7 @@ const getHabits = async (req, res, next) => {
       throw new AppError(400, "Invalid date format. Please use 'YYYY-MM-DD'.");
     }
 
-    date = new Date(date).setUTCHours(0, 0, 0, 0);
+    date = new Date(date).setHours(0, 0, 0, 0);
 
     const searchOptions = {
       user_id: req.session.user_id,

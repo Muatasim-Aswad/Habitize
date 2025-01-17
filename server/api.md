@@ -108,12 +108,12 @@ See **_(1)_**. Only password.
       "frequency": "daily"
     },
     "period": {
-      "start": "2025-01-01",
-      "end": "2025-02-31"
+      "start": "2025-01-01T00:00:00.000Z",
+      "end": "2025-03-03T00:00:00.000Z"
     },
     "reminders": [
       {
-        "time": "23:55",
+        "time": "1970-01-01T20:35:00.000Z",
         "message": "go to bed"
       }
     ]
@@ -267,7 +267,7 @@ See **_(1)_**. All fields are optional.
     "categories": [],
     "reminders": [
       {
-        "time": "23:55",
+        "time": "1970-01-01T20:35:00.000Z",
         "message": "Did you drink enough?",
         "_id": "678782eb90e0dcc1710c4b25"
       }
@@ -305,7 +305,7 @@ See **_(1)_**. All fields are optional.
     "categories": [],
     "reminders": [
       {
-        "time": "23:55",
+        "time": "1970-01-01T20:35:00.000Z",
         "message": "Did you drink enough?",
         "_id": "678782eb90e0dcc1710c4b25"
       }
@@ -366,7 +366,7 @@ See **_(1)_**. All fields are optional.
       "categories": [],
       "reminders": [
         {
-          "time": "23:55",
+          "time": "1970-01-01T20:35:00.000Z",
           "message": "go to bed",
           "_id": "67877bbd1daa41672f5c7bee"
         }
@@ -402,7 +402,7 @@ See **_(1)_**. All fields are optional.
       "categories": [],
       "reminders": [
         {
-          "time": "23:55",
+          "time": "1970-01-01T20:35:00.000Z",
           "message": "go to bed",
           "_id": "67877bd81daa41672f5c7bf3"
         }

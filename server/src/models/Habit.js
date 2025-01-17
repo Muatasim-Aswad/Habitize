@@ -14,13 +14,13 @@ const exampleHabit = {
     frequency: "daily",
   },
   period: {
-    start: new Date("2022-01-01"),
-    end: new Date("2022-12-31"),
+    start: "2022-01-01T00:00:00.000Z", // ISO 8601 format
+    end: "2022-12-31T23:59:59.999Z",   // ISO 8601 format
   },
   categories: ["609c5e9e8c5e5e0015f3e8a2"],
   reminders: [
     {
-      time: "08:00",
+      time: "1970-01-01T08:00:00.000Z", // ISO 8601 format, date part set to 1970-01-01
       message: "Don't forget to exercise!",
     }
   ],
@@ -81,9 +81,8 @@ const habitSchema = new mongoose.Schema(
     reminders: [
       {
         time: {
-          type: String, // Format HH:mm (e.g., "08:30")
+          type: Date, // Updated to store ISO date strings
           required: true,
-          match: [/^\d{2}:\d{2}$/, "Time must be in the format HH:mm."],
         },
         message: {
           type: String,
@@ -94,7 +93,7 @@ const habitSchema = new mongoose.Schema(
     ],
   },
   {
-    timestamps: true, // Automatically adds `createdAt` and `updatedAt` fields
+    timestamps: true, // Automatically adds createdAt and updatedAt fields
   },
 );
 
@@ -137,11 +136,11 @@ const habitJoiSchema = Joi.object({
       }),
   }).required(),
   period: Joi.object({
-    start: Joi.date().required().messages({
+    start: Joi.date().iso().required().messages({
       "date.base": "Start date must be a valid date.",
       "any.required": "Start date field is required.",
     }),
-    end: Joi.date().optional().messages({
+    end: Joi.date().iso().optional().messages({
       "date.base": "End date must be a valid date.",
     }),
   }).required(),
@@ -158,13 +157,10 @@ const habitJoiSchema = Joi.object({
   reminders: Joi.array()
     .items(
       Joi.object({
-        time: Joi.string()
-          .pattern(/^\d{2}:\d{2}$/) // Validates time format HH:mm
-          .required()
-          .messages({
-            "string.pattern.base": "Time must be in the format HH:mm.",
-            "any.required": "Reminder field time is required.",
-          }),
+        time: Joi.date().iso().required().messages({
+          "date.base": "Time must be a valid ISO date string.",
+          "any.required": "Reminder field time is required.",
+        }),
         message: Joi.string().optional().messages({
           "string.base": "Reminder message must be a string.",
         }),
