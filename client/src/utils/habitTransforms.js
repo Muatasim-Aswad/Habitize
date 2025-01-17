@@ -8,6 +8,9 @@ import { getMotivationalMessage } from "./motivationalMessages";
 export const transformHabitToApiFormat = (habitData) => {
   if (!habitData) return null;
 
+  habitData.period.start.setHours(0, 0, 0, 0);
+  habitData.period.end.setHours(23, 59, 59, 999);
+
   return {
     name: habitData.name,
     icon: habitData.icon,
@@ -17,17 +20,13 @@ export const transformHabitToApiFormat = (habitData) => {
       frequency: habitData.goal.frequency.toLowerCase(),
     },
     period: {
-      start: habitData.period.start.toISOString().split("T")[0],
-      end: habitData.period.end.toISOString().split("T")[0],
+      start: habitData.period.start.toISOString(),
+      end: habitData.period.end.toISOString(),
     },
     reminders: habitData.reminder.time
       ? [
           {
-            time: habitData.reminder.time
-              .toISOString()
-              .split("T")[1]
-              .split(".")[0]
-              .slice(0, 5),
+            time: habitData.reminder.time.toISOString(),
             message: habitData.reminder.message || "",
           },
         ]
@@ -55,7 +54,7 @@ export const transformApiToFormFormat = (apiData) => {
     },
     reminder: apiData.reminders?.[0]
       ? {
-          time: new Date(`1970-01-01T${apiData.reminders[0].time}`),
+          time: new Date(apiData.reminders[0].time),
           message: apiData.reminders[0].message,
         }
       : {
@@ -84,7 +83,12 @@ export const transformApiToCardFormat = (apiData) => {
     count: timesDone,
     target: goalNumber,
     isDone: timesDone >= goalNumber,
-    reminderTime: apiData.reminders?.[0]?.time || null,
+    reminderTime: apiData.reminders?.[0]?.time
+      ? new Date(apiData.reminders[0].time).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      : null,
     reminderMessage: apiData.reminders?.[0]?.message || null,
     goal: {
       number: goalNumber,

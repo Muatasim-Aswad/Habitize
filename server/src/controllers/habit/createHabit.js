@@ -13,9 +13,6 @@ const createHabit = async (req, res, next) => {
         `Habit with name: ${habit.name}, already exists.`,
       );
 
-    habit.period.start = new Date(habit.period.start).setUTCHours(0, 0, 0, 0);
-    habit.period.end = new Date(habit.period.end).setUTCHours(23, 59, 59, 999);
-
     habit.user_id = user_id;
     const result = await Habit.create(habit);
 
