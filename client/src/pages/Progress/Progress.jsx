@@ -13,6 +13,7 @@ import TimelineIcon from "@mui/icons-material/Timeline";
 import ProgressCard from "./ProgressCard";
 import { userService } from "../../services/api/userService";
 import { useNavigate } from "react-router-dom";
+import Instructions from "../../components/fallback/Instructions";
 
 const Progress = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -102,6 +103,7 @@ const Progress = () => {
         </MenuItem>
       </Menu>
 
+      {habits.length === 0 && <Instructions />}
       <Grid container spacing={2} style={{ marginTop: "20px" }}>
         {filteredHabits.map((habit) => (
           <ProgressCard

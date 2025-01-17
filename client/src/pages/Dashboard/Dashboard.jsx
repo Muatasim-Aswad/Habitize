@@ -10,6 +10,7 @@ import BottomNavigation from "../../components/navigation/BottomNavigation";
 import { useHabits } from "../../hooks/habits/useHabits";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import DashboardFallback from "../../components/fallback/DashboardFallback";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -96,6 +97,7 @@ const Dashboard = () => {
             width: "100%",
           }}
         >
+          {habits.length === 0 && <DashboardFallback />}
           <HabitList
             habits={habits}
             onIncrement={handleIncrement}
