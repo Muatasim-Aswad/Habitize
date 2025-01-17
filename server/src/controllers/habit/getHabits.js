@@ -5,11 +5,19 @@ import findOrCreateCheckIn from "../../models/servicesDB/findOrCreateCheckIn.js"
 const getHabits = async (req, res, next) => {
   try {
     let { date } = req.query;
-    if (!date || !date.match(/^\d{4}-\d{2}-\d{2}$/)) {
-      throw new AppError(400, "Invalid date format. Please use 'YYYY-MM-DD'.");
+    if (
+      !date ||
+      !date.match(
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/,
+      )
+    ) {
+      throw new AppError(
+        400,
+        "Invalid date format. Please use ISO 8601 format (e.g., 'YYYY-MM-DDTHH:mm:ss.sssZ').",
+      );
     }
 
-    date = new Date(date).setHours(0, 0, 0, 0);
+    date = new Date(date);
 
     const searchOptions = {
       user_id: req.session.user_id,
