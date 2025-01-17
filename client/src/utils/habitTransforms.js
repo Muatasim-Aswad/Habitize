@@ -1,5 +1,9 @@
+import React from "react";
+import IconRenderer from "../components/IconRenderer";
+import { getMotivationalMessage } from "./motivationalMessages";
+
 /**
- * Form verilerini API formatına dönüştürür
+ * Transforms form data to API format
  */
 export const transformHabitToApiFormat = (habitData) => {
   if (!habitData) return null;
@@ -32,7 +36,7 @@ export const transformHabitToApiFormat = (habitData) => {
 };
 
 /**
- * API verilerini form formatına dönüştürür
+ * Transforms API data to form format
  */
 export const transformApiToFormFormat = (apiData) => {
   if (!apiData) return null;
@@ -58,5 +62,39 @@ export const transformApiToFormFormat = (apiData) => {
           time: null,
           message: "",
         },
+  };
+};
+
+/**
+ * Transforms API data to HabitCard format
+ */
+export const transformApiToCardFormat = (apiData) => {
+  if (!apiData) return null;
+
+  const timesDone = apiData.checkIn?.times_done || 0;
+  const goalNumber = apiData.goal?.number || 0;
+  const frequency = apiData.goal?.frequency || "daily";
+
+  return {
+    id: apiData._id,
+    name: apiData.name,
+    icon: ({ size, color }) => (
+      <IconRenderer iconName={apiData.icon} size={size} style={{ color }} />
+    ),
+    count: timesDone,
+    target: goalNumber,
+    isDone: timesDone >= goalNumber,
+    reminderTime: apiData.reminders?.[0]?.time || null,
+    reminderMessage: apiData.reminders?.[0]?.message || null,
+    goal: {
+      number: goalNumber,
+      frequency: frequency,
+    },
+    motivationalMessage: getMotivationalMessage(
+      timesDone,
+      goalNumber,
+      frequency,
+    ),
+    checkIn: apiData.checkIn || null,
   };
 };

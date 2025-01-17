@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from "react";
+import React, { memo, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Box,
@@ -63,6 +63,11 @@ const cardStyles = {
     marginRight: { xs: 0, sm: "24px" },
     fontWeight: "900",
     lineHeight: { xs: 1.2, sm: 1.5 },
+    minWidth: { sm: "200px" },
+  },
+  spacer: {
+    flex: { xs: "unset", sm: 1 },
+    minWidth: { sm: "200px" },
   },
   actionsContainer: {
     display: "flex",
@@ -70,6 +75,7 @@ const cardStyles = {
     width: { xs: "100%", sm: "auto" },
     justifyContent: { xs: "space-between", sm: "flex-end" },
     gap: { xs: "3vw", sm: "12px" },
+    marginLeft: { sm: "auto" },
   },
   habitName: {
     fontSize: { xs: "4vw", sm: "1rem" },
@@ -157,13 +163,14 @@ const HabitCard = memo(
     const {
       icon: HabitIcon,
       name,
-      streak,
       count,
       target,
       isDone,
       reminderTime,
       reminderMessage,
+      motivationalMessage,
     } = habit;
+
     const [anchorEl, setAnchorEl] = useState(null);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -191,19 +198,6 @@ const HabitCard = memo(
       onReset();
     };
 
-    const getProgressMessage = useCallback(() => {
-      if (isDone) return "Done";
-      if (count === 0) return "New Seed!";
-      const remaining = target - count;
-      return `Just ${remaining} more to finish!`;
-    }, [count, target, isDone]);
-
-    const streakMessage = useCallback(() => {
-      return streak > 0 && !isDone
-        ? `${streak} times in a row!`
-        : getProgressMessage();
-    }, [streak, isDone, getProgressMessage]);
-
     return (
       <Box sx={cardStyles.container}>
         <Box sx={cardStyles.infoContainer}>
@@ -219,18 +213,20 @@ const HabitCard = memo(
                 color: isDone ? COLORS.primary.main : COLORS.secondary.main,
               }}
             >
-              {streakMessage()}
+              {motivationalMessage}
             </Typography>
           </Box>
         </Box>
 
-        {reminderTime && (
+        {reminderTime ? (
           <Box sx={cardStyles.reminderContainer}>
             <AccessTimeIcon sx={{ fontSize: { xs: "3.5vw", sm: "1rem" } }} />
             <Typography component="span">
               {reminderTime} - {reminderMessage}
             </Typography>
           </Box>
+        ) : (
+          <Box sx={cardStyles.spacer} />
         )}
 
         {isMobile ? (
@@ -367,12 +363,12 @@ HabitCard.propTypes = {
   habit: PropTypes.shape({
     icon: PropTypes.elementType.isRequired,
     name: PropTypes.string.isRequired,
-    streak: PropTypes.number.isRequired,
     count: PropTypes.number.isRequired,
     target: PropTypes.number.isRequired,
     isDone: PropTypes.bool.isRequired,
     reminderTime: PropTypes.string,
     reminderMessage: PropTypes.string,
+    motivationalMessage: PropTypes.string.isRequired,
   }).isRequired,
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired,

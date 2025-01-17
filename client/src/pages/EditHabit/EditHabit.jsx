@@ -45,7 +45,7 @@ const EditHabit = () => {
   };
 
   if (isLoading) {
-    return null; // veya loading spinner
+    return null; // or loading spinner
   }
 
   if (error) {
