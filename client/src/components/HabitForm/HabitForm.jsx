@@ -76,7 +76,7 @@ const HabitForm = ({ habit, setHabit, onSave }) => {
         <NameInput
           name={habit.name}
           setName={(name) => setHabit({ ...habit, name })}
-          maxLength={15}
+          maxLength={20}
         />
 
         <GoalSection
