@@ -9,13 +9,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import {
-  PencilSimple,
-  X,
-  Plus,
-  ArrowCounterClockwise,
-  Minus,
-} from "phosphor-react";
+import { PencilSimple, X, Plus, Minus } from "phosphor-react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { COLORS } from "../../../../theme/constants";
 
@@ -159,7 +153,7 @@ const cardStyles = {
 };
 
 const HabitCard = memo(
-  ({ habit, onIncrement, onDecrement, onEdit, onDelete, onReset }) => {
+  ({ habit, onIncrement, onDecrement, onEdit, onDelete }) => {
     const {
       icon: HabitIcon,
       name,
@@ -191,11 +185,6 @@ const HabitCard = memo(
     const handleDelete = () => {
       handleMenuClose();
       onDelete();
-    };
-
-    const handleReset = () => {
-      handleMenuClose();
-      onReset();
     };
 
     return (
@@ -233,7 +222,6 @@ const HabitCard = memo(
           <Box sx={cardStyles.mobileActions}>
             <IconButton
               onClick={onIncrement}
-              disabled={isDone}
               sx={{
                 backgroundColor: COLORS.primary.main,
                 color: COLORS.primary.contrast,
@@ -268,34 +256,20 @@ const HabitCard = memo(
                 horizontal: "right",
               }}
             >
-              {!isDone && [
-                <MenuItem key="progress" sx={{ color: COLORS.text.secondary }}>
-                  Progress: {count}/{target}
-                </MenuItem>,
-                <MenuItem
-                  key="decrease"
-                  onClick={onDecrement}
-                  disabled={count === 0}
-                >
-                  <Minus weight="bold" style={{ marginRight: 8 }} />
-                  Decrease
-                </MenuItem>,
-              ]}
-              <MenuItem onClick={isDone ? handleReset : handleEdit}>
-                {isDone ? (
-                  <>
-                    <ArrowCounterClockwise
-                      weight="bold"
-                      style={{ marginRight: 8 }}
-                    />
-                    Reset
-                  </>
-                ) : (
-                  <>
-                    <PencilSimple weight="bold" style={{ marginRight: 8 }} />
-                    Edit
-                  </>
-                )}
+              <MenuItem key="progress" sx={{ color: COLORS.text.secondary }}>
+                Progress: {count}/{target}
+              </MenuItem>
+              <MenuItem
+                key="decrease"
+                onClick={onDecrement}
+                disabled={count === 0}
+              >
+                <Minus weight="bold" style={{ marginRight: 8 }} />
+                Decrease
+              </MenuItem>
+              <MenuItem onClick={handleEdit}>
+                <PencilSimple weight="bold" style={{ marginRight: 8 }} />
+                Edit
               </MenuItem>
               <MenuItem
                 onClick={handleDelete}
@@ -311,7 +285,7 @@ const HabitCard = memo(
             <Box sx={cardStyles.counterContainer}>
               <IconButton
                 onClick={onDecrement}
-                disabled={count === 0 || isDone}
+                disabled={count === 0}
                 sx={cardStyles.actionButton}
               >
                 <Minus weight="bold" />
@@ -326,26 +300,16 @@ const HabitCard = memo(
                   px: 1,
                 }}
               >
-                {isDone ? "Done" : `${count}/${target}`}
+                {`${count}/${target}${isDone ? " Done" : ""}`}
               </Typography>
-              <IconButton
-                onClick={onIncrement}
-                disabled={isDone}
-                sx={cardStyles.actionButton}
-              >
+              <IconButton onClick={onIncrement} sx={cardStyles.actionButton}>
                 <Plus weight="bold" />
               </IconButton>
             </Box>
             <Box sx={{ display: "flex", gap: "8px" }}>
-              {isDone ? (
-                <IconButton onClick={onReset} sx={cardStyles.editButton}>
-                  <ArrowCounterClockwise size={20} />
-                </IconButton>
-              ) : (
-                <IconButton onClick={onEdit} sx={cardStyles.editButton}>
-                  <PencilSimple size={20} />
-                </IconButton>
-              )}
+              <IconButton onClick={onEdit} sx={cardStyles.editButton}>
+                <PencilSimple size={20} />
+              </IconButton>
               <IconButton onClick={onDelete} sx={cardStyles.deleteButton}>
                 <X size={20} />
               </IconButton>
@@ -374,7 +338,6 @@ HabitCard.propTypes = {
   onDecrement: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onReset: PropTypes.func.isRequired,
 };
 
 export default HabitCard;

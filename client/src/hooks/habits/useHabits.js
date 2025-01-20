@@ -64,7 +64,7 @@ export const useHabits = () => {
             icon: habit.icon.name || habit.icon,
             goal: {
               number: habit.target,
-              frequency: habit.goal.frequency, // Keep the original frequency
+              frequency: habit.goal.frequency,
             },
             checkIn: {
               times_done: updatedCount,
@@ -95,7 +95,7 @@ export const useHabits = () => {
   const handleIncrement = async (habitId) => {
     try {
       const habit = habits.find((h) => h.id === habitId);
-      if (!habit || habit.isDone) return;
+      if (!habit) return;
 
       const updatedCount = habit.count + 1;
       const checkInId = habit.checkIn?._id;
@@ -136,71 +136,6 @@ export const useHabits = () => {
     }
   };
 
-  const handleReset = async (habitId) => {
-    try {
-      const habit = habits.find((h) => h.id === habitId);
-      if (!habit) return;
-
-      const checkInId = habit.checkIn?._id;
-
-      // Only reset if there's a check-in for today
-      if (checkInId) {
-        const response = await habitService.updateCheckIn(checkInId, 0);
-        if (response.success) {
-          // Only update today's count, keeping other data intact
-          const updatedHabit = {
-            ...habit,
-            count: 0,
-            isDone: false,
-            checkIn: {
-              ...habit.checkIn,
-              times_done: 0,
-            },
-          };
-
-          // Create API data structure for motivational message
-          const apiData = {
-            _id: habit.id,
-            name: habit.name,
-            icon: habit.icon.name || habit.icon,
-            goal: {
-              number: habit.target,
-              frequency: habit.goal.frequency,
-            },
-            checkIn: {
-              ...habit.checkIn,
-              times_done: 0,
-            },
-            reminders: habit.reminderTime
-              ? [
-                  {
-                    time: habit.reminderTime,
-                    message: habit.reminderMessage,
-                  },
-                ]
-              : [],
-          };
-
-          // Get new motivational message
-          const transformedData = transformApiToCardFormat(apiData);
-
-          setHabits((prevHabits) =>
-            prevHabits.map((h) =>
-              h.id === habitId
-                ? {
-                    ...updatedHabit,
-                    motivationalMessage: transformedData.motivationalMessage,
-                  }
-                : h,
-            ),
-          );
-        }
-      }
-    } catch (error) {
-      setError(error.message || "Failed to reset habit");
-    }
-  };
-
   const handleDelete = async (habitId) => {
     try {
       const response = await habitService.deleteHabit(habitId);
@@ -228,7 +163,6 @@ export const useHabits = () => {
     selectedDate,
     handleIncrement,
     handleDecrement,
-    handleReset,
     handleDelete,
     handleSearchChange,
     handleDateChange,
