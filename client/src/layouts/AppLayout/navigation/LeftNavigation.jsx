@@ -9,8 +9,8 @@ import {
 } from "@mui/material";
 import { Home, Timeline, Settings, Logout } from "@mui/icons-material";
 import { Link, useLocation } from "react-router-dom";
-import { COLORS } from "../../theme/constants";
-import logo from "../../../public/image.png";
+import { COLORS } from "../../../theme/constants";
+import logo from "../../../../public/image.png";
 
 const navItems = [
   { icon: <Home />, text: "Home", link: "/app/dashboard" },

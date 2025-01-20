@@ -13,7 +13,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../public/image.png";
+import logo from "../../../public/image.png";
 
 const navItems = [
   { icon: <HomeIcon />, link: "/app/dashboard" },

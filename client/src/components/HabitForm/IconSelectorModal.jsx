@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Box, Typography, Modal, Button, IconButton } from "@mui/material";
-import IconSelector from "../IconSelector";
+import IconSelector from "./IconSelector";
 import IconRenderer from "../IconRenderer";
 import ArrowDropDown from "@mui/icons-material/ArrowDropDown";
 

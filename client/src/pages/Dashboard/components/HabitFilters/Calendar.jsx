@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Grid, Typography, Box } from "@mui/material";
-import { getDaysInMonth, isSameDay } from "../../../utils/dateUtils";
-import { COLORS } from "../../../theme/constants";
+import { getDaysInMonth, isSameDay } from "../../../../utils/dateUtils";
+import { COLORS } from "../../../../theme/constants";
 
 const Calendar = ({
   currentMonth,

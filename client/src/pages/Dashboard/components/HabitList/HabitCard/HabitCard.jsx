@@ -17,7 +17,7 @@ import {
   Minus,
 } from "phosphor-react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { COLORS } from "../../../../theme/constants";
+import { COLORS } from "../../../../../theme/constants";
 
 const cardStyles = {
   container: {

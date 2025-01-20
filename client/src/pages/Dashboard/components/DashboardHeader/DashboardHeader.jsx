@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { SPACING } from "../../../theme/constants";
+import { SPACING } from "../../../../theme/constants";
 import PropTypes from "prop-types";
-import logo from "../../../../public/logo.png";
+import logo from "../../../../../public/logo.png";
 
 const DashboardHeader = ({ userName }) => {
   return (

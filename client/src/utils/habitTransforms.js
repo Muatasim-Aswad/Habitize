@@ -23,14 +23,15 @@ export const transformHabitToApiFormat = (habitData) => {
       start: habitData.period.start.toISOString(),
       end: habitData.period.end.toISOString(),
     },
-    reminders: habitData.reminder.time
-      ? [
-          {
-            time: habitData.reminder.time.toISOString(),
-            message: habitData.reminder.message || "",
-          },
-        ]
-      : [],
+    reminders:
+      habitData.reminder.time && habitData.reminder.message
+        ? [
+            {
+              time: habitData.reminder.time.toISOString(),
+              message: habitData.reminder.message || "",
+            },
+          ]
+        : [],
   };
 };
 
