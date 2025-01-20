@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { SPACING, COLORS } from "../../theme/constants";
-import HabitList from "../../components/dashboard/HabitList/HabitList";
-import HabitFilters from "../../components/dashboard/HabitFilters/HabitFilters";
-import AddHabitButton from "../../components/dashboard/AddHabitButton/AddHabitButton";
-import DashboardHeader from "../../components/dashboard/DashboardHeader/DashboardHeader";
+import HabitList from "./components/HabitList/HabitList";
+import HabitFilters from "./components/HabitFilters/HabitFilters";
+import AddHabitButton from "./components/AddHabitButton/AddHabitButton";
+import DashboardHeader from "./components/DashboardHeader/DashboardHeader";
 import ConfirmationDialog from "../../components/common/ConfirmationDialog/ConfirmationDialog";
 import BottomNavigation from "../../layouts/AppLayout/navigation/BottomNavigation";
 import { useHabits } from "../../hooks/habits/useHabits";

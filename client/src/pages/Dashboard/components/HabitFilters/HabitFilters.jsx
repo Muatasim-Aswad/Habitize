@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Box, InputBase } from "@mui/material";
 import { MagnifyingGlass } from "phosphor-react";
-import { COLORS, SPACING } from "../../../theme/constants";
+import { COLORS, SPACING } from "../../../../theme/constants";
 import DatePicker from "./DatePicker";
 
 const HabitFilters = ({

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Typography, Dialog, IconButton } from "@mui/material";
 import { CalendarBlank, CaretLeft, CaretRight } from "phosphor-react";
-import { COLORS } from "../../../theme/constants";
-import { formatDate } from "../../../utils/dateUtils";
+import { COLORS } from "../../../../theme/constants";
+import { formatDate } from "../../../../utils/dateUtils";
 import Calendar from "./Calendar";
 
 const DatePicker = ({ selectedDate, onDateChange }) => {

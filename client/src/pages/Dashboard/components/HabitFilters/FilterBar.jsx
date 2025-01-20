@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { IconButton } from "@mui/material";
 import { FunnelSimple } from "phosphor-react";
-import { COLORS, DASHBOARD } from "../../../theme/constants";
+import { COLORS, DASHBOARD } from "../../../../theme/constants";
 
 const FilterBar = ({ onClick }) => {
   return (
