@@ -24,7 +24,7 @@ const ProgressCard = ({ habit, isMobile, handleClick }) => {
           justifyContent: "center",
           width: isMobile ? "100%" : "80%",
           aspectRatio: "1 / 1",
-          mx: "auto",
+          mx: "0",
           overflow: "hidden",
         }}
       >

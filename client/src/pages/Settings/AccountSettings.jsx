@@ -333,37 +333,25 @@ const AccountSettings = ({
           sx={{
             width: "48%",
             maxWidth: "200px",
-            backgroundColor: "#4F8A8B",
-            borderRadius: "8px",
-          }}
-          onClick={handleSave}
-        >
-          Save
-        </Button>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          width: "100%",
-          maxWidth: "500px",
-          position: "absolute",
-          bottom: 16,
-          right: 16,
-        }}
-      >
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{
-            width: "48%",
-            maxWidth: "200px",
             backgroundColor: "#8B4F54",
             borderRadius: "8px",
           }}
           onClick={handleDelete}
         >
           Delete Account
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            width: "48%",
+            maxWidth: "200px",
+            backgroundColor: "#4F8A8B",
+            borderRadius: "8px",
+          }}
+          onClick={handleSave}
+        >
+          Save
         </Button>
       </Box>
 
