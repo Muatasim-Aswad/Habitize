@@ -92,7 +92,7 @@ const HabitForm = ({ habit, setHabit, onSave }) => {
         <ReminderSection
           reminder={habit.reminder}
           setReminder={(reminder) => setHabit({ ...habit, reminder })}
-          maxLength={30}
+          maxLength={50}
         />
 
         <Button
