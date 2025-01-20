@@ -27,19 +27,24 @@ const HabitForm = ({ habit, setHabit, onSave }) => {
   };
 
   const handleSaveClick = async () => {
-    if (!habit.name || !habit.goal) {
-      setSnackbarMessage("Please add habit details.");
+    try {
+      if (!habit.name || !habit.goal) {
+        setSnackbarMessage("Please add habit details.");
+        setSnackbarOpen(true);
+        return;
+      }
+
+      await onSave();
+      setSnackbarMessage("Habit submitted successfully!");
       setSnackbarOpen(true);
-      return;
+
+      setTimeout(() => {
+        navigate("/app/dashboard");
+      }, 2000);
+    } catch (error) {
+      setSnackbarMessage(error.message || "Failed to submit.");
+      setSnackbarOpen(true);
     }
-
-    await onSave();
-    setSnackbarMessage("Habit added successfully");
-    setSnackbarOpen(true);
-
-    setTimeout(() => {
-      navigate("/app/dashboard");
-    }, 1000);
   };
 
   const handleSnackbarClose = () => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import HabitForm from "../../components/HabitForm/HabitForm";
 import { habitService } from "../../services/api/habitService";
 import {
@@ -8,7 +8,6 @@ import {
 } from "../../utils/habitTransforms";
 
 const EditHabit = () => {
-  const navigate = useNavigate();
   const { habitId } = useParams();
   const [habitData, setHabitData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,18 +29,13 @@ const EditHabit = () => {
     fetchHabit();
   }, [habitId]);
 
-  const handleSave = () => {
-    const updateHabitData = async () => {
-      try {
-        const apiData = transformHabitToApiFormat(habitData);
-        await habitService.updateHabit(habitId, apiData);
-        navigate("/app/dashboard");
-      } catch (error) {
-        setError("Failed to update habit. Please try again later.");
-      }
-    };
-
-    updateHabitData();
+  const handleSave = async () => {
+    try {
+      const apiData = transformHabitToApiFormat(habitData);
+      await habitService.updateHabit(habitId, apiData);
+    } catch (error) {
+      throw new Error("Failed to update habit. Please try again later.");
+    }
   };
 
   if (isLoading) {
