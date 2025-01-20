@@ -6,7 +6,7 @@ import HabitFilters from "../../components/dashboard/HabitFilters/HabitFilters";
 import AddHabitButton from "../../components/dashboard/AddHabitButton/AddHabitButton";
 import DashboardHeader from "../../components/dashboard/DashboardHeader/DashboardHeader";
 import ConfirmationDialog from "../../components/common/ConfirmationDialog/ConfirmationDialog";
-import BottomNavigation from "../../components/navigation/BottomNavigation";
+import BottomNavigation from "../../layouts/AppLayout/navigation/BottomNavigation";
 import { useHabits } from "../../hooks/habits/useHabits";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";

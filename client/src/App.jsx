@@ -8,13 +8,13 @@ import { UserProvider } from "./context/UserContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 
-import LandingLayout from "./pages/Landing/LandingLayout";
+import LandingLayout from "./layouts/LandingLayout/LandingLayout";
 import SignInForm from "./pages/SignIn/SignInForm";
 import SignUpForm from "./pages/SignUp/SignUpForm";
 import ResetPasswordForm from "./pages/ResetPassword/ResetPasswordForm";
 import CreatePasswordForm from "./pages/CreatePassword/CreatePasswordForm";
 
-import AppLayout from "./components/AppLayout";
+import AppLayout from "./layouts/AppLayout/AppLayout";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Progress from "./pages/Progress/Progress";
 import Settings from "./pages/Settings/Settings";

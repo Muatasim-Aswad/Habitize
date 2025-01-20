@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { Home, Timeline, Settings, Logout } from "@mui/icons-material";
 import { useNavigate, useLocation } from "react-router-dom";
-import { COLORS } from "../../theme/constants";
+import { COLORS } from "../../../theme/constants";
 
 const navItems = [
   {
