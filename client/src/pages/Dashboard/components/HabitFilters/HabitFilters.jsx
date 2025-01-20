@@ -10,6 +10,7 @@ const HabitFilters = ({
   onSearchChange,
   selectedDate,
   onDateChange,
+  hasHabitsForDate,
 }) => {
   return (
     <Box
@@ -54,7 +55,11 @@ const HabitFilters = ({
       </Box>
 
       {/* Date Picker */}
-      <DatePicker selectedDate={selectedDate} onDateChange={onDateChange} />
+      <DatePicker
+        selectedDate={selectedDate}
+        onDateChange={onDateChange}
+        hasHabitsForDate={hasHabitsForDate}
+      />
     </Box>
   );
 };
@@ -64,6 +69,7 @@ HabitFilters.propTypes = {
   onSearchChange: PropTypes.func.isRequired,
   selectedDate: PropTypes.instanceOf(Date).isRequired,
   onDateChange: PropTypes.func.isRequired,
+  hasHabitsForDate: PropTypes.func,
 };
 
 export default HabitFilters;

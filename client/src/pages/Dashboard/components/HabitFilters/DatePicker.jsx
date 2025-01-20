@@ -6,7 +6,7 @@ import { COLORS } from "../../../../theme/constants";
 import { formatDate } from "../../../../utils/dateUtils";
 import Calendar from "./Calendar";
 
-const DatePicker = ({ selectedDate, onDateChange }) => {
+const DatePicker = ({ selectedDate, onDateChange, hasHabitsForDate }) => {
   const [open, setOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
@@ -14,15 +14,21 @@ const DatePicker = ({ selectedDate, onDateChange }) => {
   const handleClose = () => setOpen(false);
 
   const handlePrevMonth = () => {
-    setCurrentMonth(
-      new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1),
+    const newDate = new Date(
+      currentMonth.getFullYear(),
+      currentMonth.getMonth() - 1,
     );
+    setCurrentMonth(newDate);
+    onDateChange(new Date(newDate.getFullYear(), newDate.getMonth(), 1));
   };
 
   const handleNextMonth = () => {
-    setCurrentMonth(
-      new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1),
+    const newDate = new Date(
+      currentMonth.getFullYear(),
+      currentMonth.getMonth() + 1,
     );
+    setCurrentMonth(newDate);
+    onDateChange(new Date(newDate.getFullYear(), newDate.getMonth(), 1));
   };
 
   return (
@@ -85,6 +91,7 @@ const DatePicker = ({ selectedDate, onDateChange }) => {
             onDateChange(date);
             handleClose();
           }}
+          hasHabitsForDate={hasHabitsForDate}
         />
       </Dialog>
     </>
@@ -94,6 +101,7 @@ const DatePicker = ({ selectedDate, onDateChange }) => {
 DatePicker.propTypes = {
   selectedDate: PropTypes.instanceOf(Date).isRequired,
   onDateChange: PropTypes.func.isRequired,
+  hasHabitsForDate: PropTypes.func,
 };
 
 export default DatePicker;

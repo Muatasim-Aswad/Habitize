@@ -9,6 +9,7 @@ export const useHabits = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [monthlyHabits, setMonthlyHabits] = useState({});
 
   // Update filtered habits whenever habits change
   useEffect(() => {
@@ -23,6 +24,18 @@ export const useHabits = () => {
       setFilteredHabits(habits);
     }
   }, [habits, searchValue]);
+
+  // Fetch monthly habits data
+  const fetchMonthlyHabits = async () => {
+    try {
+      const response = await habitService.getMonthlyHabits(selectedDate);
+      if (response.days) {
+        setMonthlyHabits(response.days);
+      }
+    } catch (error) {
+      setError("Failed to fetch monthly habits");
+    }
+  };
 
   // Fetch habits from API
   const fetchHabits = async () => {
@@ -40,7 +53,13 @@ export const useHabits = () => {
 
   useEffect(() => {
     fetchHabits();
+    fetchMonthlyHabits();
   }, [selectedDate]);
+
+  const hasHabitsForDate = (date) => {
+    const day = date.getDate().toString();
+    return monthlyHabits[day] || false;
+  };
 
   const updateHabitState = (habitId, updatedCount) => {
     setHabits((prevHabits) =>
@@ -166,6 +185,7 @@ export const useHabits = () => {
     handleDelete,
     handleSearchChange,
     handleDateChange,
+    hasHabitsForDate,
   };
 };
 
