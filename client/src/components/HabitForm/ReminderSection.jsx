@@ -5,7 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import PropTypes from "prop-types";
 
-const ReminderSection = ({ reminder, setReminder }) => {
+const ReminderSection = ({ reminder, setReminder, maxLength }) => {
   return (
     <Box
       sx={{
@@ -54,6 +54,9 @@ const ReminderSection = ({ reminder, setReminder }) => {
             borderRadius: "8px",
           },
         }}
+        inputProps={{
+          maxLength: maxLength,
+        }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -76,6 +79,7 @@ ReminderSection.propTypes = {
     message: PropTypes.string,
   }).isRequired,
   setReminder: PropTypes.func.isRequired,
+  maxLength: PropTypes.number.isRequired,
 };
 
 export default ReminderSection;
