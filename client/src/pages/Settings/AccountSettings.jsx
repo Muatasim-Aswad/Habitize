@@ -19,8 +19,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { authService } from "../services/api";
-import { usePasswordValidation } from "../hooks/usePasswordValidation";
+import { authService } from "../../services/api";
+import { usePasswordValidation } from "../../hooks/usePasswordValidation";
 
 const AccountSettings = ({
   initialUserData = { email: "", name: "" },
