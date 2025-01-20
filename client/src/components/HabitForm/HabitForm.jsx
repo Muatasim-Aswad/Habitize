@@ -4,7 +4,7 @@ import { Button, Typography, Box, Snackbar } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import EditIcon from "@mui/icons-material/Edit";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import IconSelectorModal from "./IconSelectorModal";
 import NameInput from "./NameInput";
 import ReminderSection from "./ReminderSection";
@@ -17,6 +17,7 @@ const HabitForm = ({ habit, setHabit, onSave }) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -39,7 +40,8 @@ const HabitForm = ({ habit, setHabit, onSave }) => {
       setSnackbarOpen(true);
 
       setTimeout(() => {
-        navigate("/app/dashboard");
+        const previousRoute = location.state?.from || "/app/dashboard";
+        navigate(previousRoute);
       }, 2000);
     } catch (error) {
       setSnackbarMessage(error.message || "Failed to submit.");
