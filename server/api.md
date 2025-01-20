@@ -40,6 +40,7 @@ Base URL: `/api`
 | 14    | `GET`           | `/habits/progress`                                   | Fetch habit names, icons, and progress percentage.  | ❌ No            | ✅ Yes        |
 |       |                 |                                                      |                                                     |                  |               |
 | 15    | `PATCH`         | `/check-ins/:checkInId`                              | Update the `times_done` field of a check-in record. | ✅ Yes           | ✅ Yes        |
+| 16    | `GET`           | `/habits/month`<br> `?month=1` <br> `&year=2025`     | Check if days of a month has active habits          | ❌ No            | ✅ Yes        |
 
 ---
 
@@ -470,6 +471,50 @@ See **_(1)_**. All fields are optional.
 {
   "success": true,
   "message": "check-in updated successfully."
+}
+```
+
+#### 16. `GET /api/habits/month?month=01&year=2026`
+
+##### Title: Success Response
+
+```json
+{
+  "month": "01",
+  "year": "2026",
+  "days": {
+    "1": true,
+    "2": false,
+    "3": false,
+    "4": false,
+    "5": false,
+    "6": false,
+    "7": false,
+    "8": false,
+    "9": false,
+    "10": false,
+    "11": false,
+    "12": false,
+    "13": false,
+    "14": false,
+    "15": false,
+    "16": false,
+    "17": false,
+    "18": false,
+    "19": false,
+    "20": false,
+    "21": false,
+    "22": false,
+    "23": false,
+    "24": false,
+    "25": false,
+    "26": false,
+    "27": false,
+    "28": false,
+    "29": false,
+    "30": false,
+    "31": false
+  }
 }
 ```
 

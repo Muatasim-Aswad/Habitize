@@ -12,6 +12,7 @@ import updateHabit from "../controllers/habit/updateHabit.js";
 import deleteHabit from "../controllers/habit/deleteHabit.js";
 import getHabits from "../controllers/habit/getHabits.js";
 import getHabitsProgress from "../controllers/habit/getHabitsProgress.js";
+import checkMonthHabits from "../controllers/habit/checkMonthHabits.js";
 
 const habitRouter = express.Router(); // api/habits
 
@@ -20,6 +21,7 @@ habitRouter.use(authenticate); // Middleware for all the following routes
 // All habits routes
 habitRouter.get("", getHabits);
 habitRouter.get("/progress", getHabitsProgress);
+habitRouter.get("/month", checkMonthHabits);
 
 // Habit CRUD routes
 habitRouter.post("", validateFullHabit, createHabit);
