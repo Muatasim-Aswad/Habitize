@@ -14,11 +14,13 @@ import ProgressCard from "./ProgressCard";
 import { userService } from "../../services/api/userService";
 import { useLocation, useNavigate } from "react-router-dom";
 import Instructions from "../../components/fallback/Instructions";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 const Progress = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [habits, setHabits] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [filteredHabits, setFilteredHabits] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,8 +30,12 @@ const Progress = () => {
 
   useEffect(() => {
     const fetchHabits = async () => {
+      setIsLoading(true);
+
       const habits = await userService.getHabitsProgress();
+
       setHabits(habits.habits);
+      setIsLoading(false);
     };
 
     fetchHabits();
@@ -104,7 +110,12 @@ const Progress = () => {
         </MenuItem>
       </Menu>
 
-      {habits.length === 0 && <Instructions />}
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        habits.length === 0 && <Instructions />
+      )}
+
       <Grid container spacing={2} style={{ marginTop: "20px" }}>
         {filteredHabits.map((habit) => (
           <ProgressCard
