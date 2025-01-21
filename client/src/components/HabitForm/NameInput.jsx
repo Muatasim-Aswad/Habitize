@@ -3,7 +3,7 @@ import React from "react";
 import { TextField } from "@mui/material";
 import PropTypes from "prop-types";
 
-const NameInput = ({ name, setName }) => {
+const NameInput = ({ name, setName, maxLength }) => {
   return (
     <TextField
       label="Name"
@@ -20,6 +20,9 @@ const NameInput = ({ name, setName }) => {
           borderRadius: "8px",
         },
       }}
+      inputProps={{
+        maxLength: maxLength,
+      }}
     />
   );
 };
@@ -27,6 +30,7 @@ const NameInput = ({ name, setName }) => {
 NameInput.propTypes = {
   name: PropTypes.string.isRequired,
   setName: PropTypes.func.isRequired,
+  maxLength: PropTypes.number.isRequired,
 };
 
 export default NameInput;

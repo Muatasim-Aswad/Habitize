@@ -83,6 +83,7 @@ const HabitForm = ({ habit, setHabit, onSave }) => {
         <NameInput
           name={habit.name}
           setName={(name) => setHabit({ ...habit, name })}
+          maxLength={20}
         />
 
         <GoalSection
@@ -98,6 +99,7 @@ const HabitForm = ({ habit, setHabit, onSave }) => {
         <ReminderSection
           reminder={habit.reminder}
           setReminder={(reminder) => setHabit({ ...habit, reminder })}
+          maxLength={50}
         />
 
         <Button
