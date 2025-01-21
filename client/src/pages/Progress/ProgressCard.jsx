@@ -42,18 +42,19 @@ const ProgressCard = ({ habit, isMobile, handleClick }) => {
           <Box
             sx={{
               position: "relative",
-              width: isMobile ? 90 : 110, // Adjust based on size
-              height: isMobile ? 90 : 110, // Adjust based on size
+              width: isMobile ? 75 : 110,
+              height: isMobile ? 75 : 110,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              marginTop: isMobile ? 2 : 0,
             }}
           >
             {/* Outer circle */}
             <CircularProgress
               variant="determinate"
               value={habit.progress}
-              size={isMobile ? 90 : 110}
+              size={isMobile ? 75 : 110}
               thickness={3}
               sx={{ position: "absolute" }}
             />
@@ -61,12 +62,11 @@ const ProgressCard = ({ habit, isMobile, handleClick }) => {
             <CircularProgress
               variant="determinate"
               value={habit.commitment}
-              size={isMobile ? 50 : 70}
+              size={isMobile ? 45 : 70}
               thickness={4}
               sx={{ position: "absolute" }}
             />
             {/* Icon */}
-
             <IconRenderer iconName={habit.icon} size={isMobile ? 30 : 40} />
           </Box>
           {/* Text content */}
