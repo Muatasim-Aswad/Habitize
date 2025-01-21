@@ -12,7 +12,7 @@ import {
 import TimelineIcon from "@mui/icons-material/Timeline";
 import ProgressCard from "./ProgressCard";
 import { userService } from "../../services/api/userService";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Instructions from "../../components/fallback/Instructions";
 
 const Progress = () => {
@@ -21,6 +21,7 @@ const Progress = () => {
   const [habits, setHabits] = useState([]);
   const [filteredHabits, setFilteredHabits] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -112,7 +113,9 @@ const Progress = () => {
             isMobile={isMobile}
             style={{ cursor: "pointer" }}
             handleClick={(habitId) => {
-              navigate(`/app/edit-habit/${habitId}`);
+              navigate(`/app/edit-habit/${habitId}`, {
+                state: { from: location.pathname },
+              });
             }}
           />
         ))}
