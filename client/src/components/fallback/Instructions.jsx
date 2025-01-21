@@ -4,11 +4,8 @@ import { Add, Home, Timeline, LibraryAdd } from "@mui/icons-material";
 import InstructionItem from "./InstructionItem";
 import exampleHabits from "./exampleHabits";
 import { habitService } from "../../services/api/habitService"; // Import habitService for API calls
-import { useNavigate } from "react-router-dom";
 
 const Instructions = () => {
-  const navigate = useNavigate();
-
   const handleAddExampleHabits = async () => {
     try {
       await Promise.all(
