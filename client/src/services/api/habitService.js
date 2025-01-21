@@ -51,6 +51,16 @@ const updateCheckIn = async (checkInId, times_done) => {
   return response;
 };
 
+// GET /habits/month?month=MM&year=YYYY
+const getMonthlyHabits = async (date = new Date()) => {
+  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // 1 => "01"
+  const year = date.getFullYear().toString();
+  const response = await httpClient.get(
+    `/habits/month?month=${month}&year=${year}`,
+  );
+  return response;
+};
+
 export const habitService = {
   getHabits,
   getHabitProgress,
@@ -59,4 +69,5 @@ export const habitService = {
   updateHabit,
   deleteHabit,
   updateCheckIn,
+  getMonthlyHabits,
 };

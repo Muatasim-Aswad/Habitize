@@ -25,6 +25,7 @@ const Dashboard = () => {
     handleDelete: handleDeleteHabit,
     handleSearchChange,
     handleDateChange,
+    hasHabitsForDate,
   } = useHabits();
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -88,6 +89,7 @@ const Dashboard = () => {
           onSearchChange={handleSearchChange}
           selectedDate={selectedDate}
           onDateChange={handleDateChange}
+          hasHabitsForDate={hasHabitsForDate}
         />
 
         <Box
