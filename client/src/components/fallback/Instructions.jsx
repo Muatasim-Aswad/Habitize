@@ -4,14 +4,20 @@ import { Add, Home, Timeline, LibraryAdd } from "@mui/icons-material";
 import InstructionItem from "./InstructionItem";
 import exampleHabits from "./exampleHabits";
 import { habitService } from "../../services/api/habitService"; // Import habitService for API calls
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Instructions = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const handleAddExampleHabits = async () => {
     try {
       await Promise.all(
         exampleHabits.map((habit) => habitService.createHabit(habit)),
       );
-      window.location.reload();
+
+      if (location.pathname === "/app/dashboard") window.location.reload();
+      else navigate("/app/dashboard");
     } catch (error) {
       alert("Failed to add example habits. Please try again.");
     }
@@ -43,15 +49,22 @@ const Instructions = () => {
       icon: <LibraryAdd />, // Changed icon to match the "Add" action
       buttonText: "Quick Start", // Shortened the button text
       onClick: handleAddExampleHabits,
-      description: `
-      Get started by adding some <strong>example habits</strong>! You can delete these habits anytime.<br />
-      <ul>
-        <li><strong>Meditate:</strong> Build mindfulness with a daily meditation session. 
-            This habit runs from <strong>January 1, 2025</strong> to <strong>December 31, 2025</strong>.</li>
-        <li><strong>Strength Training:</strong> Improve your fitness with two sessions per week. 
-            This habit runs from <strong>January 1, 2025</strong> to <strong>June 30, 2025</strong>.</li>
-      </ul>
-      `,
+      description: (() => {
+        // Calculate start and end dates dynamically
+        const startDay = new Date();
+        const endDay = new Date(startDay.getTime() + 40 * 24 * 60 * 60 * 1000); // 40 days later
+        endDay.setUTCHours(23, 59, 59, 999);
+
+        return `
+          Get started by adding some <strong>example habits</strong>! You can delete these habits anytime.<br />
+          <ul>
+            <li><strong>Meditate:</strong> Build mindfulness with a daily meditation session. 
+                This habit runs from <strong>${startDay.toDateString()}</strong> to <strong>${endDay.toDateString()}</strong>.</li>
+            <li><strong>Running:</strong> Improve your fitness by running 10 kilometers per week. 
+                This habit runs from <strong>${startDay.toDateString()}</strong> to <strong>${endDay.toDateString()}</strong>.</li>
+          </ul>
+        `;
+      })(),
     },
   ];
 

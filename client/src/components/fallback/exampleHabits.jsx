@@ -1,3 +1,7 @@
+const startDay = new Date();
+const endDay = new Date(startDay.getTime() + 40 * 24 * 60 * 60 * 1000);
+endDay.setUTCHours(23, 59, 59, 999);
+
 const exampleHabits = [
   {
     name: "Meditate",
@@ -8,9 +12,8 @@ const exampleHabits = [
       frequency: "daily",
     },
     period: {
-      start: "2025-01-01T00:00:00.000Z",
-
-      end: "2025-12-31T23:59:59.999Z",
+      start: startDay.toISOString(),
+      end: endDay.toISOString(),
     },
     categories: [],
     reminders: [
@@ -21,22 +24,22 @@ const exampleHabits = [
     ],
   },
   {
-    name: "Strength Training",
-    icon: "FitnessCenter",
+    name: "Running",
+    icon: "DirectionsRun",
     goal: {
-      number: 2,
-      unit: "sessions",
+      number: 10,
+      unit: "kilometers",
       frequency: "weekly",
     },
     period: {
-      start: "2025-01-01T00:00:00.000Z",
-      end: "2025-06-30T23:59:59.999Z",
+      start: startDay.toISOString(),
+      end: endDay.toISOString(),
     },
     categories: [],
     reminders: [
       {
         time: "1970-01-01T07:00:00.000Z",
-        message: "It's strength training day! Let's get to work.",
+        message: "Lace up and hit the road.",
       },
     ],
   },
