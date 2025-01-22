@@ -184,6 +184,9 @@ const AccountSettings = ({
               </InputAdornment>
             ),
           }}
+          inputProps={{
+            maxLength: 30,
+          }}
         />
         <TextField
           label="Current Password"
@@ -248,17 +251,17 @@ const AccountSettings = ({
           }}
         />
         {passwordErrors.length > 0 && (
-          <Typography variant="caption" color="error" sx={{ mt: 0.5 }}>
+          <Typography variant="caption" color="error" sx={{ mt: -3 }}>
             {passwordErrors[0]}
           </Typography>
         )}
         {userData.newPassword && (
-          <Box sx={{ mt: 1 }}>
+          <Box sx={{ mt: -2 }}>
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                mb: 0.5,
+                mb: 0.2,
               }}
             >
               <Typography variant="caption" color="textSecondary">
@@ -309,7 +312,7 @@ const AccountSettings = ({
         />
         {userData.confirmPassword &&
           userData.newPassword !== userData.confirmPassword && (
-            <Typography variant="caption" color="error" sx={{ mt: 0.5 }}>
+            <Typography variant="caption" color="error" sx={{ mt: -3 }}>
               Passwords do not match.
             </Typography>
           )}
