@@ -25,46 +25,59 @@ const Instructions = () => {
 
   const instructionItems = [
     {
+      icon: <LibraryAdd />,
+      buttonText: "Quick Start",
+      onClick: handleAddExampleHabits,
+      description: (() => {
+        const startDay = new Date();
+        return `
+          Get started by adding some <strong>example habits</strong>! You can delete these habits anytime.<br />
+          <ul style="padding-left: 1rem;">
+            <li><strong>Meditate:</strong> Build mindfulness with a daily meditation session. 
+                This habit runs from <strong>${startDay.toDateString()}</strong> for <strong>40 days</strong>.</li>
+            <li><strong>Running:</strong> Improve your fitness by running 10 kilometers per week. 
+                This habit runs from <strong>${startDay.toDateString()}</strong> for <strong>4 weeks</strong>.</li>
+          </ul>
+        `;
+      })(),
+    },
+    {
       icon: <Add />,
       buttonText: "Add Habit",
       linkTo: "/app/add-habit",
-      description: "To <strong>create a new habit</strong>, use this button.",
+      description:
+        "To <strong>add a new habit</strong>, use the <strong>+</strong> button.",
     },
     {
       icon: <Home />,
       buttonText: "Dashboard",
       linkTo: "/app/dashboard",
-      description: `Once a habit is created, you can <strong>record your progress</strong> in the dashboard page. <br />
-      You can also <strong>delete</strong> or <strong>edit</strong> your habits here. <br />
-      Using the date selector, you can record your progress on different days.`,
+      description: `
+        In the Dashboard, you can: <br />
+        <ul style="padding-left: 1rem;">
+          <li><strong>Add, edit, or delete a habit.</strong></li>
+          <li><strong>Record your progress</strong> for a specific day using the date selector.</li>
+          <li>Filter habits by name to quickly find what you're looking for.</li>
+        </ul>
+      `,
     },
     {
       icon: <Timeline />,
       buttonText: "Progress",
       linkTo: "/app/progress",
-      description: `You can <strong>track your progress</strong> over time in the progress page. <br />
-      There you can see all your habits and <strong>edit</strong> them as well.`,
-    },
-    {
-      icon: <LibraryAdd />, // Changed icon to match the "Add" action
-      buttonText: "Quick Start", // Shortened the button text
-      onClick: handleAddExampleHabits,
-      description: (() => {
-        // Calculate start and end dates dynamically
-        const startDay = new Date();
-        const endDay = new Date(startDay.getTime() + 40 * 24 * 60 * 60 * 1000); // 40 days later
-        endDay.setUTCHours(23, 59, 59, 999);
-
-        return `
-          Get started by adding some <strong>example habits</strong>! You can delete these habits anytime.<br />
-          <ul>
-            <li><strong>Meditate:</strong> Build mindfulness with a daily meditation session. 
-                This habit runs from <strong>${startDay.toDateString()}</strong> to <strong>${endDay.toDateString()}</strong>.</li>
-            <li><strong>Running:</strong> Improve your fitness by running 10 kilometers per week. 
-                This habit runs from <strong>${startDay.toDateString()}</strong> to <strong>${endDay.toDateString()}</strong>.</li>
-          </ul>
-        `;
-      })(),
+      description: `
+        On the Progress page, you can: <br />
+        <ul style="padding-left: 1rem;">
+          <li><strong>Track your habits' progress</strong> over time toward your end goal, and your commitment up to today.</li>
+          <li><strong>Edit or delete a habit</strong> by clicking on it directly.</li>
+          <li>You will find all your habits here. You can filter them to only view:
+            <ul style="padding-left: 2rem;">
+              <li>Habits that are currently in progress.</li>
+              <li>Completed or older habits.</li>
+            </ul>
+          </li>
+        </ul>
+      `,
     },
   ];
 

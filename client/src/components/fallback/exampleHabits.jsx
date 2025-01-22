@@ -1,6 +1,8 @@
 const startDay = new Date();
-const endDay = new Date(startDay.getTime() + 40 * 24 * 60 * 60 * 1000);
-endDay.setUTCHours(23, 59, 59, 999);
+const days40 = new Date(startDay.getTime() + 40 * 24 * 60 * 60 * 1000);
+days40.setUTCHours(23, 59, 59, 999);
+
+const weeks4 = new Date(startDay.getTime() + 4 * 7 * 24 * 60 * 60 * 1000);
 
 const exampleHabits = [
   {
@@ -13,7 +15,7 @@ const exampleHabits = [
     },
     period: {
       start: startDay.toISOString(),
-      end: endDay.toISOString(),
+      end: days40.toISOString(),
     },
     categories: [],
     reminders: [
@@ -33,7 +35,7 @@ const exampleHabits = [
     },
     period: {
       start: startDay.toISOString(),
-      end: endDay.toISOString(),
+      end: weeks4.toISOString(),
     },
     categories: [],
     reminders: [
