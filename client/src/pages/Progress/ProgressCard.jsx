@@ -12,19 +12,19 @@ import IconRenderer from "../../components/IconRenderer";
 
 const ProgressCard = ({ habit, isMobile, handleClick }) => {
   return (
-    <Grid item xs={6} sm={6} md={4} key={habit._id}>
+    <Grid item xs={6} md={4} key={habit._id}>
       <Card
         sx={{
           backgroundColor: "#FFC29780",
-          borderRadius: "12px",
-          padding: 1,
+          borderRadius: "0.75rem",
+          padding: "0.5rem",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          width: isMobile ? "100%" : "80%",
+          justifyContent: "space-between",
+          width: "100%",
           aspectRatio: "1 / 1",
-          mx: "0",
+          mx: "auto",
           overflow: "hidden",
         }}
       >
@@ -35,52 +35,107 @@ const ProgressCard = ({ habit, isMobile, handleClick }) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "space-between",
+            width: "100%",
+            height: "100%",
+            padding: "0.5rem !important",
           }}
         >
-          {/* Centering the circles and icon */}
+          {/* Icon Section - Upper Layer */}
           <Box
             sx={{
               position: "relative",
-              width: isMobile ? 90 : 110, // Adjust based on size
-              height: isMobile ? 90 : 110, // Adjust based on size
+              width: "100%",
+              height: "50%",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              flexShrink: 0,
             }}
           >
-            {/* Outer circle */}
-            <CircularProgress
-              variant="determinate"
-              value={habit.progress}
-              size={isMobile ? 90 : 110}
-              thickness={3}
-              sx={{ position: "absolute" }}
-            />
-            {/* Inner circle */}
-            <CircularProgress
-              variant="determinate"
-              value={habit.commitment}
-              size={isMobile ? 50 : 70}
-              thickness={4}
-              sx={{ position: "absolute" }}
-            />
-            {/* Icon */}
-
-            <IconRenderer iconName={habit.icon} size={isMobile ? 30 : 40} />
+            <Box
+              sx={{
+                position: "relative",
+                width: isMobile ? "4rem" : "6.875rem",
+                height: isMobile ? "4rem" : "6.875rem",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <CircularProgress
+                variant="determinate"
+                value={habit.progress}
+                size={isMobile ? "4rem" : "6.875rem"}
+                thickness={3}
+                sx={{ position: "absolute" }}
+              />
+              <CircularProgress
+                variant="determinate"
+                value={habit.commitment}
+                size={isMobile ? "2.5rem" : "4.375rem"}
+                thickness={4}
+                sx={{ position: "absolute" }}
+              />
+              <IconRenderer
+                iconName={habit.icon}
+                size={isMobile ? "1.5625rem" : "2.5rem"}
+              />
+            </Box>
           </Box>
-          {/* Text content */}
-          <Box sx={{ textAlign: "center", marginTop: 2 }}>
+
+          {/* Text Section - Lower Layer */}
+          <Box
+            sx={{
+              width: "100%",
+              height: "50%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              overflow: "hidden",
+            }}
+          >
             <Typography
               variant={isMobile ? "body1" : "h6"}
-              style={{ marginTop: "10px" }}
+              sx={{
+                marginBottom: "0.25rem",
+                fontSize: isMobile ? "0.875rem" : "1.25rem",
+                fontWeight: "medium",
+                width: "100%",
+                textAlign: "center",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
             >
               {habit.name}
             </Typography>
-            <Typography variant={isMobile ? "body2" : "body1"}>
+            <Typography
+              variant="body2"
+              sx={{
+                marginBottom: "0.25rem",
+                fontSize: isMobile ? "0.75rem" : "0.875rem",
+                width: "100%",
+                textAlign: "center",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               Commitment: {habit.commitment}%
             </Typography>
-            <Typography variant={isMobile ? "body2" : "body1"}>
+            <Typography
+              variant="body2"
+              sx={{
+                fontSize: isMobile ? "0.75rem" : "0.875rem",
+                width: "100%",
+                textAlign: "center",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               Progress: {habit.progress}%
             </Typography>
           </Box>
