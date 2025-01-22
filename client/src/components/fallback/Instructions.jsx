@@ -53,10 +53,9 @@ const Instructions = () => {
       buttonText: "Dashboard",
       linkTo: "/app/dashboard",
       description: `
-        In the Dashboard, you can: <br />
         <ul style="padding-left: 1rem;">
-          <li><strong>Add, edit, or delete a habit.</strong></li>
           <li><strong>Record your progress</strong> for a specific day using the date selector.</li>
+          <li><strong>Add, edit, or delete a habit.</strong></li>
           <li>Filter habits by name to quickly find what you're looking for.</li>
         </ul>
       `,
@@ -66,16 +65,10 @@ const Instructions = () => {
       buttonText: "Progress",
       linkTo: "/app/progress",
       description: `
-        On the Progress page, you can: <br />
         <ul style="padding-left: 1rem;">
-          <li><strong>Track your habits' progress</strong> over time toward your end goal, and your commitment up to today.</li>
+          <li><strong>Track your progress</strong> over time toward your end goal, and your commitment up to today.</li>
           <li><strong>Edit or delete a habit</strong> by clicking on it directly.</li>
-          <li>You will find all your habits here. You can filter them to only view:
-            <ul style="padding-left: 2rem;">
-              <li>Habits that are currently in progress.</li>
-              <li>Completed or older habits.</li>
-            </ul>
-          </li>
+          <li>All your habits are here. You can filter them to view only those that are in progress or completed.</li>
         </ul>
       `,
     },
