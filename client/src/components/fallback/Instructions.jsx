@@ -1,42 +1,91 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
-import { Add, Home, Timeline } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
+import { Add, Home, Timeline, LibraryAdd } from "@mui/icons-material";
+import InstructionItem from "./InstructionItem";
+import exampleHabits from "./exampleHabits";
+import { habitService } from "../../services/api/habitService"; // Import habitService for API calls
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Instructions = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleAddExampleHabits = async () => {
+    try {
+      await Promise.all(
+        exampleHabits.map((habit) => habitService.createHabit(habit)),
+      );
+
+      if (location.pathname === "/app/dashboard") window.location.reload();
+      else navigate("/app/dashboard");
+    } catch (error) {
+      alert("Failed to add example habits. Please try again.");
+    }
+  };
+
+  const instructionItems = [
+    {
+      icon: <LibraryAdd />,
+      buttonText: "Quick Start",
+      onClick: handleAddExampleHabits,
+      description: (() => {
+        const startDay = new Date();
+        return `
+          Get started by adding some <strong>example habits</strong>! You can delete these habits anytime.<br />
+          <ul style="padding-left: 1rem;">
+            <li><strong>Meditate:</strong> Build mindfulness with a daily meditation session. 
+                This habit runs from <strong>${startDay.toDateString()}</strong> for <strong>40 days</strong>.</li>
+            <li><strong>Running:</strong> Improve your fitness by running 10 kilometers per week. 
+                This habit runs from <strong>${startDay.toDateString()}</strong> for <strong>4 weeks</strong>.</li>
+          </ul>
+        `;
+      })(),
+    },
+    {
+      icon: <Add />,
+      buttonText: "Add Habit",
+      linkTo: "/app/add-habit",
+      description:
+        "To <strong>add a new habit</strong>, use the <strong>+</strong> button.",
+    },
+    {
+      icon: <Home />,
+      buttonText: "Dashboard",
+      linkTo: "/app/dashboard",
+      description: `
+        <ul style="padding-left: 1rem;">
+          <li><strong>Record your progress</strong> for a specific day using the date selector.</li>
+          <li><strong>Add, edit, or delete a habit.</strong></li>
+          <li>Filter habits by name to quickly find what you're looking for.</li>
+        </ul>
+      `,
+    },
+    {
+      icon: <Timeline />,
+      buttonText: "Progress",
+      linkTo: "/app/progress",
+      description: `
+        <ul style="padding-left: 1rem;">
+          <li><strong>Track your progress</strong> over time toward your end goal, and your commitment up to today.</li>
+          <li><strong>Edit or delete a habit</strong> by clicking on it directly.</li>
+          <li>All your habits are here. You can filter them to view only those that are in progress or completed.</li>
+        </ul>
+      `,
+    },
+  ];
+
   return (
-    <Box p={3}>
-      <Box display="flex" alignItems="center" gap={2} mb={3}>
-        <Link to="/app/add-habit">
-          <Add />
-        </Link>
-        <Typography variant="body1">
-          To <strong>create a new habit</strong>, use this button.
-        </Typography>
-      </Box>
-      <Box display="flex" alignItems="center" gap={2} mb={3}>
-        <Link to="/app/dashboard">
-          <Home />
-        </Link>
-        <Typography variant="body1">
-          Once a habit is created, you can <strong>record your progress</strong>{" "}
-          in the dashboard page. <br />
-          You can also <strong>delete</strong> or <strong>edit</strong> your
-          habits here. <br />
-          Using the date selector, you can record your progress on different
-          days.
-        </Typography>
-      </Box>
-      <Box display="flex" alignItems="center" gap={2}>
-        <Link to="/app/progress">
-          <Timeline />
-        </Link>
-        <Typography variant="body1">
-          You can <strong>track your progress</strong> over time in the progress
-          page. <br />
-          There you can see all your habits and edit them as well.
-        </Typography>
-      </Box>
+    <Box p={3} pl={0}>
+      {instructionItems.map((item, index) => (
+        <InstructionItem
+          key={index}
+          icon={item.icon}
+          buttonText={item.buttonText}
+          linkTo={item.linkTo}
+          onClick={item.onClick} // Pass the onClick handler if available
+          description={item.description}
+        />
+      ))}
     </Box>
   );
 };

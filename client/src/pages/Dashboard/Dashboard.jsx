@@ -11,6 +11,7 @@ import { useHabits } from "../../hooks/habits/useHabits";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import DashboardFallback from "../../components/fallback/DashboardFallback";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const Dashboard = () => {
     handleSearchChange,
     handleDateChange,
     hasHabitsForDate,
+    isLoading,
   } = useHabits();
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -99,7 +101,12 @@ const Dashboard = () => {
             width: "100%",
           }}
         >
-          {habits.length === 0 && <DashboardFallback />}
+          {isLoading ? (
+            <LoadingIndicator />
+          ) : (
+            habits.length === 0 && <DashboardFallback />
+          )}
+
           <HabitList
             habits={habits}
             onIncrement={handleIncrement}

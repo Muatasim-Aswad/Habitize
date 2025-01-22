@@ -11,6 +11,9 @@ import PropTypes from "prop-types";
 import IconRenderer from "../../components/IconRenderer";
 
 const ProgressCard = ({ habit, isMobile, handleClick }) => {
+  if (habit.progress > 100) habit.progress = 100;
+  if (habit.commitment > 100) habit.commitment = 100;
+
   return (
     <Grid item xs={6} md={4} key={habit._id}>
       <Card
