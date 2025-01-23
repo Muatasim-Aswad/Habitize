@@ -12,7 +12,7 @@ export default function createResetPasswordEmail(link, name, email) {
         background-color: #f9f9f9;
         margin: 0;
         padding: 0;
-        color: #333;
+        color: #000;
       }
       .email-container {
         max-width: 600px;
@@ -39,31 +39,31 @@ export default function createResetPasswordEmail(link, name, email) {
         margin-top: 0;
       }
       .reset-button {
-        text-align: center;
         display: inline-block;
         margin: 20px 0;
         padding: 10px 20px;
         background-color: #4F8A8B;
-        color: #ffffff;
-        text-decoration: none;
+        color: #ffffff !important; /* Add !important to enforce the white color */
+        text-decoration: none; /* Remove underline */
         border-radius: 5px;
         font-size: 16px;
         font-weight: bold;
+        text-align: center;
       }
 
-      .reset-button a {
-        text-decoration: none;
-        color: white;
-      }
       .reset-button:hover {
-        background-color: #4F8A8B;
-        padding: 12px 24px;
-        border-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        background-color: #3A6D6E;
+        text-decoration: none; /* Ensure underline doesn't appear on hover */
       }
+
       .instructions {
         margin-top: 20px;
         font-size: 14px;
         color: #555;
+      }
+      .instructions p {
+        margin: 0;
+        padding: 5px 0;
       }
       .footer {
         text-align: center;
@@ -83,11 +83,11 @@ export default function createResetPasswordEmail(link, name, email) {
         <h2>Hi ${name},</h2>
         <p>We received a request to reset your password for your account. Click the button below to reset your password:</p>
         <a href="${link}" class="reset-button">Reset Your Password</a>
-        <p>If the button above doesn’t work, copy and paste the following link into your browser:</p>
+        <p>If the button above doesn’t work, click or copy and paste the following link into your browser:</p>
         <p><a href="${link}">${link}</a></p>
         <div class="instructions">
+          <p>This link will expire shortly. If it is expired, request a new one.</p>
           <p>If you did not request a password reset, you can safely ignore this email. Rest assured, your account is safe.</p>
-          <p> This link will expire shortly. If it is expired request a new one.</p>
           <p>If you have any questions, feel free to reach out to our support team.</p>
         </div>
       </div>
@@ -98,6 +98,5 @@ export default function createResetPasswordEmail(link, name, email) {
     </div>
   </body>
   </html>
-  
-    `;
+  `;
 }

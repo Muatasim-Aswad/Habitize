@@ -11,6 +11,8 @@ import ReminderSection from "./ReminderSection";
 import GoalSection from "./GoalSection";
 import PeriodSection from "./PeriodSection";
 import PropTypes from "prop-types";
+import ConfirmationDialog from "../common/ConfirmationDialog/ConfirmationDialog";
+import useHabits from "../../hooks/habits/useHabits";
 
 const HabitForm = ({ habit, setHabit, onSave }) => {
   const [open, setOpen] = useState(false);
@@ -21,6 +23,42 @@ const HabitForm = ({ habit, setHabit, onSave }) => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [habitToDelete, setHabitToDelete] = useState(null);
+
+  const { handleDelete, error } = useHabits();
+
+  const handleDeleteClick = () => {
+    setHabitToDelete(habit._id);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (habitToDelete) {
+      await handleDelete(habitToDelete);
+    }
+    setDeleteDialogOpen(false);
+    setHabitToDelete(null);
+
+    setSnackbarMessage("Habit deleted successfully!");
+    setSnackbarOpen(true);
+
+    setTimeout(() => {
+      const previousRoute = location.state?.from || "/app/dashboard";
+      navigate(previousRoute);
+    }, 1500);
+
+    if (error) {
+      setSnackbarMessage(error.message || "Failed to delete.");
+      setSnackbarOpen(true);
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDialogOpen(false);
+    setHabitToDelete(null);
+  };
 
   const handleIconSelect = (icon) => {
     setHabit({ ...habit, icon });
@@ -42,7 +80,7 @@ const HabitForm = ({ habit, setHabit, onSave }) => {
       setTimeout(() => {
         const previousRoute = location.state?.from || "/app/dashboard";
         navigate(previousRoute);
-      }, 2000);
+      }, 1500);
     } catch (error) {
       setSnackbarMessage(error.message || "Failed to submit.");
       setSnackbarOpen(true);
@@ -101,21 +139,48 @@ const HabitForm = ({ habit, setHabit, onSave }) => {
           setReminder={(reminder) => setHabit({ ...habit, reminder })}
           maxLength={50}
         />
-
-        <Button
-          variant="contained"
-          color="primary"
+        <Box
           sx={{
-            width: "50%",
-            maxWidth: "200px",
-            mt: 10,
-            backgroundColor: "#4F8A8B",
-            borderRadius: "8px",
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            maxWidth: "500px",
+            mt: 4,
+            gap: 3,
+            position: "relative",
+            marginBottom: "16",
           }}
-          onClick={handleSaveClick}
         >
-          Save
-        </Button>
+          {habit._id && (
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                width: "48%",
+                maxWidth: "200px",
+                backgroundColor: "#8B4F54",
+                borderRadius: "8px",
+              }}
+              onClick={handleDeleteClick}
+            >
+              Delete Habit
+            </Button>
+          )}
+
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{
+              width: "48%",
+              maxWidth: "200px",
+              backgroundColor: "#4F8A8B",
+              borderRadius: "8px",
+            }}
+            onClick={handleSaveClick}
+          >
+            Save
+          </Button>
+        </Box>
 
         <Snackbar
           open={snackbarOpen}
@@ -127,6 +192,16 @@ const HabitForm = ({ habit, setHabit, onSave }) => {
             horizontal: "center",
           }}
         />
+
+        <ConfirmationDialog
+          open={deleteDialogOpen}
+          title="Delete Habit"
+          message="Are you sure you want to delete this habit? This action cannot be undone."
+          onConfirm={handleDeleteConfirm}
+          onCancel={handleDeleteCancel}
+          confirmText="Delete"
+          cancelText="Cancel"
+        />
       </Box>
     </LocalizationProvider>
   );
@@ -134,6 +209,7 @@ const HabitForm = ({ habit, setHabit, onSave }) => {
 
 HabitForm.propTypes = {
   habit: PropTypes.shape({
+    _id: PropTypes.string,
     name: PropTypes.string,
     icon: PropTypes.string,
     goal: PropTypes.shape({
