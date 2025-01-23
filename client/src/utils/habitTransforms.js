@@ -42,6 +42,7 @@ export const transformApiToFormFormat = (apiData) => {
   if (!apiData) return null;
 
   return {
+    _id: apiData._id,
     name: apiData.name,
     icon: apiData.icon,
     goal: {
