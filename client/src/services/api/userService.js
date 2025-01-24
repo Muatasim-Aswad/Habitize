@@ -43,6 +43,22 @@ export const userService = {
     return response;
   },
 
+  // check password using the same endpoint as login
+  checkPassword: async (password) => {
+    try {
+      const response = await httpClient.post(
+        `/users/${authService.getUser().id}/check`,
+        {
+          user: { password },
+        },
+      );
+
+      return response.success;
+    } catch (error) {
+      return false;
+    }
+  },
+
   // Get current user
   getCurrentUser: () => {
     return authService.getUser();

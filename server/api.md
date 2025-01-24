@@ -22,6 +22,7 @@ Base URL: `/api`
 | 1     | `POST`          | `/users`                                             | Register a new user.                                | ✅ Yes           | ❌ No         |
 | 2     | `GET`           | `/users/:userId`                                     | Retrieve a user's details.                          | ❌ No            | ✅ Yes        |
 | 3     | `PATCH`         | `/users/:userId`                                     | Update a user's details.                            | ✅ Yes           | ✅ Yes        |
+| 4     | `POST`          | `/users/:userId/check`                               | Check the password                                  | ✅ Yes           | ✅ Yes        |
 | 4     | `DELETE`        | `/users/:userId`                                     | Delete a user account.                              | ❌ No            | ✅ Yes        |
 |       |                 |                                                      |                                                     |                  |               |
 | 5     | `POST`          | `/users/login`                                       | Authenticate a user and start a session.            | ✅ Yes           | ❌ No         |
@@ -80,6 +81,10 @@ Content Type: All requests and responses must use `application/json`.
 #### 3. `PATCH /api/users/:userId`
 
 See **_(1)_**. Fields are optional.
+
+#### 4. `POST /api/users/:userId/check`
+
+See **_(1)_**. Only password.
 
 #### 5. `POST /api/users/login`
 
@@ -185,6 +190,21 @@ See **_(1)_**. All fields are optional.
   }
 }
 ```
+
+#### 4. `POST /api/users/:userId/check`
+
+##### Title: Success Response
+
+```json
+{
+  "success": true,
+  "message": "Password is correct"
+}
+```
+
+##### Title: Failure Response
+
+`Bad Request 400`
 
 #### 4. `DELETE /api/users/:userId`
 

@@ -9,6 +9,7 @@ import loginUser from "../controllers/user/loginUser.js";
 import logoutUser from "../controllers/user/logoutUser.js";
 import sendResetLink from "../controllers/user/sendResetLink.js";
 import logoutUserSilent from "../controllers/user/logoutUserSilent.js";
+import checkPassword from "../controllers/user/checkPassword.js";
 
 // Middleware
 import authenticate from "../middleware/authenticate.js";
@@ -48,5 +49,6 @@ userRouter.use("/:userId", authenticate, authorize); // Middleware for all route
 userRouter.get("/:userId", getUser);
 userRouter.patch("/:userId", validateUpdatingUser, updateUser);
 userRouter.delete("/:userId", deleteUser);
+userRouter.post("/:userId/check", checkPassword);
 
 export default userRouter;
