@@ -17,7 +17,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../../services/api";
 import { usePasswordValidation } from "../../hooks/usePasswordValidation";
-import DeleteDialog from "../../components/DeleteDialoge";
+import DeleteDialog from "../../components/DeleteDialog";
 
 const AccountSettings = ({
   initialUserData = { email: "", name: "" },

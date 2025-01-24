@@ -33,6 +33,7 @@ const DeleteDialog = ({
         sx={{
           padding: "1rem",
           paddingTop: 0,
+          paddingBottom: "0.5rem",
         }}
       >
         <Button
