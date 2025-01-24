@@ -382,14 +382,31 @@ const AccountSettings = ({
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelDelete} color="primary">
+          <Button
+            onClick={handleCancelDelete}
+            color="primary"
+            sx={{
+              backgroundColor: "#f5f5f5",
+              fontWeight: "600",
+              "&:hover": {
+                backgroundColor: "#e0e0e0",
+              },
+            }}
+          >
             Cancel
           </Button>
           <Button
             onClick={handleConfirmDelete}
-            color="primary"
             variant="contained"
             autoFocus
+            sx={{
+              backgroundColor: "#8B4F54",
+              color: "#fff",
+              fontWeight: "600",
+              "&:hover": {
+                backgroundColor: "#733C44",
+              },
+            }}
           >
             Yes
           </Button>
