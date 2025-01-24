@@ -104,7 +104,24 @@ const AccountSettings = ({
     }, 1000);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    //check if user entered current password
+
+    if (!userData.currentPassword) {
+      setSnackbarMessage(
+        "To delete your account, please enter your current password.",
+      );
+      setSnackbarOpen(true);
+      return;
+    }
+
+    const isValid = await userService.checkPassword(userData.currentPassword);
+    if (!isValid) {
+      setSnackbarMessage("Current password is incorrect.");
+      setSnackbarOpen(true);
+      return;
+    }
+
     setOpenDeleteDialog(true);
   };
 
