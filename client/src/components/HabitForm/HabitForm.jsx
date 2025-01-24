@@ -11,8 +11,8 @@ import ReminderSection from "./ReminderSection";
 import GoalSection from "./GoalSection";
 import PeriodSection from "./PeriodSection";
 import PropTypes from "prop-types";
-import ConfirmationDialog from "../common/ConfirmationDialog/ConfirmationDialog";
 import useHabits from "../../hooks/habits/useHabits";
+import DeleteDialog from "../DeleteDialog";
 
 const HabitForm = ({ habit, setHabit, onSave }) => {
   const [open, setOpen] = useState(false);
@@ -192,15 +192,12 @@ const HabitForm = ({ habit, setHabit, onSave }) => {
             horizontal: "center",
           }}
         />
-
-        <ConfirmationDialog
+        <DeleteDialog
           open={deleteDialogOpen}
-          title="Delete Habit"
-          message="Are you sure you want to delete this habit? This action cannot be undone."
-          onConfirm={handleDeleteConfirm}
+          title="Delete Habit!"
+          description="Are you sure you want to delete this habit?"
           onCancel={handleDeleteCancel}
-          confirmText="Delete"
-          cancelText="Cancel"
+          onConfirm={handleDeleteConfirm}
         />
       </Box>
     </LocalizationProvider>

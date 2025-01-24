@@ -5,13 +5,13 @@ import HabitList from "./components/HabitList/HabitList";
 import HabitFilters from "./components/HabitFilters/HabitFilters";
 import AddHabitButton from "./components/AddHabitButton/AddHabitButton";
 import DashboardHeader from "./components/DashboardHeader/DashboardHeader";
-import ConfirmationDialog from "../../components/common/ConfirmationDialog/ConfirmationDialog";
 import BottomNavigation from "../../layouts/AppLayout/navigation/BottomNavigation";
 import { useHabits } from "../../hooks/habits/useHabits";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import DashboardFallback from "../../components/fallback/DashboardFallback";
 import LoadingIndicator from "../../components/LoadingIndicator";
+import DeleteDialog from "../../components/DeleteDialog";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -122,14 +122,12 @@ const Dashboard = () => {
 
       <BottomNavigation />
 
-      <ConfirmationDialog
+      <DeleteDialog
         open={deleteDialogOpen}
-        title="Delete Habit"
-        message="Are you sure you want to delete this habit? This action cannot be undone."
-        onConfirm={handleDeleteConfirm}
+        title="Delete Habit!"
+        description="Are you sure you want to delete this habit?"
         onCancel={handleDeleteCancel}
-        confirmText="Delete"
-        cancelText="Cancel"
+        onConfirm={handleDeleteConfirm}
       />
     </Box>
   );
