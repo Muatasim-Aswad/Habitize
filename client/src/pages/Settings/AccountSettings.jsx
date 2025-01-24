@@ -7,10 +7,6 @@ import {
   Typography,
   InputAdornment,
   IconButton,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   LinearProgress,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
@@ -21,6 +17,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../../services/api";
 import { usePasswordValidation } from "../../hooks/usePasswordValidation";
+import DeleteDialog from "../../components/DeleteDialoge";
 
 const AccountSettings = ({
   initialUserData = { email: "", name: "" },
@@ -368,50 +365,13 @@ const AccountSettings = ({
           horizontal: "center",
         }}
       />
-
-      <Dialog
+      <DeleteDialog
         open={openDeleteDialog}
-        onClose={handleCancelDelete}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Delete Account!"}</DialogTitle>
-        <DialogContent>
-          <Typography variant="body1">
-            Are you sure you want to delete your account?
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={handleCancelDelete}
-            color="primary"
-            sx={{
-              backgroundColor: "#f5f5f5",
-              fontWeight: "600",
-              "&:hover": {
-                backgroundColor: "#e0e0e0",
-              },
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={handleConfirmDelete}
-            variant="contained"
-            autoFocus
-            sx={{
-              backgroundColor: "#8B4F54",
-              color: "#fff",
-              fontWeight: "600",
-              "&:hover": {
-                backgroundColor: "#733C44",
-              },
-            }}
-          >
-            Yes
-          </Button>
-        </DialogActions>
-      </Dialog>
+        title="Delete Account!"
+        description="Are you sure you want to delete your account?"
+        onCancel={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+      />
     </Box>
   );
 };
