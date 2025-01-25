@@ -18,12 +18,12 @@ const cardStyles = {
     display: "flex",
     alignItems: "center",
     backgroundColor: COLORS.background.card,
-    borderRadius: { xs: "4vw", sm: "16px" },
-    padding: { xs: "2vh 4vw", sm: "16px 24px" },
-    gap: { xs: "1vh", sm: "16px" },
+    borderRadius: { xs: "4vw", md: "16px" },
+    padding: { xs: "2vh 4vw", md: "16px 24px" },
+    gap: { xs: "1vh", md: "16px" },
     width: "100%",
     boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
-    flexDirection: { xs: "column", sm: "row" },
+    flexDirection: { xs: "column", md: "row" },
     position: "relative",
   },
   mobileActions: {
@@ -36,69 +36,85 @@ const cardStyles = {
   },
   infoContainer: {
     display: "flex",
-    alignItems: { xs: "flex-start", sm: "center" },
-    flex: { xs: "unset", sm: "0 0 auto" },
-    gap: { xs: "3vw", sm: "16px" },
-    width: { xs: "100%", sm: "auto" },
+    alignItems: { xs: "flex-start", md: "center" },
+    flex: { xs: "unset", md: "0 0 auto" },
+    gap: { xs: "3vw", md: "16px" },
+    width: { xs: "100%", md: "auto" },
   },
   textContainer: {
-    flex: { xs: 1, sm: "unset" },
+    flex: { xs: 1, md: "unset" },
+    overflow: "hidden",
+    width: "100%",
+    paddingRight: { xs: "80px", md: 0 },
   },
   reminderContainer: {
-    display: { xs: "flex", sm: "flex" },
+    display: { xs: "flex", md: "flex" },
     alignItems: "center",
-    gap: { xs: "2vw", sm: "8px" },
+    gap: { xs: "2vw", md: "8px" },
     color: "#4A3B28",
-    fontSize: { xs: "3.5vw", sm: "0.75rem" },
-    marginTop: { xs: "0.5vh", sm: 0 },
-    flex: { xs: "unset", sm: 1 },
-    justifyContent: { xs: "flex-start", sm: "center" },
-    marginLeft: { xs: 0, sm: "24px" },
-    marginRight: { xs: 0, sm: "24px" },
+    fontSize: { xs: "3.5vw", md: "0.75rem" },
+    marginTop: { xs: "0.5vh", md: 0 },
+    flex: { xs: "unset", md: 1 },
+    justifyContent: { xs: "flex-start", md: "center" },
+    marginLeft: { xs: 0, md: "24px" },
+    marginRight: { xs: 0, md: "24px" },
     fontWeight: "900",
-    lineHeight: { xs: 1.2, sm: 1.5 },
-    minWidth: { sm: "200px" },
+    lineHeight: { xs: 1.2, md: 1.5 },
+    minWidth: { md: "200px" },
+    maxWidth: "100%",
+    overflow: "hidden",
+    "& span": {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+    },
   },
   spacer: {
-    flex: { xs: "unset", sm: 1 },
-    minWidth: { sm: "200px" },
+    flex: { xs: "unset", md: 1 },
+    minWidth: { md: "200px" },
   },
   actionsContainer: {
     display: "flex",
     alignItems: "center",
-    width: { xs: "100%", sm: "auto" },
-    justifyContent: { xs: "space-between", sm: "flex-end" },
-    gap: { xs: "3vw", sm: "12px" },
-    marginLeft: { sm: "auto" },
+    width: { xs: "100%", md: "auto" },
+    justifyContent: { xs: "space-between", md: "flex-end" },
+    gap: { xs: "3vw", md: "12px" },
+    marginLeft: { md: "auto" },
   },
   habitName: {
-    fontSize: { xs: "4vw", sm: "1rem" },
+    fontSize: { xs: "0.875rem", md: "1.25rem" },
     color: COLORS.text.primary,
     fontWeight: "700",
     textTransform: "uppercase",
-    marginBottom: { xs: "0.5vh", sm: "4px" },
-    lineHeight: { xs: 1.2, sm: 1.5 },
+    marginBottom: { xs: "0.5vh", md: "4px" },
+    lineHeight: { xs: 1.2, md: 1.5 },
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
   },
   streakText: {
-    fontSize: { xs: "3.5vw", sm: "0.875rem" },
+    fontSize: { xs: "0.75rem", md: "0.875rem" },
     fontWeight: "600",
-    lineHeight: { xs: 1.2, sm: 1.5 },
+    lineHeight: { xs: 1.2, md: 1.5 },
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
   },
   counterContainer: {
     display: "flex",
     alignItems: "center",
     backgroundColor: COLORS.primary.main,
-    borderRadius: { xs: "3vw", sm: "24px" },
-    flex: { xs: 1, sm: "0 0 auto" },
-    minWidth: { xs: "auto", sm: "120px" },
-    height: { xs: "11vw", sm: "40px" },
-    maxHeight: { xs: "50px", sm: "40px" },
+    borderRadius: { xs: "3vw", md: "24px" },
+    flex: { xs: 1, md: "0 0 auto" },
+    minWidth: { xs: "auto", md: "120px" },
+    height: { xs: "11vw", md: "40px" },
+    maxHeight: { xs: "50px", md: "40px" },
   },
   actionButton: {
-    width: { xs: "11vw", sm: "40px" },
-    height: { xs: "11vw", sm: "40px" },
-    maxWidth: { xs: "50px", sm: "40px" },
-    maxHeight: { xs: "50px", sm: "40px" },
+    width: { xs: "11vw", md: "40px" },
+    height: { xs: "11vw", md: "40px" },
+    maxWidth: { xs: "50px", md: "40px" },
+    maxHeight: { xs: "50px", md: "40px" },
     color: COLORS.primary.contrast,
     "&:hover": {
       backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -127,10 +143,10 @@ const cardStyles = {
     },
   },
   moreButton: {
-    width: { xs: "11vw", sm: "40px" },
-    height: { xs: "11vw", sm: "40px" },
-    maxWidth: { xs: "50px", sm: "40px" },
-    maxHeight: { xs: "50px", sm: "40px" },
+    width: { xs: "11vw", md: "40px" },
+    height: { xs: "11vw", md: "40px" },
+    maxWidth: { xs: "50px", md: "40px" },
+    maxHeight: { xs: "50px", md: "40px" },
     color: COLORS.text.primary,
     "&:hover": {
       backgroundColor: "transparent",
@@ -138,13 +154,11 @@ const cardStyles = {
     "& .dots": {
       display: "flex",
       flexDirection: "column",
-      gap: "1.2vw",
+      gap: "4px",
       alignItems: "center",
       "& .dot": {
-        width: "1.6vw",
-        height: "1.6vw",
-        maxWidth: "6px",
-        maxHeight: "6px",
+        width: "4px",
+        height: "4px",
         backgroundColor: "currentColor",
         borderRadius: "50%",
       },
@@ -167,7 +181,7 @@ const HabitCard = memo(
 
     const [anchorEl, setAnchorEl] = useState(null);
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
     const handleMenuOpen = (event) => {
       setAnchorEl(event.currentTarget);
@@ -190,10 +204,7 @@ const HabitCard = memo(
     return (
       <Box sx={cardStyles.container}>
         <Box sx={cardStyles.infoContainer}>
-          <HabitIcon
-            size={isMobile ? "12vw" : 36}
-            color={COLORS.text.primary}
-          />
+          <HabitIcon size={isMobile ? 25 : 40} color={COLORS.text.primary} />
           <Box sx={cardStyles.textContainer}>
             <Typography sx={cardStyles.habitName}>{name}</Typography>
             <Typography
@@ -209,7 +220,7 @@ const HabitCard = memo(
 
         {reminderTime ? (
           <Box sx={cardStyles.reminderContainer}>
-            <AccessTimeIcon sx={{ fontSize: { xs: "3.5vw", sm: "1rem" } }} />
+            <AccessTimeIcon sx={{ fontSize: { xs: "3.5vw", md: "1rem" } }} />
             <Typography component="span">
               {reminderTime} - {reminderMessage}
             </Typography>
@@ -295,7 +306,7 @@ const HabitCard = memo(
                   flex: 1,
                   textAlign: "center",
                   color: COLORS.primary.contrast,
-                  fontSize: { xs: "4vw", sm: "1rem" },
+                  fontSize: { xs: "4vw", md: "1rem" },
                   fontWeight: "700",
                   px: 1,
                 }}
