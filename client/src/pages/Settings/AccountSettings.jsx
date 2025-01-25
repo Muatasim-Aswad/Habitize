@@ -15,7 +15,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { authService } from "../../services/api";
+import { authService, userService } from "../../services/api";
 import { usePasswordValidation } from "../../hooks/usePasswordValidation";
 import DeleteDialog from "../../components/DeleteDialog";
 
@@ -62,16 +62,32 @@ const AccountSettings = ({
     }));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (userData.newPassword !== userData.confirmPassword) {
       setSnackbarMessage("Passwords do not match.");
       setSnackbarOpen(true);
       return;
     }
+
     if (passwordErrors.length > 0) {
       setSnackbarMessage(passwordErrors[0]);
       setSnackbarOpen(true);
       return;
+    }
+
+    if (userData.newPassword) {
+      if (!userData.currentPassword) {
+        setSnackbarMessage("Please enter your current password.");
+        setSnackbarOpen(true);
+        return;
+      }
+
+      const isValid = await userService.checkPassword(userData.currentPassword);
+      if (!isValid) {
+        setSnackbarMessage("Current password is incorrect.");
+        setSnackbarOpen(true);
+        return;
+      }
     }
 
     const user = authService.getUser();
@@ -88,7 +104,24 @@ const AccountSettings = ({
     }, 1000);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    //check if user entered current password
+
+    if (!userData.currentPassword) {
+      setSnackbarMessage(
+        "To delete your account, please enter your current password.",
+      );
+      setSnackbarOpen(true);
+      return;
+    }
+
+    const isValid = await userService.checkPassword(userData.currentPassword);
+    if (!isValid) {
+      setSnackbarMessage("Current password is incorrect.");
+      setSnackbarOpen(true);
+      return;
+    }
+
     setOpenDeleteDialog(true);
   };
 
