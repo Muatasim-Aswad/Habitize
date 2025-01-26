@@ -1,8 +1,11 @@
 const startDay = new Date();
+startDay.setHours(0, 0, 0, 0);
+
 const days40 = new Date(startDay.getTime() + 40 * 24 * 60 * 60 * 1000);
-days40.setUTCHours(23, 59, 59, 999);
+days40.setHours(23, 59, 59, 999);
 
 const weeks4 = new Date(startDay.getTime() + 4 * 7 * 24 * 60 * 60 * 1000);
+weeks4.setHours(23, 59, 59, 999);
 
 const exampleHabits = [
   {
