@@ -2,7 +2,12 @@ import httpClient from "./httpClient";
 
 // GET /habits?date=yyyy-mm-dd
 const getHabits = async (date) => {
-  const formattedDate = date ? date.toISOString() : new Date().toISOString();
+  if (!date && date instanceof Date) {
+    date = new Date();
+  }
+  date.setHours(0, 0, 0, 0);
+
+  const formattedDate = date.toISOString();
   const response = await httpClient.get(`/habits?date=${formattedDate}`);
   return response;
 };
