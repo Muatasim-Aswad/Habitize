@@ -6,7 +6,7 @@
 
 This is the final project for the HackYourFuture curriculum we did as a cohort using the [MERN stack](https://www.mongodb.com/resources/languages/mern-stack) by following the agile methodology with our team and a group of mentors. A quick guide to what we built:
 
-Account-based habit tracker designed to help users adopt new habits effectively. With this app you can create a habit, record your progress, and track it using stats. The account management includes resetting password using your email.
+**Habitize** is an ccount-based habit tracker designed to help users adopt new habits effectively. With this app you can create a habit, record your progress, and track it using stats. The account management includes resetting password using your email.
 
 🔗 **Live Demo:** [Habitize](https://c49-group-a.hackyourfuture.tech/)
 
