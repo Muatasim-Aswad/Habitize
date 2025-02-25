@@ -1,12 +1,14 @@
-`TODO: Add a nice screenshot of the app!`
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)  ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)  ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)  ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)  ![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)  ![Material UI](https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white)  ![NodeMailer](https://img.shields.io/badge/NodeMailer-18A303?style=for-the-badge&logo=maildotru&logoColor=white)  
+
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/2a8de38b-8ab7-408d-bdc0-a40a68090bcc" />
 
 # Habitize
 
 This is the final project for the HackYourFuture curriculum we did as a cohort using the [MERN stack](https://www.mongodb.com/resources/languages/mern-stack) by following the agile methodology with our team and a group of mentors. A quick guide to what we built:
 
-> TODO: Add short description of the app
+Account-based habit tracker designed to help users adopt new habits effectively. With this app you can create a habit, record your progress, and track it using stats. The account management includes resetting password using your email.
 
-`[Click here for the Demo version](TODO: add link)`
+🔗 **Live Demo:** [Habitize](https://c49-group-a.hackyourfuture.tech/)
 
 ## 1. Setup
 
