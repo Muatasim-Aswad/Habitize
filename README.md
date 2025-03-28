@@ -8,7 +8,9 @@ This is the final project for the HackYourFuture curriculum we did as a cohort u
 
 **Habitize** is an ccount-based habit tracker designed to help users adopt new habits effectively. With this app you can create a habit, record your progress, and track it using stats. The account management includes resetting password using your email.
 
-🔗 **Live Demo:** [Habitize](https://c49-group-a.hackyourfuture.tech/)
+🔗 [**Live Demo**](https://c49-group-a.hackyourfuture.tech/)
+🔗 [**API Docs**](https://github.com/Muatasim-Aswad/Habitize/blob/develop/server/api.md)
+🔗 [**ERD**](https://lucid.app/lucidchart/3b78ab32-ed05-4364-93a5-a462c0004fbe/edit?invitationId=inv_de2cdc8c-7610-4eb6-b171-b96e05a3c243&referringApp=slack&page=0_0#)
 
 ## 1. Setup
 
