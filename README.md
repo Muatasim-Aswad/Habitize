@@ -1,4 +1,5 @@
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)  ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)  ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)  ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)  ![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)  ![Material UI](https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white)  ![NodeMailer](https://img.shields.io/badge/NodeMailer-18A303?style=for-the-badge&logo=maildotru&logoColor=white)  
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)  ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)  ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)  ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)  ![Material UI](https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white)  ![NodeMailer](https://img.shields.io/badge/NodeMailer-18A303?style=for-the-badge&logo=maildotru&logoColor=white)  ![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)  ![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)
+
 
 <img width="1440" alt="image" src="https://github.com/user-attachments/assets/2a8de38b-8ab7-408d-bdc0-a40a68090bcc" />
 
@@ -8,7 +9,8 @@ This is the final project for the HackYourFuture curriculum we did as a cohort u
 
 **Habitize** is an ccount-based habit tracker designed to help users adopt new habits effectively. With this app you can create a habit, record your progress, and track it using stats. The account management includes resetting password using your email.
 
-🔗 [**Live Demo**](https://c49-group-a.hackyourfuture.tech/)
+🔗 [**Live Demo (Render)**](https://habitize.onrender.com)
+🔗 [**Alternative Demo (Heroku)**](https://c49-group-a.hackyourfuture.tech/)
 🔗 [**API Docs**](https://github.com/Muatasim-Aswad/Habitize/blob/develop/server/api.md)
 🔗 [**ERD**](https://lucid.app/lucidchart/3b78ab32-ed05-4364-93a5-a462c0004fbe/edit?invitationId=inv_de2cdc8c-7610-4eb6-b171-b96e05a3c243&referringApp=slack&page=0_0#)
 
