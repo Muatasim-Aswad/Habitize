@@ -45,17 +45,8 @@
   },
   "homepage": "https://github.com/HackYourFuture/final-project-template#readme",
   "devDependencies": {
-    "axios": "^1.6.8",
     "cypress": "^13.8.1",
-    "husky": "^9.0.0"
-  },
-  "dependencies": {
-    "concurrently": "^9.1.0",
-    "joi": "^17.13.3",
-    "phosphor-react": "^1.4.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.28.0",
-    "styled-components": "^6.1.13"
+    "husky": "^9.0.0",
+    "concurrently": "^9.1.0"
   }
 }
