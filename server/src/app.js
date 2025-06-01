@@ -60,4 +60,4 @@ app.all("/api/*", (req, res) => {
 
 app.use(errorHandler); //manages any error or unsuccessful request using AppError
 
-)export default app;
+export default app;
