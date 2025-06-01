@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Navigate } from "react-router-dom";
 
 import SignInForm from "./pages/SignIn/SignInForm";
@@ -15,8 +15,14 @@ import EditHabit from "./pages/EditHabit/EditHabit";
 import { Routes } from "react-router-dom";
 import AppFrame from "./layouts/AppFrame";
 import LandingFrame from "./layouts/LandingFrame";
+import { warmupService } from "./utils/warmupService";
 
 const App = () => {
+  useEffect(() => {
+    //non-blocking warm-up for api server if spinned down
+    warmupService.triggerWarmup();
+  }, []);
+
   //frames includes a wrapping route and a layout component
   return (
     <Routes>

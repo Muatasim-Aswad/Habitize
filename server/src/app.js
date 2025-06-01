@@ -11,6 +11,18 @@ app.set("trust proxy", 1); // to pass heroku s proxy in the limiter
 app.use(express.json());
 app.use(cors());
 
+app.get("/healthz", (req, res) => {
+  res.status(200).json({
+    status: "healthy",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
+app.get("/warmup", (req, res) => {
+  res.status(200).end();
+});
+
 app.use("/api/users", userRouter);
 app.use("/api/habits", habitRouter);
 app.use("/api/check-ins", checkInRouter);
