@@ -17,8 +17,6 @@ class WarmupService {
     if (this.isWarmedUp) {
       return Promise.resolve();
     }
-
-    console.log('🔥 Warming up server...');
     
     this.warmupPromise = fetch(WARMUP_URL, {
       method: 'GET',
@@ -27,7 +25,6 @@ class WarmupService {
       signal: AbortSignal.timeout(5000)
     })
     .then(() => {
-      console.log('✅ Server warmed up successfully');
       this.isWarmedUp = true;
     })
     .catch((error) => {
