@@ -15,7 +15,7 @@ import EditHabit from "./pages/EditHabit/EditHabit";
 import { Routes } from "react-router-dom";
 import AppFrame from "./layouts/AppFrame";
 import LandingFrame from "./layouts/LandingFrame";
-import { warmupService } from "./utils/warmupService";
+import { warmupService } from "./services/api/warmupService";
 
 const App = () => {
   useEffect(() => {
