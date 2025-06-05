@@ -1,5 +1,5 @@
 const WARMUP_URL = `${process.env.BASE_SERVER_URL}/warmup`;
-const WARMUP_ABORT_TIMEOUT = Number(process.env.WARMUP_ABORT_TIMEOUT) || 50000;
+const WARMUP_ABORT_TIMEOUT = process.env.WARMUP_ABORT_TIMEOUT || "50000";
 const WARMUP_RETRIES = 1;
 
 class WarmupService {
@@ -23,7 +23,7 @@ class WarmupService {
     this.warmupPromise = fetch(WARMUP_URL, {
       method: 'GET',
       mode: 'cors',
-      signal: AbortSignal.timeout(WARMUP_ABORT_TIMEOUT)
+      signal: AbortSignal.timeout(Number(WARMUP_ABORT_TIMEOUT)),
     })
       .then(() => {
         this.isWarmedUp = true;
