@@ -48,6 +48,7 @@ module.exports = {
     }),
     new webpack.EnvironmentPlugin({
       BASE_SERVER_URL: "",
+      WARMUP_ABORT_TIMEOUT: "",
     }),
   ],
   devServer: {

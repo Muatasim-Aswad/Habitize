@@ -1,5 +1,5 @@
 const WARMUP_URL = `${process.env.BASE_SERVER_URL}/warmup`;
-const WARMUP_ABORT_TIMEOUT = `${process.env.WARMUP_ABORT_TIMEOUT || 50000}`; // Default to 50 seconds if not set
+const WARMUP_ABORT_TIMEOUT = process.env.WARMUP_ABORT_TIMEOUT || "50000"; // Default to 50 seconds if not set
 const WARMUP_RETRIES = 1;
 
 class WarmupService {
