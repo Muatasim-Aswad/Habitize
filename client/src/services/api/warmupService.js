@@ -1,10 +1,12 @@
-// utils/warmupService.js
 const WARMUP_URL = `${process.env.BASE_SERVER_URL}/warmup`;
+const WARMUP_ABORT_TIMEOUT = Number(process.env.WARMUP_ABORT_TIMEOUT) || 50000;
+const WARMUP_RETRIES = 1;
 
 class WarmupService {
   constructor() {
     this.isWarmedUp = false;
     this.warmupPromise = null;
+    this.warmupRetries = 0;
   }
 
   async warmupServer() {
@@ -17,24 +19,36 @@ class WarmupService {
     if (this.isWarmedUp) {
       return Promise.resolve();
     }
-    
+
     this.warmupPromise = fetch(WARMUP_URL, {
       method: 'GET',
       mode: 'cors',
-      // Don't wait too long for warmup
-      signal: AbortSignal.timeout(5000)
+      signal: AbortSignal.timeout(WARMUP_ABORT_TIMEOUT)
     })
-    .then(() => {
-      this.isWarmedUp = true;
-    })
-    .catch((error) => {
-      console.log('⚠️ Server warmup failed (this is expected if server is cold):', error.message);
-      // Don't throw error - warmup failing is expected behavior
-    })
-    .finally(() => {
-      // Reset promise so it can be called again later
-      this.warmupPromise = null;
-    });
+      .then(() => {
+        this.isWarmedUp = true;
+        this.warmupRetries = 0; // Reset retry count
+        console.log("✅ Warmup succeeded.");
+      })
+      .catch(async (error) => {
+        if (error.name === 'AbortError') {
+          console.warn('⏱️ Warmup request aborted after timeout.');
+        } else {
+          console.error('⚠️ Warmup request failed:', error.message);
+        }
+
+        if (this.warmupRetries < WARMUP_RETRIES) {
+          this.warmupRetries++;
+          console.log(`🔁 Retrying warmup (${this.warmupRetries}/${WARMUP_RETRIES})...`);
+          await new Promise((res) => setTimeout(res, 1000)); // Optional: wait 1s before retry
+          return this.warmupServer(); // Retry
+        }
+
+        console.error('❌ All warmup retries failed. Server may still be waking up or unreachable.');
+      })
+      .finally(() => {
+        this.warmupPromise = null;
+      });
 
     return this.warmupPromise;
   }
@@ -57,5 +71,4 @@ class WarmupService {
   }
 }
 
-// Export singleton instance
 export const warmupService = new WarmupService();

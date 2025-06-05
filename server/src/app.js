@@ -4,6 +4,7 @@ import userRouter from "./routes/user.js";
 import errorHandler from "./middleware/errorHandler.js";
 import habitRouter from "./routes/habit.js";
 import checkInRouter from "./routes/checkIn.js";
+import { logInfo } from "./util/logging.js";
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.get("/healthz", (req, res) => {
 });
 
 app.get("/warmup", (req, res) => {
+  logInfo("Warmup endpoint hit - server is ready to handle requests.");
   res.status(200).end();
 });
 
