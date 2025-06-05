@@ -14,8 +14,10 @@ app.set("trust proxy", 1); // to pass heroku s proxy in the limiter
 const corsOptions = {
   origin: [
     process.env.CLIENT,
-    'http://localhost:5000'
-  ],
+    'http://localhost:5000',
+    'http://localhost:3000',
+    'https://habitize.onrender.com'
+  ], 
   credentials: true, // Allow cookies/credentials
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: [
